@@ -9,6 +9,7 @@
     "lintfix": "eslint src --fix"
   },
   "dependencies": {
+    "element-ui": "^2.4.6",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1"
   },
