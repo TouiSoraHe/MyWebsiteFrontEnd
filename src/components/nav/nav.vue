@@ -7,10 +7,10 @@
                 </div>
                 <div class="menu">
                 <el-menu :default-active="$route.path" router class="nav-ul" mode="horizontal" @select="handleSelect">
-                    <el-menu-item index="/blog">博文</el-menu-item>
-                    <el-menu-item index="/archive">归档</el-menu-item>
-                    <el-menu-item index="/music">音乐</el-menu-item>
-                    <el-menu-item index="/message">留言</el-menu-item>
+                    <el-menu-item index="/blog" class="my-icon-ego-blog"> 博文</el-menu-item>
+                    <el-menu-item index="/archive" class="my-icon-guidang"> 归档</el-menu-item>
+                    <el-menu-item index="/music" class="my-icon-MusicAcc"> 音乐</el-menu-item>
+                    <el-menu-item index="/message" class="my-icon-liuyan"> 留言</el-menu-item>
                     <el-menu-item index="/" v-show="false"></el-menu-item>
                 </el-menu>
                 </div>
