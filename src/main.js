@@ -4,6 +4,7 @@ import router from './router'
 import 'normalize.css/normalize.css'
 import './assets/icon/iconfont.css'
 import './assets/css/global.css'
+import Highlight from './assets/js/highlight.js'
 import {
     Menu,
     MenuItem,
@@ -23,6 +24,8 @@ Vue.use(Main);
 Vue.use(Footer);
 Vue.use(Col);
 Vue.use(Row);
+
+Vue.use(Highlight)
 
 new Vue({
     router,
