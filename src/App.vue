@@ -5,7 +5,7 @@
         </el-header>
         <div class="bg">
         </div>
-        <el-main>
+        <el-main class="myMain">
             <transition name="el-fade-in-linear" mode="out-in">
                 <router-view :style='{"margin-left":this.marginlr,"margin-right":this.marginlr}'></router-view>
             </transition>
@@ -54,7 +54,7 @@ export default {
     background-repeat: no-repeat;
 }
 
-main {
+.myMain {
     background-image: url('bg2.gif');
     background-color: #eee;
 }

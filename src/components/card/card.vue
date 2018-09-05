@@ -37,7 +37,6 @@ export default {
     background: rgba(255, 255, 255, 1);
     box-shadow: 2px 2px 6px #aaa;
     border-radius: 5px;
-    /*font-size: 115%;*/
     transition: all 0.2s linear;
 }
 
@@ -55,8 +54,8 @@ export default {
     margin-bottom: 20px;
 }
 
-.content{
-    font-size:0.95em;
+.content {
+    font-size: 0.95em;
     font-weight: normal;
 }
 </style>

@@ -64,12 +64,6 @@ export default {
         display: inline-block;
     }
 
-    a{
-        text-decoration: none;
-        display: inline-block;
-        width: 100%;
-    }
-
     .home > a{
         color: #909399;
         height: 60px;
