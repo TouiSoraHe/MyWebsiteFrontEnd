@@ -1,5 +1,5 @@
 <template>
-    <div class="card" @click="cardOnClick">
+    <div class="card">
         <div class="title">
             <slot name="title"></slot>
         </div>
@@ -13,14 +13,9 @@
 </template>
 <script>
 export default {
-    methods: {
-        "cardOnClick": function() {
-            console.log("click");
-        }
-    }
 }
 </script>
-<style>
+<style scoped>
 .card {
     box-sizing: border-box;
     width: 98%;
@@ -40,22 +35,17 @@ export default {
     transition: all 0.2s linear;
 }
 
-.title {
+.card > .title {
     font-size: 1.17em;
     font-weight: 600;
     text-align: center;
     margin-bottom: 10px;
 }
 
-.time {
+.card > .time {
     font-size: 0.75em;
     font-weight: 200;
     text-align: center;
     margin-bottom: 20px;
-}
-
-.content {
-    font-size: 0.95em;
-    font-weight: normal;
 }
 </style>

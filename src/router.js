@@ -5,6 +5,7 @@ import blog from 'components/blog/blog.vue'
 import music from 'components/music/music.vue'
 import archive from 'components/archive/archive.vue'
 import message from 'components/message/message.vue'
+import article from 'components/article/article.vue'
 
 Vue.use(Router)
 
@@ -14,7 +15,8 @@ export default new Router({
     { path:'/blog',component:blog},
     { path:'/archive',component:archive},
     { path:'/music',component:music},
-    { path:'/message',component:message}
+    { path:'/message',component:message},
+    { path:'/blog/:id',component:article,props: true}
   ],
   linkActiveClass: 'active'
 })

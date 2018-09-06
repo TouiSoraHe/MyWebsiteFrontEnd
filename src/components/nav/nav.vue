@@ -6,7 +6,7 @@
                     <router-link  to="/" class="my-icon-home"> 主页</router-link>
                 </div>
                 <div class="menu">
-                <el-menu :default-active="$route.path" router class="nav-ul" mode="horizontal" @select="handleSelect">
+                <el-menu :default-active="$route.path" router class="nav-ul" mode="horizontal">
                     <el-menu-item index="/blog" class="my-icon-ego-blog"> 博文</el-menu-item>
                     <el-menu-item index="/archive" class="my-icon-guidang"> 归档</el-menu-item>
                     <el-menu-item index="/music" class="my-icon-MusicAcc"> 音乐</el-menu-item>
@@ -34,15 +34,10 @@ export default {
       },
     }
   },
-  methods: {
-    handleSelect (key, keyPath) {
-      console.log(key +"|"+ keyPath);
-    }
-  }
 }
 </script>
 
-<style type="text/css">
+<style scoped>
     .nav {
         z-index: 1000;
         transition: all 0.5s ease;
