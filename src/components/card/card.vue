@@ -1,10 +1,14 @@
 <template>
     <div class="card">
         <div class="title">
-            <slot name="title"></slot>
+            <h4>
+                <slot name="title"></slot>
+            </h4>
         </div>
         <div class="time">
-            <slot name="time"></slot>
+            <p>
+                <slot name="time"></slot>
+            </p>
         </div>
         <div class="content">
             <slot name="content"></slot>
@@ -12,8 +16,7 @@
     </div>
 </template>
 <script>
-export default {
-}
+export default {}
 </script>
 <style scoped>
 .card {
@@ -35,17 +38,12 @@ export default {
     transition: all 0.2s linear;
 }
 
-.card > .title {
-    font-size: 1.17em;
-    font-weight: 600;
+.title {
     text-align: center;
-    margin-bottom: 10px;
 }
 
-.card > .time {
-    font-size: 0.75em;
-    font-weight: 200;
+.time {
+    font-size: 95%;
     text-align: center;
-    margin-bottom: 20px;
 }
 </style>

@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import axios from 'axios'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/monokai-sublime.css'
 import 'normalize.css/normalize.css'
 import 'assets/icon/iconfont.css'
 import 'assets/css/tent.min.css'
@@ -19,6 +21,12 @@ import {
 Vue.config.productionTip = false;
 
 Vue.prototype.$axios = axios;
+Vue.prototype.highlight = function() {
+    let blocks = document.querySelectorAll('pre code');
+    blocks.forEach((block) => {
+        hljs.highlightBlock(block);
+    });
+};
 
 Vue.use(Menu);
 Vue.use(MenuItem);

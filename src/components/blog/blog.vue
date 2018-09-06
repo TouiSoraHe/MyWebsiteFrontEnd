@@ -5,7 +5,9 @@
                 <card>
                     <div slot="title">{{item.title}}</div>
                     <div slot="time">{{item.time}}</div>
-                    <div slot="content">{{item.summary}}</div>
+                    <div slot="content">
+                        <vue-markdown :source="item.summary" @rendered="markdownRendered"></vue-markdown>
+                    </div>
                 </card>
             </router-link>
         </div>
@@ -13,6 +15,7 @@
 </template>
 <script>
 import card from "components/card/card.vue"
+import VueMarkdown from "vue-markdown"
 
 export default {
     data() {
@@ -21,7 +24,13 @@ export default {
         };
     },
     components: {
-        "card": card
+        "card": card,
+        "vue-markdown":VueMarkdown
+    },
+    methods:{
+        markdownRendered:function(){
+            this.$nextTick(()=>{this.highlight();});
+        },
     },
     created: function() {
         var that = this;

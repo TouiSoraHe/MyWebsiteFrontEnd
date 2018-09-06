@@ -1,11 +1,16 @@
 <template>
     <div>
-        <div class="title">{{article.title}}</div>
+        <div class="title">
+            <h3>{{article.title}}</h3></div>
         <div class="time">{{article.time}}</div>
-        <div class="content">{{article.content}}</div>
+        <div class="content">
+            <vue-markdown :source="article.content" @rendered="markdownRendered"></vue-markdown>
+        </div>
     </div>
 </template>
 <script>
+import VueMarkdown from "vue-markdown"
+
 export default {
     props: {
         id: {
@@ -21,6 +26,11 @@ export default {
             },
         };
     },
+    methods: {
+        markdownRendered: function() {
+            this.$nextTick(()=>{this.highlight();});
+        },
+    },
     created: function() {
         var that = this;
         this.$axios
@@ -31,20 +41,18 @@ export default {
                 that.article.content = response.data.content;
             });
     },
+    components: {
+        "vue-markdown": VueMarkdown
+    },
 }
 </script>
 <style scoped>
 .title {
-    font-size: 1.17em;
-    font-weight: 600;
     text-align: center;
-    margin-bottom: 10px;
 }
 
 .time {
-    font-size: 0.75em;
-    font-weight: 200;
+    font-size: 0.9em;
     text-align: center;
-    margin-bottom: 20px;
 }
 </style>

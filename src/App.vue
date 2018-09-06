@@ -6,7 +6,7 @@
         <div class="bg">
         </div>
         <el-main class="myMain">
-            <transition name="el-fade-in-linear" mode="out-in" v-on:before-enter="beforeEnter">
+            <transition name="el-fade-in-linear" mode="out-in">
                 <router-view :style='{"margin-left":this.marginlr,"margin-right":this.marginlr}'></router-view>
             </transition>
         </el-main>
@@ -16,8 +16,6 @@
 </template>
 <script type="text/javascript">
 import nav from 'components/nav/nav.vue'
-import Hljs from 'highlight.js'
-import 'highlight.js/styles/monokai-sublime.css'
 
 export default {
     data() {
@@ -33,15 +31,6 @@ export default {
         "my-nav": nav
     },
     methods: {
-        highlight: function() {
-            let blocks = document.querySelectorAll('pre code');
-            blocks.forEach((block) => {
-                Hljs.highlightBlock(block)
-            });
-        },
-        beforeEnter: function() {
-            this.highlight();
-        }
     },
     mounted() {
         this.$nextTick(function() {
@@ -52,14 +41,8 @@ export default {
                 that.clientSize.height = `${document.documentElement.clientHeight}px`;
                 that.clientSize.width = `${document.documentElement.clientWidth}px`;
             };
-            this.highlight();
         });
     },
-    updated: function() {
-        this.$nextTick(function() {
-            // this.highlight();
-        });
-    }
 }
 </script>
 <style scoped>
