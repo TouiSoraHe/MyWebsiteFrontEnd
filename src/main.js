@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import axios from 'axios'
 import 'normalize.css/normalize.css'
 import 'assets/icon/iconfont.css'
 import 'assets/css/tent.min.css'
@@ -16,6 +17,8 @@ import {
 } from 'element-ui';
 
 Vue.config.productionTip = false;
+
+Vue.prototype.$axios = axios;
 
 Vue.use(Menu);
 Vue.use(MenuItem);
