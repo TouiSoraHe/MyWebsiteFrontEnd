@@ -2,7 +2,6 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import 'normalize.css/normalize.css'
-import Highlight from 'assets/js/highlight.js'
 import 'assets/icon/iconfont.css'
 import 'assets/css/tent.min.css'
 import 'assets/css/global.css'
@@ -25,8 +24,6 @@ Vue.use(Main);
 Vue.use(Footer);
 Vue.use(Col);
 Vue.use(Row);
-
-Vue.use(Highlight)
 
 new Vue({
     router,
