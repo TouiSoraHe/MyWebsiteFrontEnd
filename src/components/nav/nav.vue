@@ -1,6 +1,6 @@
 <template>
     <div class="nav">
-        <el-row :style="elRowStyleObj">
+        <el-row class="navContent" :style="navContentStyleObj">
             <el-col :span="24">
                 <div class="home">
                     <router-link  to="/" class="my-icon-home"> 主页</router-link>
@@ -22,18 +22,21 @@
 <script>
 export default {
   props: {
-    marginlr: {
+    contentMaxWidth: {
       type: String
     }
   },
   data () {
     return {
-      elRowStyleObj:{
-        "margin-left":this.marginlr,
-        "margin-right":this.marginlr,
-      },
-    }
+    };
   },
+  computed:{
+    navContentStyleObj:function(){
+        return {
+            "max-width":this.contentMaxWidth,
+        };
+    },
+  }
 }
 </script>
 
@@ -47,6 +50,11 @@ export default {
         top: 0;
         left: 0;
         right: 0;
+    }
+
+    .navContent{
+        margin-left: auto;
+        margin-right:auto;
     }
 
     .menu {

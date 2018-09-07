@@ -22,6 +22,7 @@ export default {}
 .card {
     box-sizing: border-box;
     width: 98%;
+    font-size:98%;
     background: rgba(255, 255, 255, 0.5);
     box-shadow: 0.1px 0.1px 2px #aaa;
     padding: 20px;
@@ -32,6 +33,7 @@ export default {}
 .card:hover {
     cursor: pointer;
     width: 100%;
+    font-size:100%;
     background: rgba(255, 255, 255, 1);
     box-shadow: 2px 2px 6px #aaa;
     border-radius: 5px;

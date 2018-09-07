@@ -1,13 +1,13 @@
 <template>
     <div id="app">
         <el-header>
-            <my-nav :marginlr="marginlr"></my-nav>
+            <my-nav :contentMaxWidth="contentMaxWidth"></my-nav>
         </el-header>
         <div class="bg">
         </div>
         <el-main class="myMain">
             <transition name="el-fade-in-linear" mode="out-in">
-                <router-view :style='{"margin-left":this.marginlr,"margin-right":this.marginlr}'></router-view>
+                <router-view :style="mainStyleObj" class="mainContent"></router-view>
             </transition>
         </el-main>
         <el-footer>
@@ -20,29 +20,19 @@ import nav from 'components/nav/nav.vue'
 export default {
     data() {
         return {
-            clientSize: {
-                height: '600px',
-                width: '600px',
-            },
-            marginlr: "16%",
+            contentMaxWidth: "1000px",
         };
     },
     components: {
-        "my-nav": nav
+        "my-nav": nav,
     },
-    methods: {
-    },
-    mounted() {
-        this.$nextTick(function() {
-            this.clientSize.height = `${document.documentElement.clientHeight}px`;
-            this.clientSize.width = `${document.documentElement.clientWidth}px`;
-            const that = this;
-            window.onresize = function() {
-                that.clientSize.height = `${document.documentElement.clientHeight}px`;
-                that.clientSize.width = `${document.documentElement.clientWidth}px`;
+    computed:{
+        mainStyleObj:function(){
+            return {
+                "max-width": this.contentMaxWidth,
             };
-        });
-    },
+        },
+    }
 }
 </script>
 <style scoped>
@@ -61,5 +51,10 @@ export default {
 .myMain {
     background-image: url('bg2.gif');
     background-color: #eee;
+}
+
+.mainContent{
+    margin-left: auto;
+    margin-right:auto;
 }
 </style>
