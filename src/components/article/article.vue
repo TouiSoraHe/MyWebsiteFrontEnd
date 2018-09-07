@@ -3,6 +3,7 @@
         <div class="title">
             <h3>{{article.title}}</h3></div>
         <div class="time">{{article.time}}</div>
+        <div class="noneHr"></div>
         <div class="content">
             <vue-markdown :source="article.content" @rendered="markdownRendered"></vue-markdown>
         </div>
@@ -55,4 +56,10 @@ export default {
     font-size: 0.9em;
     text-align: center;
 }
+
+.noneHr{
+    width: 100%;
+    margin: 1.5em 0;
+    padding: 0.1px 0;
+} 
 </style>

@@ -10,6 +10,7 @@
                 <slot name="time"></slot>
             </p>
         </div>
+        <hr>
         <div class="content">
             <slot name="content"></slot>
         </div>
