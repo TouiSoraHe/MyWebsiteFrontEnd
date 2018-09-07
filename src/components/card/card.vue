@@ -24,8 +24,8 @@ export default {}
     box-sizing: border-box;
     width: 98%;
     font-size:98%;
-    background: rgba(255, 255, 255, 0.5);
-    box-shadow: 0.1px 0.1px 2px #aaa;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 2px #aaa;
     padding: 20px;
     margin: 15px auto;
     transition: all 0.1s linear;
@@ -36,7 +36,7 @@ export default {}
     width: 100%;
     font-size:100%;
     background: rgba(255, 255, 255, 1);
-    box-shadow: 2px 2px 6px #aaa;
+    box-shadow: 2px 2px 3px #999;
     border-radius: 5px;
     transition: all 0.2s linear;
 }

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="article">
         <div class="title">
             <h3>{{article.title}}</h3></div>
         <div class="time">{{article.time}}</div>
@@ -48,6 +48,12 @@ export default {
 }
 </script>
 <style scoped>
+.article{
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
 .title {
     text-align: center;
 }

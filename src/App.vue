@@ -10,7 +10,10 @@
                 <router-view :style="mainStyleObj" class="mainContent"></router-view>
             </transition>
         </el-main>
-        <el-footer>
+        <el-footer class="myFooter">
+            <div :style="footerStyleObj" class="footerContent">
+                (〃'▽'〃)
+            </div>
         </el-footer>
     </div>
 </template>
@@ -20,14 +23,19 @@ import nav from 'components/nav/nav.vue'
 export default {
     data() {
         return {
-            contentMaxWidth: "1000px",
+            contentMaxWidth: "800px",
         };
     },
     components: {
         "my-nav": nav,
     },
-    computed:{
-        mainStyleObj:function(){
+    computed: {
+        mainStyleObj: function() {
+            return {
+                "max-width": this.contentMaxWidth,
+            };
+        },
+        footerStyleObj: function() {
             return {
                 "max-width": this.contentMaxWidth,
             };
@@ -49,12 +57,31 @@ export default {
 }
 
 .myMain {
+    min-height: 600px;
     background-image: url('bg2.gif');
     background-color: #eee;
+    background-color: #efefef;
 }
 
-.mainContent{
+.mainContent {
     margin-left: auto;
-    margin-right:auto;
+    margin-right: auto;
+}
+
+.myFooter {
+    width: 100%;
+    background-color: #232323;
+    min-height: 60px !important;
+    height: auto !important;
+    color: #888;
+    display: table;
+}
+
+.footerContent {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
 }
 </style>
