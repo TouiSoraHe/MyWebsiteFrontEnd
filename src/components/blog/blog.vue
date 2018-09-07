@@ -1,5 +1,8 @@
 <template>
-    <div class="blog">
+    <div class="blog" 
+        v-loading="loadingBlogList" 
+        element-loading-background="rgba(255, 255, 255, 0)"
+        >
         <div>
             <router-link :to="'/blog/'+item.id" v-for="item in blogList" :key="item.id">
                 <card>
@@ -21,25 +24,50 @@ export default {
     data() {
         return {
             blogList: [],
+            loadingBlogList: true,
         };
     },
     components: {
         "card": card,
-        "vue-markdown":VueMarkdown
+        "vue-markdown": VueMarkdown
     },
-    methods:{
-        markdownRendered:function(){
-            this.$nextTick(()=>{this.highlight();});
+    methods: {
+        markdownRendered: function() {
+            this.$nextTick(() => { this.highlight(); });
         },
     },
     created: function() {
         var that = this;
-        this.$axios
-            .get('/api/blogList')
+        that.loadedBlogList = true;
+        this.$axios({
+                url: '/api/blogList',
+                method: 'get'
+            })
             .then(function(response) {
+                that.loadingBlogList = false;
                 response.data.forEach(function(item) {
                     that.blogList.push(item);
                 });
+            })
+            .catch(function(error) {
+                that.loadingBlogList = false;
+                if (error.response) {
+                    that.$message({
+                        message: '网络请求错误:' + error.response.status,
+                        type: 'error',
+                        duration: 2000,
+                        showClose: true,
+                        center: true
+                    });
+                } else {
+                    that.$message({
+                        message: error.message,
+                        type: 'error',
+                        duration: 2000,
+                        showClose: true,
+                        center: true
+                    });
+                }
             });
     },
 }

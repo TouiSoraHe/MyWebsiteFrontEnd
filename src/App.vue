@@ -50,15 +50,15 @@ export default {
     min-height: 200px;
     height: 300px;
     width: 100%;
-    background-image: url('bg.jpg');
+    background-image: url('assets/img/bg.jpg');
     background-size: cover;
     background-position: center 50%;
     background-repeat: no-repeat;
 }
 
 .myMain {
-    min-height: 600px;
-    background-image: url('bg2.gif');
+    min-height: 500px;
+    background-image: url('assets/img/bg2.gif');
     background-color: #eee;
     background-color: #efefef;
 }
@@ -66,6 +66,7 @@ export default {
 .mainContent {
     margin-left: auto;
     margin-right: auto;
+    min-height: inherit;
 }
 
 .myFooter {

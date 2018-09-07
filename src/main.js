@@ -16,7 +16,9 @@ import {
     Main,
     Footer,
     Col,
-    Row
+    Row,
+    Message,
+    Loading
 } from 'element-ui';
 
 Vue.config.productionTip = false;
@@ -36,6 +38,10 @@ Vue.use(Main);
 Vue.use(Footer);
 Vue.use(Col);
 Vue.use(Row);
+
+Vue.use(Loading.directive);
+
+Vue.prototype.$message = Message;
 
 new Vue({
     router,
