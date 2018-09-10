@@ -21,34 +21,35 @@ export default {}
 .card {
     position: relative;
     padding: 20px;
-    width: 100%;
     margin: 15px auto;
-    box-sizing: border-box;
-    /*    background-color: rgba(0,0,0,0);
-    box-shadow: 0 0 2px #aaa;
-    z-index: 100;
-    transition: all 0.1s linear;*/
+    z-index: 0;
 }
-
-
-/*.card:hover {
-    cursor: pointer;
-    background: rgba(255, 255, 255, 1);
-    box-shadow: 2px 2px 3px #999;
-    border-radius: 5px;
-    transition: all 0.2s linear;
-}*/
 
 .card:before {
     content: "";
     position: absolute;
-    background-color: #999;
+    z-index: -1;
     top: 0;
     bottom: 0;
     right: 0;
     left: 0;
-    z-index: -1;
+    background-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 2px 2px 3px #999;
+    border-radius: 5px;
+    transition: all 0.1s linear;
 }
+
+.card:hover:before {
+    cursor: pointer;
+    top: -4px;
+    bottom: -4px;
+    right: -4px;
+    left: -4px;
+    background-color: rgba(255, 255, 255, 1);
+    transition: all 0.2s linear;
+}
+
+.card:before:hover {}
 
 .text-center {
     text-align: center;
@@ -68,6 +69,7 @@ export default {}
     color: #555;
     font-size: 14px;
 }
+
 .slot>* {
     display: inline !important;
 }
