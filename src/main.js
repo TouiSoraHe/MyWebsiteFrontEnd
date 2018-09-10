@@ -4,7 +4,7 @@ import router from './router'
 import axios from 'axios'
 import hljs from 'highlight.js'
 import 'normalize.css/normalize.css'
-import 'assets/css/tent.min.css'
+import 'assets/css/milligram.min.css'
 import 'assets/icon/iconfont.css'
 import 'highlight.js/styles/monokai-sublime.css'
 import 'assets/css/global.css'
@@ -42,6 +42,13 @@ Vue.use(Row);
 Vue.use(Loading.directive);
 
 Vue.prototype.$message = Message;
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
+  next();
+});
 
 new Vue({
     router,

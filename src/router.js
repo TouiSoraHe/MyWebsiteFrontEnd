@@ -11,12 +11,12 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    { path:'/',component:index},
-    { path:'/blog',component:blog},
-    { path:'/archive',component:archive},
-    { path:'/music',component:music},
-    { path:'/message',component:message},
-    { path:'/blog/:id',component:article,props: true}
+    { path:'/',component:index,meta: {title: '首页'}},
+    { path:'/blog',component:blog,meta: {title: '博文'}},
+    { path:'/archive',component:archive,meta: {title: '归档'}},
+    { path:'/music',component:music,meta: {title: '音乐'}},
+    { path:'/message',component:message,meta: {title: '留言'}},
+    { path:'/blog/:id',component:article,props: true,meta: {title: '博文'}}
   ],
   linkActiveClass: 'active'
 })

@@ -7,7 +7,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "lintfix": "eslint src --fix",
-    "mock": "json-server --watch mock/data.json --delay 2000"
+    "mock": "json-server --watch mock/data.json --delay 750"
   },
   "dependencies": {
     "axios": "^0.18.0",

@@ -5,10 +5,17 @@
         </el-header>
         <div class="bg">
         </div>
-        <el-main class="myMain">
-            <transition name="el-fade-in-linear" mode="out-in">
-                <router-view :style="mainStyleObj" class="mainContent"></router-view>
-            </transition>
+        <el-main class="myMain" :style="myMainStyleObj">
+            <div class="mainContent" :style="mainStyleObj">
+                <div class="mainContentLeft">
+                    <transition name="el-fade-in-linear" mode="out-in">
+                        <router-view style="min-height: inherit;"></router-view>
+                    </transition>
+                </div>
+                <div class="mainContentRight">
+                    hello
+                </div>
+            </div>
         </el-main>
         <el-footer class="myFooter">
             <div :style="footerStyleObj" class="footerContent">
@@ -23,11 +30,26 @@ import nav from 'components/nav/nav.vue'
 export default {
     data() {
         return {
-            contentMaxWidth: "800px",
+            clientSize: {
+                height: 0,
+                width: 0,
+            },
+            contentMaxWidth: "1000px",
         };
     },
     components: {
         "my-nav": nav,
+    },
+    mounted() {
+        var that = this;
+        this.$nextTick(() => {
+            that.clientSize.height = document.documentElement.clientHeight;
+            that.clientSize.width = document.documentElement.clientWidth;
+            window.onresize = () => {
+                that.clientSize.height = document.documentElement.clientHeight;
+                that.clientSize.width = document.documentElement.clientWidth;
+            };
+        });
     },
     computed: {
         mainStyleObj: function() {
@@ -38,6 +60,23 @@ export default {
         footerStyleObj: function() {
             return {
                 "max-width": this.contentMaxWidth,
+            };
+        },
+        myMainStyleObj: function() {
+            let minHeight = 0;
+            let myMainEle = document.querySelector('.myMain');
+            let myMainHeight = 0;
+            if (myMainEle != null) {
+                let myMainEleStyle = window.getComputedStyle(myMainEle, null);
+                let top = parseFloat(myMainEleStyle.paddingTop.replace('px', ''));
+                let bottom = parseFloat(myMainEleStyle.paddingBottom.replace('px', ''));
+                myMainHeight = myMainEle.clientHeight - top - bottom;
+            }
+            if ((document.body.offsetHeight - myMainHeight) < this.clientSize.height) {
+                minHeight = this.clientSize.height - (document.body.offsetHeight - myMainHeight);
+            }
+            return {
+                "min-height": minHeight + "px"
             };
         },
     }
@@ -57,9 +96,7 @@ export default {
 }
 
 .myMain {
-    min-height: 500px;
     background-image: url('assets/img/bg2.gif');
-    background-color: #eee;
     background-color: #efefef;
 }
 
@@ -67,6 +104,20 @@ export default {
     margin-left: auto;
     margin-right: auto;
     min-height: inherit;
+}
+
+.mainContentLeft {
+    min-height: inherit;
+    display: inline-block;
+    float: left;
+    width: 80%;
+}
+
+.mainContentRight {
+    display: inline-block;
+    float: right;
+    width: 18%;
+    margin-left: 2%;
 }
 
 .myFooter {

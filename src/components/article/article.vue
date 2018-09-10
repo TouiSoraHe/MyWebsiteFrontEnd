@@ -48,7 +48,7 @@ export default {
         },
     },
     created: function() {
-        var that = this;
+        let that = this;
         that.loadingArticle = true;
         this.$axios
             .get('/api/blog/' + that.id)
@@ -57,6 +57,7 @@ export default {
                 that.article.title = response.data.title;
                 that.article.time = response.data.time;
                 that.article.content = response.data.content;
+                document.title = response.data.title;
             })
             .catch(function(error) {
                 that.loadingArticle = false;
