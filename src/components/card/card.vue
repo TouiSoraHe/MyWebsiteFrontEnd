@@ -1,27 +1,42 @@
 <template>
-    <div class="card">
+    <div class="card" v-if="article">
+        <h4 class="text-center title">{{article.title}}</h4>
         <div class="text-center">
-            <h4 class="slot title">
-                <slot name="title"></slot>
-            </h4>
-        </div>
-        <div class="text-center">
-            <i class="my-icon-calendar time slot">&nbsp;<slot name="time"></slot></i>
+            <i class="my-icon-calendar time" v-show="article.time">&nbsp;发表于&nbsp;{{article.time}}</i>
+            <span v-show="article.words">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+            <i class="my-icon-word_files_icon words" v-show="article.words">&nbsp;字数&nbsp;{{article.words}}</i>
+            <span v-show="article.views">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+            <i class="my-icon-eye views" v-show="article.views">&nbsp;阅读次数&nbsp;{{article.views}}</i>
         </div>
         <hr>
-        <div class="slot content">
-            <slot name="content"></slot>
-        </div>
+        <div class="content" v-if="article.summary"><vue-markdown :source="article.summary" @rendered="markdownRendered"></vue-markdown></div>
     </div>
 </template>
 <script>
-export default {}
+import VueMarkdown from "vue-markdown"
+
+export default {
+    props: {
+        article: {
+            type: Object
+        }
+    },
+    components: {
+        "vue-markdown": VueMarkdown
+    },
+    methods: {
+        markdownRendered: function() {
+            this.$nextTick(() => { this.$highlight(); });
+        },
+    },
+}
 </script>
 <style scoped>
 .card {
     position: relative;
     padding: 20px;
     z-index: 0;
+    color: #606c76;
 }
 
 .card:before {
@@ -48,26 +63,29 @@ export default {}
     transition: all 0.2s linear;
 }
 
-.text-center {
-    text-align: center;
-}
-
 .title {
     color: #444;
     font-size: 23px;
 }
 
+.time,.words,.views{
+    font-size: 13px;
+}
+
 .time {
     color: #00a7e0;
-    font-size: 13px;
+}
+
+.words{
+    color: #000;   
+}
+
+.views{
+    color:#ff3f1a;
 }
 
 .content {
     color: #555;
     font-size: 14px;
-}
-
-.slot>* {
-    display: inline !important;
 }
 </style>

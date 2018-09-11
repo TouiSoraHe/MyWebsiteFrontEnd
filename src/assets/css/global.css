@@ -11,6 +11,10 @@ hr {
     border-top: 0.1rem solid #bdbdbd;
 }
 
+.text-center {
+    text-align: center;
+}
+
 
 /*滚动条整体部分*/
 

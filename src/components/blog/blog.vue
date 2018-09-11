@@ -5,20 +5,13 @@
         >
         <div>
             <router-link :to="'/blog/'+item.id" v-for="item in blogList" :key="item.id">
-                <card class="card-item">
-                    <div slot="title">{{item.title}}</div>
-                    <div slot="time">{{item.time}}</div>
-                    <div slot="content">
-                        <vue-markdown :source="item.summary" @rendered="markdownRendered"></vue-markdown>
-                    </div>
-                </card>
+                <card class="card-item" :article="item"></card>
             </router-link>
         </div>
     </div>
 </template>
 <script>
 import card from "components/card/card.vue"
-import VueMarkdown from "vue-markdown"
 
 export default {
     data() {
@@ -29,12 +22,6 @@ export default {
     },
     components: {
         "card": card,
-        "vue-markdown": VueMarkdown
-    },
-    methods: {
-        markdownRendered: function() {
-            this.$nextTick(() => { this.highlight(); });
-        },
     },
     created: function() {
         var that = this;
@@ -46,28 +33,26 @@ export default {
             .then(function(response) {
                 that.loadingBlogList = false;
                 response.data.forEach(function(item) {
-                    that.blogList.push(item);
+                    let o = {
+                        id:-1,
+                        title:"",
+                        time:"",
+                        words:"",
+                        views:"",
+                        summary:""
+                    };
+                    o.id = item.id;
+                    o.title = item.title;
+                    o.time = item.time;
+                    o.words = item.words;
+                    o.views = item.views;
+                    o.summary = item.summary;
+                    that.blogList.push(o);
                 });
             })
             .catch(function(error) {
                 that.loadingBlogList = false;
-                if (error.response) {
-                    that.$message({
-                        message: '网络请求错误:' + error.response.status,
-                        type: 'error',
-                        duration: 2000,
-                        showClose: true,
-                        center: true
-                    });
-                } else {
-                    that.$message({
-                        message: error.message,
-                        type: 'error',
-                        duration: 2000,
-                        showClose: true,
-                        center: true
-                    });
-                }
+                that.$axiosError(error);
             });
     },
 }

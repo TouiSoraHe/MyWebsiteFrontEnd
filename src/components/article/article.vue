@@ -1,11 +1,18 @@
 <template>
-    <div class="article" v-loading="loadingArticle" element-loading-background="rgba(255, 255, 255, 0)" :style="articleStyleObj">
-        <div class="title">
-            <h3>{{article.title}}</h3></div>
-        <div class="time">{{article.time}}</div>
-        <div class="noneHr"></div>
-        <div class="content">
-            <vue-markdown :source="article.content" @rendered="markdownRendered"></vue-markdown>
+    <div v-loading="loadingArticle" element-loading-background="rgba(255, 255, 255, 0)">
+        <div class="article" v-show="articleIsShow">
+            <h3 class="title text-center">{{article.title}}</h3>
+            <div class="text-center">
+                <i class="my-icon-calendar time" v-show="article.time">&nbsp;发表于&nbsp;{{article.time}}</i>
+                <span v-show="article.words">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                <i class="my-icon-word_files_icon words" v-show="article.words">&nbsp;字数&nbsp;{{article.words}}</i>
+                <span v-show="article.views">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                <i class="my-icon-eye views" v-show="article.views">&nbsp;阅读次数&nbsp;{{article.views}}</i>
+            </div>
+            <div class="noneHr"></div>
+            <div class="content">
+                <vue-markdown :source="article.content" @rendered="markdownRendered"></vue-markdown>
+            </div>
         </div>
     </div>
 </template>
@@ -23,61 +30,40 @@ export default {
             article: {
                 title: "",
                 time: "",
+                words:"",
+                views:"",
                 content: "",
             },
+            articleIsShow:false,
             loadingArticle: true,
         };
     },
     computed:{
-        articleStyleObj:function(){
-            if(this.loadingArticle){
-                return {
-                    "background-color": "rgba(255,255,255,0)"
-                };
-            }
-            else{
-                return {
-                    "background-color": "rgba(255,255,255,1)"
-                };
-            }
-        },
     },
     methods: {
         markdownRendered: function() {
-            this.$nextTick(() => { this.highlight(); });
+            this.$nextTick(() => { this.$highlight(); });
         },
     },
     created: function() {
         let that = this;
         that.loadingArticle = true;
+        that.articleIsShow = false;
         this.$axios
             .get('/api/blog/' + that.id)
             .then(function(response) {
-                that.loadingArticle = false;
                 that.article.title = response.data.title;
                 that.article.time = response.data.time;
+                that.article.words = response.data.words;
+                that.article.views = response.data.views;
                 that.article.content = response.data.content;
                 document.title = response.data.title;
+                that.loadingArticle = false;
+                that.articleIsShow = true;
             })
             .catch(function(error) {
                 that.loadingArticle = false;
-                if (error.response) {
-                    that.$message({
-                        message: '网络请求错误:' + error.response.status,
-                        type: 'error',
-                        duration: 2000,
-                        showClose: true,
-                        center: true
-                    });
-                } else {
-                    that.$message({
-                        message: error.message,
-                        type: 'error',
-                        duration: 2000,
-                        showClose: true,
-                        center: true
-                    });
-                }
+                that.$axiosError(error);
             });
     },
     components: {
@@ -89,16 +75,27 @@ export default {
 .article {
     padding: 40px;
     background-color: rgba(255,255,255,1);
-    border-radius: 5px;
+    box-shadow: 0 0 1px #bdbdbd;
 }
 
 .title {
-    text-align: center;
+    color:#444;
+}
+
+.time,.words,.views {
+    font-size: 0.8em;
 }
 
 .time {
-    font-size: 0.9em;
-    text-align: center;
+    color: #00a7e0;
+}
+
+.words{
+    color: #000;   
+}
+
+.views{
+    color:#ff3f1a;
 }
 
 .noneHr {

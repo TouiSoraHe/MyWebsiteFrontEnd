@@ -24,14 +24,6 @@ import {
 
 Vue.config.productionTip = false;
 
-Vue.prototype.$axios = axios;
-Vue.prototype.highlight = function() {
-    let blocks = document.querySelectorAll('pre code');
-    blocks.forEach((block) => {
-        hljs.highlightBlock(block);
-    });
-};
-
 Vue.use(Menu);
 Vue.use(MenuItem);
 Vue.use(Container);
@@ -44,6 +36,33 @@ Vue.use(Row);
 Vue.use(Loading.directive);
 
 Vue.prototype.$message = Message;
+
+Vue.prototype.$axios = axios;
+Vue.prototype.$highlight = function() {
+    let blocks = document.querySelectorAll('pre code');
+    blocks.forEach((block) => {
+        hljs.highlightBlock(block);
+    });
+};
+Vue.prototype.$axiosError = function(error){
+    if (error.response) {
+        Message({
+            message: '网络请求错误:' + error.response.status,
+            type: 'error',
+            duration: 2000,
+            showClose: true,
+            center: true
+        });
+    } else {
+        Message({
+            message: error.message,
+            type: 'error',
+            duration: 2000,
+            showClose: true,
+            center: true
+        });
+    }
+}
 
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {

@@ -12,7 +12,6 @@ export default {
     },
     methods: {
         topOnClick: function() {
-            console.log("返回顶部");
             (function smoothscroll() {
                 var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
                 if (currentScroll > 0) {
@@ -24,7 +23,6 @@ export default {
     },
     created() {
         let that = this;
-        console.log("创建");
         window.onscroll = () => {
             if (document.documentElement.scrollTop > 1000) {
                 that.show = true;
