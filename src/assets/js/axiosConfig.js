@@ -11,7 +11,6 @@ export default{
             // 在发送请求之前打开longding
             lodingInstance = Vue.prototype.$loading({
                 lock:true,
-                text:"test",
             });
             return config;
           }, function (error) {

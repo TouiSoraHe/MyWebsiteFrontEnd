@@ -1,19 +1,21 @@
 <template>
     <div>
-        <div class="article" v-if="articleIsShow">
-            <h3 class="title text-center">{{article.title}}</h3>
-            <div class="text-center">
-                <i class="my-icon-calendar time" v-if="article.time">&nbsp;发表于&nbsp;{{article.time}}</i>
-                <span v-if="article.words">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                <i class="my-icon-word_files_icon words" v-if="article.words">&nbsp;字数&nbsp;{{article.words}}</i>
-                <span v-if="article.views">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                <i class="my-icon-eye views" v-if="article.views">&nbsp;阅读次数&nbsp;{{article.views}}</i>
+        <transition name="el-zoom-in-center" mode="out-in">
+            <div class="article" v-if="articleIsShow">
+                <h3 class="title text-center">{{article.title}}</h3>
+                <div class="text-center">
+                    <i class="my-icon-calendar time" v-if="article.time">&nbsp;发表于&nbsp;{{article.time}}</i>
+                    <span v-if="article.words">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                    <i class="my-icon-word_files_icon words" v-if="article.words">&nbsp;字数&nbsp;{{article.words}}</i>
+                    <span v-if="article.views">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                    <i class="my-icon-eye views" v-if="article.views">&nbsp;阅读次数&nbsp;{{article.views}}</i>
+                </div>
+                <div class="noneHr"></div>
+                <div class="content">
+                    <vue-markdown :source="article.content" @rendered="markdownRendered"></vue-markdown>
+                </div>
             </div>
-            <div class="noneHr"></div>
-            <div class="content">
-                <vue-markdown :source="article.content" @rendered="markdownRendered"></vue-markdown>
-            </div>
-        </div>
+        </transition>
     </div>
 </template>
 <script>
@@ -30,15 +32,14 @@ export default {
             article: {
                 title: "",
                 time: "",
-                words:"",
-                views:"",
+                words: "",
+                views: "",
                 content: "",
             },
-            articleIsShow:false,
+            articleIsShow: false,
         };
     },
-    computed:{
-    },
+    computed: {},
     methods: {
         markdownRendered: function() {
             this.$nextTick(() => { this.$highlight(); });
@@ -66,15 +67,17 @@ export default {
 <style scoped>
 .article {
     padding: 40px;
-    background-color: rgba(255,255,255,1);
+    background-color: rgba(255, 255, 255, 1);
     box-shadow: 0 0 1px #bdbdbd;
 }
 
 .title {
-    color:#444;
+    color: #444;
 }
 
-.time,.words,.views {
+.time,
+.words,
+.views {
     font-size: 0.8em;
 }
 
@@ -82,12 +85,12 @@ export default {
     color: #00a7e0;
 }
 
-.words{
-    color: #000;   
+.words {
+    color: #000;
 }
 
-.views{
-    color:#ff3f1a;
+.views {
+    color: #ff3f1a;
 }
 
 .noneHr {
