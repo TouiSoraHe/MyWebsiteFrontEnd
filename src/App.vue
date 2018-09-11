@@ -9,12 +9,12 @@
             <el-main class="myMain" :style="myMainStyleObj">
                 <div class="mainContent" :style="mainStyleObj">
                     <div class="mainContentLeft">
-                        <transition name="el-fade-in-linear" mode="out-in">
+                        <transition name="el-zoom-in-center" mode="out-in">
                             <router-view style="min-height: inherit;"></router-view>
                         </transition>
                     </div>
                     <div class="mainContentRight">
-                        hello
+                        <div style="width: 100%;background-color: #999;">占位</div>
                     </div>
                 </div>
             </el-main>

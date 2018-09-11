@@ -1,13 +1,13 @@
 <template>
-    <div v-loading="loadingArticle" element-loading-background="rgba(255, 255, 255, 0)">
-        <div class="article" v-show="articleIsShow">
+    <div>
+        <div class="article" v-if="articleIsShow">
             <h3 class="title text-center">{{article.title}}</h3>
             <div class="text-center">
-                <i class="my-icon-calendar time" v-show="article.time">&nbsp;发表于&nbsp;{{article.time}}</i>
-                <span v-show="article.words">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                <i class="my-icon-word_files_icon words" v-show="article.words">&nbsp;字数&nbsp;{{article.words}}</i>
-                <span v-show="article.views">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                <i class="my-icon-eye views" v-show="article.views">&nbsp;阅读次数&nbsp;{{article.views}}</i>
+                <i class="my-icon-calendar time" v-if="article.time">&nbsp;发表于&nbsp;{{article.time}}</i>
+                <span v-if="article.words">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                <i class="my-icon-word_files_icon words" v-if="article.words">&nbsp;字数&nbsp;{{article.words}}</i>
+                <span v-if="article.views">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                <i class="my-icon-eye views" v-if="article.views">&nbsp;阅读次数&nbsp;{{article.views}}</i>
             </div>
             <div class="noneHr"></div>
             <div class="content">
@@ -35,7 +35,6 @@ export default {
                 content: "",
             },
             articleIsShow:false,
-            loadingArticle: true,
         };
     },
     computed:{
@@ -47,8 +46,6 @@ export default {
     },
     created: function() {
         let that = this;
-        that.loadingArticle = true;
-        that.articleIsShow = false;
         this.$axios
             .get('/api/blog/' + that.id)
             .then(function(response) {
@@ -58,12 +55,7 @@ export default {
                 that.article.views = response.data.views;
                 that.article.content = response.data.content;
                 document.title = response.data.title;
-                that.loadingArticle = false;
                 that.articleIsShow = true;
-            })
-            .catch(function(error) {
-                that.loadingArticle = false;
-                that.$axiosError(error);
             });
     },
     components: {

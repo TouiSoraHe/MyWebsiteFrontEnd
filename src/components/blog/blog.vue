@@ -1,13 +1,12 @@
 <template>
-    <div class="blog" 
-        v-loading="loadingBlogList" 
-        element-loading-background="rgba(255, 255, 255, 0)"
-        >
-        <div>
-            <router-link :to="'/blog/'+item.id" v-for="item in blogList" :key="item.id">
-                <card class="card-item" :article="item"></card>
-            </router-link>
-        </div>
+    <div class="blog">
+        <transition name="el-zoom-in-center" mode="out-in">
+            <div v-if="blogList">
+                <router-link :to="'/blog/'+item.id" v-for="item in blogList" :key="item.id">
+                    <card class="card-item" :article="item"></card>
+                </router-link>
+            </div>
+        </transition>
     </div>
 </template>
 <script>
@@ -17,7 +16,6 @@ export default {
     data() {
         return {
             blogList: [],
-            loadingBlogList: true,
         };
     },
     components: {
@@ -25,21 +23,19 @@ export default {
     },
     created: function() {
         var that = this;
-        that.loadedBlogList = true;
         this.$axios({
                 url: '/api/blogList',
                 method: 'get'
             })
             .then(function(response) {
-                that.loadingBlogList = false;
                 response.data.forEach(function(item) {
                     let o = {
-                        id:-1,
-                        title:"",
-                        time:"",
-                        words:"",
-                        views:"",
-                        summary:""
+                        id: -1,
+                        title: "",
+                        time: "",
+                        words: "",
+                        views: "",
+                        summary: ""
                     };
                     o.id = item.id;
                     o.title = item.title;
@@ -49,16 +45,12 @@ export default {
                     o.summary = item.summary;
                     that.blogList.push(o);
                 });
-            })
-            .catch(function(error) {
-                that.loadingBlogList = false;
-                that.$axiosError(error);
             });
     },
 }
 </script>
 <style scoped>
-.card-item{
-    margin-bottom: 15px;
+.card-item {
+    margin-bottom: 25px;
 }
 </style>

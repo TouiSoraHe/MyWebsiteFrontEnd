@@ -2,11 +2,11 @@
     <div class="card" v-if="article">
         <h4 class="text-center title">{{article.title}}</h4>
         <div class="text-center">
-            <i class="my-icon-calendar time" v-show="article.time">&nbsp;发表于&nbsp;{{article.time}}</i>
-            <span v-show="article.words">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-            <i class="my-icon-word_files_icon words" v-show="article.words">&nbsp;字数&nbsp;{{article.words}}</i>
-            <span v-show="article.views">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-            <i class="my-icon-eye views" v-show="article.views">&nbsp;阅读次数&nbsp;{{article.views}}</i>
+            <i class="my-icon-calendar time" v-if="article.time">&nbsp;发表于&nbsp;{{article.time}}</i>
+            <span v-if="article.words">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+            <i class="my-icon-word_files_icon words" v-if="article.words">&nbsp;字数&nbsp;{{article.words}}</i>
+            <span v-if="article.views">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+            <i class="my-icon-eye views" v-if="article.views">&nbsp;阅读次数&nbsp;{{article.views}}</i>
         </div>
         <hr>
         <div class="content" v-if="article.summary"><vue-markdown :source="article.summary" @rendered="markdownRendered"></vue-markdown></div>

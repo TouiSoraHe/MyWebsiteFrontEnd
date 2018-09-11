@@ -9,7 +9,7 @@ import article from 'components/article/article.vue'
 
 Vue.use(Router)
 
-export default new Router({
+let router = new Router({
   routes: [
     { path:'/',component:index,meta: {title: '首页'}},
     { path:'/blog',component:blog,meta: {title: '博文'}},
@@ -19,4 +19,13 @@ export default new Router({
     { path:'/blog/:id',component:article,props: true,meta: {title: '博文'}}
   ],
   linkActiveClass: 'active'
-})
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
+  next();
+});
+
+export default router;

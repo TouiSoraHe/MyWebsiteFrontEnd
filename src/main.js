@@ -1,75 +1,20 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import axios from 'axios'
-import hljs from 'highlight.js'
+import element from 'assets/js/elementConfig'
+import axios from 'assets/js/axiosConfig'
+import other from 'assets/js/otherConfig'
+
 import 'normalize.css/normalize.css'
 import 'assets/css/milligram.min.css'
 import 'assets/icon/iconfont.css'
-import 'highlight.js/styles/monokai-sublime.css'
 import 'assets/css/global.css'
 
-import {
-    Menu,
-    MenuItem,
-    Container,
-    Header,
-    Main,
-    Footer,
-    Col,
-    Row,
-    Message,
-    Loading
-} from 'element-ui';
+element.init();
+axios.init();
+other.init();
 
 Vue.config.productionTip = false;
-
-Vue.use(Menu);
-Vue.use(MenuItem);
-Vue.use(Container);
-Vue.use(Header);
-Vue.use(Main);
-Vue.use(Footer);
-Vue.use(Col);
-Vue.use(Row);
-
-Vue.use(Loading.directive);
-
-Vue.prototype.$message = Message;
-
-Vue.prototype.$axios = axios;
-Vue.prototype.$highlight = function() {
-    let blocks = document.querySelectorAll('pre code');
-    blocks.forEach((block) => {
-        hljs.highlightBlock(block);
-    });
-};
-Vue.prototype.$axiosError = function(error){
-    if (error.response) {
-        Message({
-            message: '网络请求错误:' + error.response.status,
-            type: 'error',
-            duration: 2000,
-            showClose: true,
-            center: true
-        });
-    } else {
-        Message({
-            message: error.message,
-            type: 'error',
-            duration: 2000,
-            showClose: true,
-            center: true
-        });
-    }
-}
-
-router.beforeEach((to, from, next) => {
-  if (to.meta.title) {
-    document.title = to.meta.title;
-  }
-  next();
-});
 
 new Vue({
     router,
