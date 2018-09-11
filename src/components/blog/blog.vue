@@ -5,7 +5,7 @@
         >
         <div>
             <router-link :to="'/blog/'+item.id" v-for="item in blogList" :key="item.id">
-                <card>
+                <card class="card-item">
                     <div slot="title">{{item.title}}</div>
                     <div slot="time">{{item.time}}</div>
                     <div slot="content">
@@ -73,4 +73,7 @@ export default {
 }
 </script>
 <style scoped>
+.card-item{
+    margin-bottom: 15px;
+}
 </style>

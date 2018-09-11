@@ -1,31 +1,35 @@
 <template>
     <div id="app">
-        <el-header>
-            <my-nav :contentMaxWidth="contentMaxWidth"></my-nav>
-        </el-header>
-        <div class="bg">
-        </div>
-        <el-main class="myMain" :style="myMainStyleObj">
-            <div class="mainContent" :style="mainStyleObj">
-                <div class="mainContentLeft">
-                    <transition name="el-fade-in-linear" mode="out-in">
-                        <router-view style="min-height: inherit;"></router-view>
-                    </transition>
-                </div>
-                <div class="mainContentRight">
-                    hello
-                </div>
+        <el-container>
+            <el-header>
+                <my-nav :contentMaxWidth="contentMaxWidth"></my-nav>
+            </el-header>
+            <div class="bg">
             </div>
-        </el-main>
-        <el-footer class="myFooter">
-            <div :style="footerStyleObj" class="footerContent">
-                (〃'▽'〃)
-            </div>
-        </el-footer>
+            <el-main class="myMain" :style="myMainStyleObj">
+                <div class="mainContent" :style="mainStyleObj">
+                    <div class="mainContentLeft">
+                        <transition name="el-fade-in-linear" mode="out-in">
+                            <router-view style="min-height: inherit;"></router-view>
+                        </transition>
+                    </div>
+                    <div class="mainContentRight">
+                        hello
+                    </div>
+                </div>
+            </el-main>
+            <my-back-to-top></my-back-to-top>
+            <el-footer class="myFooter">
+                <div :style="footerStyleObj" class="footerContent">
+                    (〃'▽'〃)
+                </div>
+            </el-footer>
+        </el-container>
     </div>
 </template>
 <script type="text/javascript">
 import nav from 'components/nav/nav.vue'
+import top from 'components/backToTop/backToTop.vue'
 
 export default {
     data() {
@@ -39,6 +43,7 @@ export default {
     },
     components: {
         "my-nav": nav,
+        "my-back-to-top": top,
     },
     mounted() {
         var that = this;
@@ -110,14 +115,14 @@ export default {
     min-height: inherit;
     display: inline-block;
     float: left;
-    width: 80%;
+    width: 75%;
 }
 
 .mainContentRight {
     display: inline-block;
     float: right;
-    width: 18%;
-    margin-left: 2%;
+    width: 20%;
+    margin-left: 5%;
 }
 
 .myFooter {

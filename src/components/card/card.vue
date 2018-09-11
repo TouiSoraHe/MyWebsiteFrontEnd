@@ -21,7 +21,6 @@ export default {}
 .card {
     position: relative;
     padding: 20px;
-    margin: 15px auto;
     z-index: 0;
 }
 
@@ -48,8 +47,6 @@ export default {}
     background-color: rgba(255, 255, 255, 1);
     transition: all 0.2s linear;
 }
-
-.card:before:hover {}
 
 .text-center {
     text-align: center;

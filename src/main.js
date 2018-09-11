@@ -12,6 +12,7 @@ import 'assets/css/global.css'
 import {
     Menu,
     MenuItem,
+    Container,
     Header,
     Main,
     Footer,
@@ -33,6 +34,7 @@ Vue.prototype.highlight = function() {
 
 Vue.use(Menu);
 Vue.use(MenuItem);
+Vue.use(Container);
 Vue.use(Header);
 Vue.use(Main);
 Vue.use(Footer);
