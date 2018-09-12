@@ -10,7 +10,6 @@ export default{
         axios.interceptors.request.use(function (config) {
             // 在发送请求之前打开longding
             lodingInstance = Vue.prototype.$loading({
-                lock:true,
             });
             return config;
           }, function (error) {

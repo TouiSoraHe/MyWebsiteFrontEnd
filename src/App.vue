@@ -75,7 +75,7 @@ export default {
                 let myMainEleStyle = window.getComputedStyle(myMainEle, null);
                 let top = parseFloat(myMainEleStyle.paddingTop.replace('px', ''));
                 let bottom = parseFloat(myMainEleStyle.paddingBottom.replace('px', ''));
-                myMainHeight = myMainEle.clientHeight - top - bottom;
+                myMainHeight = myMainEle.clientHeight - top - bottom + 60;
             }
             if ((document.body.offsetHeight - myMainHeight) < this.clientSize.height) {
                 minHeight = this.clientSize.height - (document.body.offsetHeight - myMainHeight);
@@ -89,20 +89,15 @@ export default {
 </script>
 <style scoped>
 .bg {
-    position: relative;
-    max-height: 400px;
-    min-height: 200px;
-    height: 300px;
+    position: fixed;
+    height: 1057px;
     width: 100%;
-    background-image: url('assets/img/bg.jpg');
+    top: 60px;
+    z-index: -1;
+    background-image: url('assets/img/headbg.png');
     background-size: cover;
-    background-position: center 50%;
+    background-position: center 0;
     background-repeat: no-repeat;
-}
-
-.myMain {
-    background-image: url('assets/img/bg2.gif');
-    background-color: #efefef;
 }
 
 .mainContent {
@@ -140,5 +135,20 @@ export default {
     text-align: center;
     display: table-cell;
     vertical-align: middle;
+}
+
+@media only screen and (max-width: 1000px){
+    .bg{
+        background-position: 40% 0;
+    }
+
+    .mainContentLeft {
+        width: 100%;
+    }
+
+    .myMain{
+        padding-right: 0;
+        padding-left: 0;
+    }
 }
 </style>

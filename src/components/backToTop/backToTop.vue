@@ -36,8 +36,8 @@ export default {
 <style scoped>
 .my-go-top {
     position: fixed;
-    bottom: 15px;
-    right: 20px;
+    bottom: 30px;
+    right: 30px;
     cursor: pointer;
     width:50px;
     height: 50px;

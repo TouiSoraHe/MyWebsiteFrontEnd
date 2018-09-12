@@ -47,7 +47,7 @@ export default {
     bottom: 0;
     right: 0;
     left: 0;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.8);
     box-shadow: 2px 2px 3px #999;
     border-radius: 5px;
     transition: all 0.1s linear;
@@ -65,10 +65,12 @@ export default {
 
 .title {
     color: #444;
+    font-weight: 700;
     font-size: 23px;
 }
 
 .time,.words,.views{
+    font-weight: 400;
     font-size: 13px;
 }
 
@@ -87,5 +89,6 @@ export default {
 .content {
     color: #555;
     font-size: 14px;
+    font-weight: 500;
 }
 </style>
