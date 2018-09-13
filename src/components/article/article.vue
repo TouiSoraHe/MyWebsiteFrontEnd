@@ -1,7 +1,7 @@
 <template>
     <div>
         <transition name="el-zoom-in-center" mode="out-in">
-            <div class="article" v-if="articleIsShow">
+            <div class="article" v-if="article">
                 <h3 class="title text-center">{{article.title}}</h3>
                 <div class="text-center">
                     <i class="my-icon-calendar time" v-if="article.time">&nbsp;发表于&nbsp;{{article.time}}</i>
@@ -29,14 +29,7 @@ export default {
     },
     data() {
         return {
-            article: {
-                title: "",
-                time: "",
-                words: "",
-                views: "",
-                content: "",
-            },
-            articleIsShow: false,
+            article: null,
         };
     },
     computed: {},
@@ -49,14 +42,15 @@ export default {
         let that = this;
         this.$axios
             .get('/api/blog/' + that.id)
-            .then(function(response) {
-                that.article.title = response.data.title;
-                that.article.time = response.data.time;
-                that.article.words = response.data.words;
-                that.article.views = response.data.views;
-                that.article.content = response.data.content;
-                document.title = response.data.title;
-                that.articleIsShow = true;
+            .then((response) => {
+                if (!response.data.id || !response.data.title || !response.data.content) {
+                    console.log("获取article时数据有误:" + response.data.id);
+                }
+                that.article = response.data;
+                document.title = that.article.title;
+            })
+            .catch((error) => {
+                console.log("获取article时发生了错误:" + error);
             });
     },
     components: {

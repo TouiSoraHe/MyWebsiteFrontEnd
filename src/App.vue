@@ -10,7 +10,9 @@
                 <div class="mainContent" :style="mainStyleObj">
                     <div class="mainContentLeft">
                         <transition name="el-zoom-in-center" mode="out-in">
-                            <router-view style="min-height: inherit;"></router-view>
+                            <!-- <keep-alive> -->
+                                <router-view style="min-height: inherit;"></router-view>
+                            <!-- </keep-alive> -->
                         </transition>
                     </div>
                     <div class="mainContentRight">
@@ -137,8 +139,8 @@ export default {
     vertical-align: middle;
 }
 
-@media only screen and (max-width: 1000px){
-    .bg{
+@media only screen and (max-width: 1000px) {
+    .bg {
         background-position: 40% 0;
     }
 
@@ -146,7 +148,7 @@ export default {
         width: 100%;
     }
 
-    .myMain{
+    .myMain {
         padding-right: 0;
         padding-left: 0;
     }

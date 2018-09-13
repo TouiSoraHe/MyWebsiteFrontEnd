@@ -27,24 +27,16 @@ export default {
                 url: '/api/blogList',
                 method: 'get'
             })
-            .then(function(response) {
+            .then((response) => {
                 response.data.forEach(function(item) {
-                    let o = {
-                        id: -1,
-                        title: "",
-                        time: "",
-                        words: "",
-                        views: "",
-                        summary: ""
-                    };
-                    o.id = item.id;
-                    o.title = item.title;
-                    o.time = item.time;
-                    o.words = item.words;
-                    o.views = item.views;
-                    o.summary = item.summary;
-                    that.blogList.push(o);
+                    if (!item.id || !item.title || !item.summary) {
+                        console.log("获取blogList时数据有误:" + item.id);
+                    }
+                    that.blogList.push(item);
                 });
+            })
+            .catch((error) => {
+                console.log("获取blogList时发生了错误:" + error);
             });
     },
 }

@@ -91,4 +91,13 @@ export default {
     font-size: 14px;
     font-weight: 500;
 }
+
+@media only screen and (max-width: 1000px) {
+    .card:hover:before {
+        top: 0px;
+        bottom: 0px;
+        right: 0px;
+        left: 0px;
+    }
+}
 </style>
