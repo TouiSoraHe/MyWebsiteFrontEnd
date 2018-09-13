@@ -47,6 +47,9 @@ export default {
         "my-nav": nav,
         "my-back-to-top": top,
     },
+    beforeMount(){
+        document.body.removeChild(document.getElementById('appLoading')); 
+    },
     mounted() {
         var that = this;
         this.$nextTick(() => {
