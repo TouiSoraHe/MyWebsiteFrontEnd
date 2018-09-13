@@ -1,7 +1,7 @@
 <template>
     <div>
         <transition name="el-zoom-in-center" mode="out-in">
-            <div class="article" v-if="article">
+            <div class="article" v-if="article" key="article">
                 <h3 class="title text-center">{{article.title}}</h3>
                 <div class="text-center">
                     <i class="my-icon-calendar time" v-if="article.time">&nbsp;发表于&nbsp;{{article.time}}</i>
@@ -15,11 +15,13 @@
                     <vue-markdown :source="article.content" @rendered="markdownRendered"></vue-markdown>
                 </div>
             </div>
+            <loading v-else key="loading" :showLoading="showLoading" style="margin-top: 100px"></loading>
         </transition>
     </div>
 </template>
 <script>
 import VueMarkdown from "vue-markdown"
+import loading from 'components/loading/loading.vue'
 
 export default {
     props: {
@@ -30,9 +32,9 @@ export default {
     data() {
         return {
             article: null,
+            showLoading:false,
         };
     },
-    computed: {},
     methods: {
         markdownRendered: function() {
             this.$nextTick(() => { this.$highlight(); });
@@ -40,9 +42,11 @@ export default {
     },
     created: function() {
         let that = this;
+        that.showLoading = true;
         this.$axios
             .get('/api/blog/' + that.id)
             .then((response) => {
+                that.showLoading = false;
                 if (!response.data.id || !response.data.title || !response.data.content) {
                     console.log("获取article时数据有误:" + response.data.id);
                 }
@@ -50,11 +54,13 @@ export default {
                 document.title = that.article.title;
             })
             .catch((error) => {
+                that.showLoading = false;
                 console.log("获取article时发生了错误:" + error);
             });
     },
     components: {
-        "vue-markdown": VueMarkdown
+        "vue-markdown": VueMarkdown,
+        "loading":loading,
     },
 }
 </script>

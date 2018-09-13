@@ -8,8 +8,7 @@ import {
     Footer,
     Col,
     Row,
-    Message,
-    Loading
+    Message
 } from 'element-ui';
 
 export default{
@@ -24,6 +23,5 @@ export default{
         Vue.use(Row);
 
         Vue.prototype.$message = Message;
-        Vue.prototype.$loading = Loading.service;
     },
 }
