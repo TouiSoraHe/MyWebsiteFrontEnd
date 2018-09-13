@@ -4,15 +4,12 @@
             <el-header>
                 <my-nav :contentMaxWidth="contentMaxWidth"></my-nav>
             </el-header>
-            <div class="bg">
-            </div>
+            <div class="bg" :class="{showBg:isShowBg}"></div>
             <el-main class="myMain" :style="myMainStyleObj">
                 <div class="mainContent" :style="mainStyleObj">
                     <div class="mainContentLeft">
                         <transition name="el-zoom-in-center" mode="out-in">
-                            <!-- <keep-alive> -->
-                                <router-view></router-view>
-                            <!-- </keep-alive> -->
+                            <router-view></router-view>
                         </transition>
                     </div>
                     <div class="mainContentRight">
@@ -41,14 +38,41 @@ export default {
                 width: 0,
             },
             contentMaxWidth: "1000px",
+            bgStyleObj:{
+                backgroundImage:'',
+                transition:'all 3s liner'
+            },
+            isShowBg:false,
         };
     },
     components: {
         "my-nav": nav,
         "my-back-to-top": top,
     },
-    beforeMount(){
-        document.body.removeChild(document.getElementById('appLoading')); 
+    methods:{
+        loadBg(){
+            let that = this;
+            var headbg = new Image();
+            headbg.src = require('assets/img/headbg.png');
+            if(headbg.complete) {
+                that.isShowBg = true;
+            }
+            else {
+                headbg.onload = function() {
+                    that.isShowBg = true;
+                };
+            }
+        },
+    },
+    beforeCreate(){
+        let el = document.getElementById('appLoading');
+        el.className += "disappear";
+        setTimeout(()=>{
+            document.body.removeChild(el); 
+        },300);
+    },
+    created(){
+        this.loadBg();
     },
     mounted() {
         var that = this;
@@ -87,10 +111,40 @@ export default {
     width: 100%;
     top: 60px;
     z-index: -1;
-    background-image: url('assets/img/headbg.png');
     background-size: cover;
     background-position: center 0;
     background-repeat: no-repeat;
+    -webkit-mask-image: url('assets/img/circlemask.png');
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center center;
+    -webkit-mask-size: 300%;
+}
+
+.showBg{
+    background-image: url('assets/img/headbg.png');
+    -webkit-animation: circle_zoom 1.2s ease-in;
+}
+
+@keyframes circle_zoom {
+    0% {
+        opacity: 0;
+        -webkit-mask-size: 0%
+    }
+
+    20%{
+        opacity: .4;
+        -webkit-mask-size: 50%
+    }
+
+    80% {
+        opacity: .7;
+        -webkit-mask-size: 250%
+    }
+
+    to {
+        opacity: 1;
+        -webkit-mask-size: 300%
+    }
 }
 
 .mainContent {

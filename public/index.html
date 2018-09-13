@@ -1,32 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>icon.png">
     <title>MyWebsiteFrontEnd</title>
     <style media="screen" type="text/css">
-      #appLoading { width: 100%; height: 100%; }
-      #appLoading img {
+    body{
+      margin: 0;
+    }
+    #appLoading {
+        position: absolute;
+        min-width: 100%;
+        min-height: 100%;
+        background-color: #fff;
+        z-index: 9999;
+    }
+
+    #appLoading img {
         position: absolute;
         top: 50%;
         left: 50%;
         width: 200px;
         height: 200px;
-        -webkit-transform: translateY(-50%)  translateX(-50%);
-        transform: translateY(-50%)  translateX(-50%);
-      }
+        -webkit-transform: translateY(-50%) translateX(-50%);
+        transform: translateY(-50%) translateX(-50%);
+    }
+
+    .disappear {
+        opacity: 0;
+        transition: all 300ms ease-in;
+    }
     </style>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but MyWebsiteFrontEnd doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
+</head>
+
+<body>
     <div id="appLoading">
-      <img src="/loading.svg" alt="loading" />
+        <img src="/loading.svg" alt="loading" />
     </div>
     <div id="app"></div>
     <!-- built files will be auto injected -->
-  </body>
+</body>
+
 </html>

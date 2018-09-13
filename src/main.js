@@ -10,11 +10,11 @@ import 'assets/css/milligram.min.css'
 import 'assets/icon/iconfont.css'
 import 'assets/css/global.css'
 
+Vue.config.productionTip = false;
+
 element.init();
 axios.init();
 other.init();
-
-Vue.config.productionTip = false;
 
 new Vue({
     router,
