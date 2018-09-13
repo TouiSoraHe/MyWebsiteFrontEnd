@@ -11,7 +11,7 @@
                     <div class="mainContentLeft">
                         <transition name="el-zoom-in-center" mode="out-in">
                             <!-- <keep-alive> -->
-                                <router-view style="min-height: inherit;"></router-view>
+                                <router-view></router-view>
                             <!-- </keep-alive> -->
                         </transition>
                     </div>
@@ -70,20 +70,8 @@ export default {
             };
         },
         myMainStyleObj: function() {
-            let minHeight = 0;
-            let myMainEle = document.querySelector('.myMain');
-            let myMainHeight = 0;
-            if (myMainEle != null) {
-                let myMainEleStyle = window.getComputedStyle(myMainEle, null);
-                let top = parseFloat(myMainEleStyle.paddingTop.replace('px', ''));
-                let bottom = parseFloat(myMainEleStyle.paddingBottom.replace('px', ''));
-                myMainHeight = myMainEle.clientHeight - top - bottom + 60;
-            }
-            if ((document.body.offsetHeight - myMainHeight) < this.clientSize.height) {
-                minHeight = this.clientSize.height - (document.body.offsetHeight - myMainHeight);
-            }
             return {
-                "min-height": minHeight + "px"
+                "min-height": this.clientSize.height + "px"
             };
         },
     }
@@ -105,12 +93,10 @@ export default {
 .mainContent {
     margin-left: auto;
     margin-right: auto;
-    min-height: inherit;
 }
 
 .mainContentLeft {
     min-height: inherit;
-    display: inline-block;
     float: left;
     width: 75%;
 }
