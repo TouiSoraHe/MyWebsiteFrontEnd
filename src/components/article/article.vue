@@ -1,7 +1,7 @@
 <template>
     <div>
         <transition name="el-zoom-in-center" mode="out-in">
-            <div class="article" v-if="article" key="article">
+            <div class="article" v-if="article">
                 <h3 class="title text-center">{{article.title}}</h3>
                 <div class="text-center">
                     <i class="my-icon-calendar time" v-if="article.time">&nbsp;发表于&nbsp;{{article.time}}</i>
@@ -15,8 +15,8 @@
                     <vue-markdown :source="article.content" @rendered="markdownRendered"></vue-markdown>
                 </div>
             </div>
-            <loading v-else key="loading" :showLoading="showLoading" style="margin-top: 100px"></loading>
         </transition>
+        <loading :showLoading="showLoading" style="margin-top: 100px"></loading>
     </div>
 </template>
 <script>

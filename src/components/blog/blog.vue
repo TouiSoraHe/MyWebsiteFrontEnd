@@ -1,13 +1,13 @@
 <template>
     <div class="blog">
         <transition name="el-zoom-in-center" mode="out-in">
-            <div v-if="blogList.length > 0" key="blogList">
+            <div v-if="blogList.length > 0">
                 <router-link :to="'/blog/'+item.id" v-for="item in blogList" :key="item.id">
                     <card class="card-item" :article="item"></card>
                 </router-link>
             </div>
-            <loading v-else key="loading" :showLoading="showLoading" style="margin-top: 100px"></loading>
         </transition>
+        <loading :showLoading="showLoading" style="margin-top: 100px"></loading>
     </div>
 </template>
 <script>
