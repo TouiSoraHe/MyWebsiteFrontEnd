@@ -38,10 +38,6 @@ export default {
                 width: 0,
             },
             contentMaxWidth: "1000px",
-            bgStyleObj:{
-                backgroundImage:'',
-                transition:'all 3s liner'
-            },
             isShowBg:false,
         };
     },
@@ -132,7 +128,7 @@ export default {
     }
 
     20%{
-        opacity: .4;
+        opacity: .3;
         -webkit-mask-size: 50%
     }
 
