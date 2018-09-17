@@ -52,7 +52,7 @@ export default {
         let that = this;
         that.showLoading = true;
         this.$axios
-            .get('/api/blog/' + that.id)
+            .get('/api/blogs/' + that.id)
             .then((response) => {
                 that.showLoading = false;
                 if (!response.data.id || !response.data.title || !response.data.content) {

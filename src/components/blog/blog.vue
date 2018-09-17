@@ -36,7 +36,7 @@ export default {
             console.log("开始加载博客列表,currentPage:"+that.currentPage);
             that.showLoading = true;
             this.$axios({
-                    url: '/api/blogInfo?_limit='+that.limt+'&_page='+(that.currentPage+1),
+                    url: '/api/blog-infos?_limit='+that.limt+'&_page='+(that.currentPage+1),
                     method: 'get'
                 })
                 .then((response) => {
