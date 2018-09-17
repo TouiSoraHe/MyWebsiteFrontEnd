@@ -49,6 +49,9 @@ export default {
                         if (!item.id || !item.title || !item.summary) {
                             console.log("获取blogInfo时数据有误:" + item.id);
                         }
+                        if(item.time && !isNaN(Date.parse(item.time))){
+                            item.time = new Date(item.time).Format('yyyy年MM月dd日 hh:mm:ss');
+                        }
                         that.blogInfo.push(item);
                     });
                 })
@@ -63,10 +66,10 @@ export default {
         this.$nextTick(()=>{
             //blogInfo懒加载
             const config = {
-                rootMargin: '0px 0px 500px 0px',
+                rootMargin: '500px 0px 500px 0px',
                 threshold: 0
             };
-            let observer = new IntersectionObserver((entries, self)=>{
+            let observer = new IntersectionObserver((entries)=>{
                 if (entries[0].intersectionRatio <= 0) return;
                 if(that.currentPage*that.limt<that.totalPage || that.currentPage==0){
                     that.loadBlogInfo();

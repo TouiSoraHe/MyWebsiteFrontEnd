@@ -51,6 +51,9 @@ export default {
                     console.log("获取article时数据有误:" + response.data.id);
                 }
                 that.article = response.data;
+                if(that.article.time && !isNaN(Date.parse(that.article.time))){
+                    that.article.time = new Date(that.article.time).Format('yyyy年MM月dd日 hh:mm:ss');
+                }
                 document.title = that.article.title;
             })
             .catch((error) => {
