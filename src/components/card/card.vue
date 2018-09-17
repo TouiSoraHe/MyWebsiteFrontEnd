@@ -2,7 +2,7 @@
     <div class="card" v-if="article">
         <h4 class="text-center title">{{article.title}}</h4>
         <div class="text-center">
-            <i class="my-icon-calendar time" v-if="article.time">&nbsp;发表于&nbsp;{{article.time}}</i>
+            <i class="my-icon-calendar time" v-if="article.time">&nbsp;发表于&nbsp;{{articleTime}}</i>
             <span v-if="article.words">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
             <i class="my-icon-word_files_icon words" v-if="article.words">&nbsp;字数&nbsp;{{article.words}}</i>
             <span v-if="article.views">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
@@ -19,6 +19,14 @@ export default {
     props: {
         article: {
             type: Object
+        }
+    },
+    computed:{
+        articleTime:function(){
+            if(!isNaN(Date.parse(this.article.time))){
+                return new Date(this.article.time).Format('yyyy年MM月dd日 hh:mm:ss');
+            }
+            return this.article.time;
         }
     },
     components: {

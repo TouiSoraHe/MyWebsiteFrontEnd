@@ -4,7 +4,7 @@
             <div class="article" v-if="article">
                 <h3 class="title text-center">{{article.title}}</h3>
                 <div class="text-center">
-                    <i class="my-icon-calendar time" v-if="article.time">&nbsp;发表于&nbsp;{{article.time}}</i>
+                    <i class="my-icon-calendar time" v-if="article.time">&nbsp;发表于&nbsp;{{articleTime}}</i>
                     <span v-if="article.words">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                     <i class="my-icon-word_files_icon words" v-if="article.words">&nbsp;字数&nbsp;{{article.words}}</i>
                     <span v-if="article.views">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
@@ -35,6 +35,14 @@ export default {
             showLoading:false,
         };
     },
+    computed:{
+        articleTime:function(){
+            if(!isNaN(Date.parse(this.article.time))){
+                return new Date(this.article.time).Format('yyyy年MM月dd日 hh:mm:ss');
+            }
+            return this.article.time;
+        }
+    },
     methods: {
         markdownRendered: function() {
             this.$nextTick(() => { this.$highlight(); });
@@ -51,9 +59,6 @@ export default {
                     console.log("获取article时数据有误:" + response.data.id);
                 }
                 that.article = response.data;
-                if(that.article.time && !isNaN(Date.parse(that.article.time))){
-                    that.article.time = new Date(that.article.time).Format('yyyy年MM月dd日 hh:mm:ss');
-                }
                 document.title = that.article.title;
             })
             .catch((error) => {

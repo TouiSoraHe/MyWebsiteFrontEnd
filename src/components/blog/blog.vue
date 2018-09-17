@@ -49,9 +49,6 @@ export default {
                         if (!item.id || !item.title || !item.summary) {
                             console.log("获取blogInfo时数据有误:" + item.id);
                         }
-                        if(item.time && !isNaN(Date.parse(item.time))){
-                            item.time = new Date(item.time).Format('yyyy年MM月dd日 hh:mm:ss');
-                        }
                         that.blogInfo.push(item);
                     });
                 })
