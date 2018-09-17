@@ -1,18 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import index from 'components/index/index.vue'
+import index from 'components/index/index.vue'
 import blog from 'components/blog/blog.vue'
 import music from 'components/music/music.vue'
 import archive from 'components/archive/archive.vue'
 import message from 'components/message/message.vue'
 import article from 'components/article/article.vue'
-import loading from 'components/loading/loading.vue'
 
 Vue.use(Router)
 
 let router = new Router({
   routes: [
-    { path:'/',component:loading,meta: {title: '首页'}},
+    { path:'/',component:index,meta: {title: '首页'}},
     { path:'/blog',component:blog,meta: {title: '博文'}},
     { path:'/archive',component:archive,meta: {title: '归档'}},
     { path:'/music',component:music,meta: {title: '音乐'}},

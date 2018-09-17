@@ -2,7 +2,7 @@
     <div class="blog">
         <transition name="el-zoom-in-center" mode="out-in">
             <div v-if="blogList.length > 0">
-                <router-link :to="'/blog/'+item.id" v-for="item in blogList" :key="item.id">
+                <router-link :to="'/blog/'+item.blogID" v-for="item in blogList" :key="item.id">
                     <card class="card-item" :article="item"></card>
                 </router-link>
             </div>
