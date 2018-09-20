@@ -18,7 +18,10 @@ let router = new Router({
     { path:'/message',component:message,meta: {title: '留言'}},
     { path:'/blog/:id',component:article,props: true,meta: {title: '博文'}}
   ],
-  linkActiveClass: 'active'
+  linkActiveClass: 'active',
+  scrollBehavior () {
+    return { x: 0, y: 0 }
+  }
 });
 
 router.beforeEach((to, from, next) => {

@@ -27,8 +27,10 @@
     </div>
 </template>
 <script type="text/javascript">
+import Vue from 'vue'
 import nav from 'components/nav/nav.vue'
 import top from 'components/backToTop/backToTop.vue'
+import Fingerprint2 from 'fingerprintjs2'
 
 export default {
     data() {
@@ -38,36 +40,37 @@ export default {
                 width: 0,
             },
             contentMaxWidth: "1000px",
-            isShowBg:false,
+            isShowBg: false,
         };
     },
     components: {
         "my-nav": nav,
         "my-back-to-top": top,
     },
-    methods:{
-        loadBg(){
+    methods: {
+        loadBg() {
             let that = this;
             var headbg = new Image();
             headbg.src = require('assets/img/headbg.png');
-            if(headbg.complete) {
+            if (headbg.complete) {
                 that.isShowBg = true;
-            }
-            else {
+            } else {
                 headbg.onload = function() {
                     that.isShowBg = true;
                 };
             }
         },
     },
-    beforeCreate(){
+    beforeCreate() {
         let el = document.getElementById('appLoading');
-        el.className += "disappear";
-        setTimeout(()=>{
-            document.body.removeChild(el); 
-        },300);
+        if (el !== null) {
+            el.className += "disappear";
+            setTimeout(() => {
+                document.body.removeChild(el);
+            }, 300);
+        }
     },
-    created(){
+    created() {
         this.loadBg();
     },
     mounted() {
@@ -79,6 +82,18 @@ export default {
                 that.clientSize.height = document.documentElement.clientHeight;
                 that.clientSize.width = document.documentElement.clientWidth;
             };
+            Fingerprint2().get((result) => {
+                this.$axios({
+                        url: '/api/users/' + result,
+                        method: 'get'
+                    })
+                    .then((response) => {
+                        Vue.prototype.$user = response.data;
+                    })
+                    .catch((error) => {
+                        console.log("get user error:" + error);
+                    });
+            });
         });
     },
     computed: {
@@ -116,7 +131,7 @@ export default {
     -webkit-mask-size: 300%;
 }
 
-.showBg{
+.showBg {
     background-image: url('assets/img/headbg.png');
     -webkit-animation: circle_zoom 1.2s ease-in;
 }
@@ -127,7 +142,7 @@ export default {
         -webkit-mask-size: 0%
     }
 
-    20%{
+    20% {
         opacity: .3;
         -webkit-mask-size: 50%
     }
