@@ -12,6 +12,8 @@ import VCard from 'vuetify/es5/components/VCard';
 import VNavigationDrawer from 'vuetify/es5/components/VNavigationDrawer';
 import VList from 'vuetify/es5/components/VList';
 import VDivider from 'vuetify/es5/components/VDivider';
+import VImg from 'vuetify/es5/components/VImg';
+import VHover from 'vuetify/es5/components/VHover';
 import { Resize,Scroll } from 'vuetify/es5/directives';
 
 Vue.use(Vuetify, {
@@ -24,7 +26,9 @@ Vue.use(Vuetify, {
         VToolbar,
         VNavigationDrawer,
         VList,
-        VDivider
+        VDivider,
+        VImg,
+        VHover
     },
     directives: {
         Resize,

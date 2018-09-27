@@ -1,15 +1,35 @@
 <template>
-    <div class="card" v-if="article">
-        <h4 class="text-center title">{{article.title}}</h4>
-        <div class="text-center">
-            <i class="my-icon-calendar time" v-if="article.time">&nbsp;发表于&nbsp;{{articleTime}}</i>
-            <span v-if="article.words">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-            <i class="my-icon-word_files_icon words" v-if="article.words">&nbsp;字数&nbsp;{{article.words}}</i>
-            <span v-if="article.views">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-            <i class="my-icon-eye views" v-if="article.views">&nbsp;阅读次数&nbsp;{{article.views}}</i>
-        </div>
-        <hr>
-        <div class="content" v-if="article.summary"><vue-markdown :source="article.summary" @rendered="markdownRendered"></vue-markdown></div>
+    <div v-if="article">
+        <v-layout align-center justify-center>
+            <v-flex sm10 md12>
+                <v-hover>
+                    <v-card slot-scope="{ hover }" :class="`elevation-${hover ? 12 : 2}`" :to="'/blog/'+article.blogID">
+                        <v-img class="white--text" height="200px" src="https://source.unsplash.com/random/800x600">
+                            <v-container fill-height fluid>
+                                <v-layout fill-height column>
+                                    <v-flex xs12 align-end flexbox>
+                                        <span class="headline">{{article.title}}</span>
+                                    </v-flex>
+                                    <v-flex xs12 align-end flexbox>
+                                        <div class="subheading">
+                                            {{article.summary}}
+                                        </div>
+                                    </v-flex>
+                                </v-layout>
+                            </v-container>
+                        </v-img>
+                        <div class="grey--text px-3 pt-2">
+                            <span class="body-1"><v-icon size="18px">date_range</v-icon>{{articleTime}}</span>&nbsp;&nbsp;
+                            <span class="body-1"><v-icon size="18px">title</v-icon><span>{{article.words}}</span></span>&nbsp;&nbsp;
+                            <span class="body-1"><v-icon size="18px">visibility</v-icon><span>{{article.views}}</span></span>
+                        </div>
+                        <v-card-text>
+
+                        </v-card-text>
+                    </v-card>
+                </v-hover>
+            </v-flex>
+        </v-layout>
     </div>
 </template>
 <script>
@@ -21,10 +41,10 @@ export default {
             type: Object
         }
     },
-    computed:{
-        articleTime:function(){
-            if(!isNaN(Date.parse(this.article.time))){
-                return new Date(this.article.time).Format('yyyy年MM月dd日 hh:mm:ss');
+    computed: {
+        articleTime: function() {
+            if (!isNaN(Date.parse(this.article.time))) {
+                return new Date(this.article.time).Format('yyyy年MM月dd日');
             }
             return this.article.time;
         }
@@ -40,73 +60,4 @@ export default {
 }
 </script>
 <style scoped>
-.card {
-    position: relative;
-    padding: 20px;
-    z-index: 0;
-    color: #606c76;
-}
-
-.card:before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
-    border-radius: 2px;
-    transition: all 0.1s linear;
-}
-
-.card:hover:before {
-    cursor: pointer;
-    top: -4px;
-    bottom: -4px;
-    right: -4px;
-    left: -4px;
-    box-shadow: 0px 7px 8px -4px rgba(0,0,0,0.2), 0px 12px 17px 2px rgba(0,0,0,0.14), 0px 5px 22px 4px rgba(0,0,0,0.12);
-    background-color: rgba(255, 255, 255, 1);
-    transition: all 0.2s linear;
-}
-
-.title {
-    color: #444;
-    font-weight: 700;
-    font-size: 23px;
-}
-
-.time,.words,.views{
-    font-weight: 400;
-    font-size: 13px;
-}
-
-.time {
-    color: #00a7e0;
-}
-
-.words{
-    color: #000;   
-}
-
-.views{
-    color:#ff3f1a;
-}
-
-.content {
-    color: #555;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-@media only screen and (max-width: 1000px) {
-    .card:hover:before {
-        top: 0px;
-        bottom: 0px;
-        right: 0px;
-        left: 0px;
-    }
-}
 </style>

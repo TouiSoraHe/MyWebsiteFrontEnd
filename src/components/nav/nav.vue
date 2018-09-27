@@ -29,7 +29,7 @@
                     </v-list-tile>
                 </v-list>
                 <v-list class="pt-0" dense>
-                    <v-divider style="margin: 0"></v-divider>
+                    <v-divider class="ma-0"></v-divider>
                     <v-list-tile v-for="item in links" :to="item.url" :key="item.title" ripple>
                         <v-list-tile-action>
                             <v-icon>{{ item.icon }}</v-icon>
