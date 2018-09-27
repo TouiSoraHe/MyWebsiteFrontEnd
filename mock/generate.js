@@ -2,6 +2,17 @@ let faker = require('faker');
 
 faker.locale = "zh_CN";
 
+Math.randomNum = function(minNum, maxNum) {
+    switch (arguments.length) {
+        case 1:
+            return parseInt(Math.random() * minNum + 1, 10);
+        case 2:
+            return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+        default:
+            return 0;
+    }
+}
+
 Array.prototype.randomGetItem = function(){
     if(this.length===0) return undefined;
     return this[Math.floor(Math.random()*this.length)];
@@ -60,8 +71,9 @@ for (let i = 1; i < 50; i++) {
     let time = faker.date.past();
     let views = faker.random.number({ 'min': 1000, 'max': 2000 });
     let content = faker.lorem.paragraphs(faker.random.number({ 'min': 10, 'max': 20 }));
-    let summary = content.slice(0, 200);
+    let summary = content.slice(0, 100);
     let words = content.length;
+    let imgUrl = 'http://7xr4g8.com1.z0.glb.clouddn.com/'+Math.randomNum(0,900);
     let blogInfo = {
         "id": blogInfoID,
         "title": title,
@@ -70,6 +82,7 @@ for (let i = 1; i < 50; i++) {
         "words": words,
         "summary": summary,
         "blogID": blogID,
+        "imgUrl":imgUrl,
     };
     let blog = {
         "id": blogID,
@@ -79,6 +92,7 @@ for (let i = 1; i < 50; i++) {
         "words": words,
         "content": content,
         "comments": commentTemps,
+        "imgUrl":imgUrl,
     };
     blogs.push(blog);
     blogInfos.push(blogInfo);

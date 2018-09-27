@@ -16,7 +16,7 @@
             <v-flex md2></v-flex>
         </v-toolbar>
         <div v-else key="mobileNav">
-            <v-btn small fixed fab @click.stop="drawer = !drawer" style="top: 10px;left: 10px;"><v-icon>menu</v-icon></v-btn>
+            <v-btn small fixed flat fab @click.stop="drawer = !drawer" style="top: 10px;left: 10px;"><v-icon>menu</v-icon></v-btn>
             <v-navigation-drawer v-model="drawer" fixed temporary width="200">
                 <v-list class="pa-1">
                     <v-list-tile to="/">

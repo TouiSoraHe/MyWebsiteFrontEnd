@@ -2,9 +2,7 @@
     <div class="blog">
         <transition name="slide-x-transition" mode="out-in">
             <div v-if="blogInfo.length > 0">
-                <!-- <router-link :to="'/blog/'+item.blogID" v-for="item in blogInfo" :key="item.id"> -->
-                    <card class="card-item" :article="item" v-for="item in blogInfo" :key="item.id"></card>
-                <!-- </router-link> -->
+                <card class="card-item" :article="item" v-for="item in blogInfo" :key="item.id"></card>
             </div>
         </transition>
         <loading :showLoading="showLoading" style="margin-top: 20px"></loading>
