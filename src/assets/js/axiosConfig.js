@@ -29,8 +29,4 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
   });
 
-export default{
-    init:function(){
-        Vue.prototype.$axios = axios;
-    },
-}
+Vue.prototype.$axios = axios;
