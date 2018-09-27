@@ -1,15 +1,9 @@
 import axios from 'axios'
 import Vue from 'vue'
-import router from 'assets/js/router'
+// import router from 'assets/js/router'
 
 function errorMessage(msg){
-    Vue.prototype.$message({
-        message: msg,
-        type: 'error',
-        duration: 2000,
-        showClose: true,
-        center: true
-    });
+    console.error(msg);
 }
 
 // 添加请求拦截器
@@ -17,7 +11,7 @@ axios.interceptors.request.use(function (config) {
     return config;
   }, function (error) {
     errorMessage(error.message);
-    router.go(-1);
+    // router.go(-1);
     return Promise.reject(error);
   });
 
@@ -31,7 +25,7 @@ axios.interceptors.response.use(function (response) {
     } else {
         errorMessage(error.message);
     }
-    router.go(-1);
+    // router.go(-1);
     return Promise.reject(error);
   });
 

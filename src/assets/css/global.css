@@ -20,6 +20,15 @@ hr {
     text-align: center;
 }
 
+.vertical-middle{
+    display: table;
+}
+
+.vertical-middle > *{
+    display: table-cell;
+    vertical-align: middle;
+}
+
 
 /*滚动条整体部分*/
 

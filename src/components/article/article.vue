@@ -1,6 +1,6 @@
 <template>
     <div>
-        <transition name="el-zoom-in-center" mode="out-in">
+        <transition name="slide-x-transition" mode="out-in">
             <div class="article" v-if="article">
                 <h3 class="title text-center">{{article.title}}</h3>
                 <div class="text-center">
@@ -16,8 +16,8 @@
                 </div>
             </div>
         </transition>
-        <loading :showLoading="showLoading" style="margin-top: 100px"></loading>
-        <transition name="el-zoom-in-center" mode="out-in">
+        <loading :showLoading="showLoading" style="margin-top: 20px"></loading>
+        <transition name="slide-x-transition" mode="out-in">
             <comment v-if="article" :comments="article.comments"></comment>
         </transition>
     </div>

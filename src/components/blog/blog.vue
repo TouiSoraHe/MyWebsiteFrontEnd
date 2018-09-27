@@ -1,6 +1,6 @@
 <template>
     <div class="blog">
-        <transition name="el-zoom-in-center" mode="out-in">
+        <transition name="slide-x-transition" mode="out-in">
             <div v-if="blogInfo.length > 0">
                 <router-link :to="'/blog/'+item.blogID" v-for="item in blogInfo" :key="item.id">
                     <card class="card-item" :article="item"></card>

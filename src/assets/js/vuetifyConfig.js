@@ -12,7 +12,7 @@ import VCard from 'vuetify/es5/components/VCard';
 import VNavigationDrawer from 'vuetify/es5/components/VNavigationDrawer';
 import VList from 'vuetify/es5/components/VList';
 import VDivider from 'vuetify/es5/components/VDivider';
-import { Resize } from 'vuetify/es5/directives';
+import { Resize,Scroll } from 'vuetify/es5/directives';
 
 Vue.use(Vuetify, {
     components: {
@@ -27,6 +27,7 @@ Vue.use(Vuetify, {
         VDivider
     },
     directives: {
-        Resize
+        Resize,
+        Scroll
     }
 });

@@ -3,12 +3,12 @@
         <header>
             <my-nav :isMobile="isMobile"></my-nav>
         </header>
-        <div class="bg" :class="{showBg:isShowBg}"></div>
+        <div class="bg" :class="{showBg:isShowBg , mobileBgOffset:isMobile}"></div>
         <main class="myMain" :style="myMainStyleObj">
             <v-container pa-0 ma-0 fluid grid-list-md>
                 <v-layout>
                     <v-flex md6 offset-md2 sm12 xs12>
-                        <transition name="el-zoom-in-center" mode="out-in">
+                        <transition name="slide-x-transition" mode="out-in">
                             <router-view></router-view>
                         </transition>
                     </v-flex>
@@ -19,10 +19,10 @@
             </v-container>
         </main>
         <my-back-to-top></my-back-to-top>
-        <footer class="myFooter">
+        <footer class="myFooter vertical-middle">
             <v-container pa-0 ma-0 fluid>
                 <v-layout>
-                    <v-flex md8 offset-md2 >
+                    <v-flex md8 offset-md2 class="text-center">
                         <div>(〃'▽'〃)</div>
                     </v-flex>
                 </v-layout>
@@ -136,7 +136,7 @@ export default {
 
 .showBg {
     background-image: url('assets/img/headbg.png');
-    -webkit-animation: circle_zoom 1.2s ease-in;
+    -webkit-animation: circle_zoom 1s ease-in;
 }
 
 @keyframes circle_zoom {
@@ -171,23 +171,9 @@ main {
     min-height: 60px !important;
     height: auto !important;
     color: #888;
-    display: table;
 }
 
-.myFooter>* {
-    display: table-cell;
-    vertical-align: middle;
-}
-
-.footerContent {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-}
-
-@media only screen and (max-width: 1000px) {
-    .bg {
-        background-position: 40% 0;
-    }
+.mobileBgOffset{
+    background-position: 40% 0;
 }
 </style>
