@@ -17,11 +17,15 @@
             </div>
         </transition>
         <loading :showLoading="showLoading" style="margin-top: 100px"></loading>
+        <transition name="el-zoom-in-center" mode="out-in">
+            <comment v-if="article" :comments="article.comments"></comment>
+        </transition>
     </div>
 </template>
 <script>
 import VueMarkdown from "vue-markdown"
 import loading from 'components/loading/loading.vue'
+import comment from 'components/comment/comment.vue'
 
 export default {
     props: {
@@ -69,6 +73,7 @@ export default {
     components: {
         "vue-markdown": VueMarkdown,
         "loading":loading,
+        "comment":comment,
     },
 }
 </script>
@@ -77,6 +82,7 @@ export default {
     padding: 40px;
     background-color: rgba(255, 255, 255, 1);
     box-shadow: 0 0 1px #bdbdbd;
+    margin-bottom: 50px;
 }
 
 .title {

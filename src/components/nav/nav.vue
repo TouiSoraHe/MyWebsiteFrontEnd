@@ -1,76 +1,68 @@
 <template>
-    <div class="nav">
-        <el-row class="navContent" :style="navContentStyleObj">
-            <el-col :span="24">
-                <div class="home">
-                    <router-link to="/" class="my-icon-home"> 主页</router-link>
-                </div>
-                <div class="menu">
-                    <el-menu :default-active="$route.path" router class="nav-ul" mode="horizontal">
-                        <el-menu-item index="/blog" class="my-icon-ego-blog"> 博文</el-menu-item>
-                        <el-menu-item index="/archive" class="my-icon-guidang"> 归档</el-menu-item>
-                        <el-menu-item index="/music" class="my-icon-MusicAcc"> 音乐</el-menu-item>
-                        <el-menu-item index="/message" class="my-icon-liuyan"> 留言</el-menu-item>
-                        <el-menu-item index="/" v-show="false"></el-menu-item>
-                    </el-menu>
-                </div>
-            </el-col>
-        </el-row>
-    </div>
+    <transition mode="out-in" name="fade-transition">
+        <v-toolbar dense fixed v-if="!isMobile" key="pcNav">
+            <v-flex md2></v-flex>
+            <v-toolbar-items>
+                <v-btn flat to="/">
+                    <v-icon left>home</v-icon><span>主页</span>
+                </v-btn>
+            </v-toolbar-items>
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+                <v-btn flat v-for="item in links" :to="item.url" :key='item.title'>
+                    <v-icon>{{ item.icon }}</v-icon><span>{{ item.title }}</span>
+                </v-btn>
+            </v-toolbar-items>
+            <v-flex md2></v-flex>
+        </v-toolbar>
+        <div v-else key="mobileNav">
+            <v-btn small fixed fab @click.stop="drawer = !drawer" style="top: 10px;left: 10px;"><v-icon>menu</v-icon></v-btn>
+            <v-navigation-drawer v-model="drawer" fixed temporary width="200">
+                <v-list class="pa-1">
+                    <v-list-tile to="/">
+                        <v-list-tile-action>
+                            <v-icon>home</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                            <v-list-tile-title>主页</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </v-list>
+                <v-list class="pt-0" dense>
+                    <v-divider style="margin: 0"></v-divider>
+                    <v-list-tile v-for="item in links" :to="item.url" :key="item.title" ripple>
+                        <v-list-tile-action>
+                            <v-icon>{{ item.icon }}</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </v-list>
+            </v-navigation-drawer>
+        </div>
+    </transition>
 </template>
 <script>
 export default {
     props: {
-        contentMaxWidth: {
-            type: String
+        isMobile: {
+            type: Boolean,
+            default: false,
         }
     },
     data() {
-        return {};
+        return {
+            drawer: false,
+            links: [
+                { title: '博文', icon: 'format_bold', url: '/blog' },
+                { title: '归档', icon: 'archive', url: '/archive' },
+                { title: '音乐', icon: 'music_video', url: '/music' },
+                { title: '留言', icon: 'message', url: '/message' },
+            ],
+        };
     },
-    computed: {
-        navContentStyleObj: function() {
-            return {
-                "max-width": this.contentMaxWidth,
-            };
-        },
-    }
 }
 </script>
 <style scoped>
-.nav {
-    z-index: 1000;
-    transition: all 0.5s ease;
-    background-color: #fff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, .4);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-}
-
-.navContent {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.menu {
-    float: right !important;
-    display: inline-block;
-}
-
-.home {
-    float: left !important;
-    display: inline-block;
-}
-
-.home>a {
-    color: #909399;
-    height: 60px;
-    line-height: 60px;
-}
-
-.home>a:hover {
-    color: inherit;
-}
 </style>

@@ -39,10 +39,12 @@ for (let i = 1; i < 50; i++) {
         let parentItem = commentTemps.randomGetItem();
         let parentID = Math.random() >= 0.5 ? null : (parentItem===undefined ? null : parentItem.id);
         let user = users.randomGetItem();
+        let time = faker.date.past();
         let comment = {
             "id":j,
             "content":commentContent,
             "parentID":parentID,
+            "time": time,
             "user": user
         };
         commentTemps.push(comment);

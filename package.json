@@ -12,21 +12,24 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "element-ui": "^2.4.6",
+    "babel-runtime": "^6.26.0",
     "fingerprintjs2": "^1.8.1",
     "highlight.js": "^9.12.0",
     "normalize.css": "^8.0.0",
     "vue": "^2.5.17",
     "vue-markdown": "^2.2.4",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuetify": "^1.2.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0",
     "@vue/cli-plugin-eslint": "^3.0.0",
     "@vue/cli-service": "^3.0.0",
-    "babel-plugin-component": "^1.1.1",
     "faker": "^4.1.0",
     "json-server": "^0.14.0",
+    "material-design-icons-iconfont": "^3.0.3",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
     "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {

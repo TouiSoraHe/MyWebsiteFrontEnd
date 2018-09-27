@@ -1,30 +1,34 @@
 <template>
-    <div id="app">
-        <el-container>
-            <el-header>
-                <my-nav :contentMaxWidth="contentMaxWidth"></my-nav>
-            </el-header>
-            <div class="bg" :class="{showBg:isShowBg}"></div>
-            <el-main class="myMain" :style="myMainStyleObj">
-                <div class="mainContent" :style="mainStyleObj">
-                    <div class="mainContentLeft">
+    <v-app id="app" v-resize="onResize">
+        <header>
+            <my-nav :isMobile="isMobile"></my-nav>
+        </header>
+        <div class="bg" :class="{showBg:isShowBg}"></div>
+        <main class="myMain" :style="myMainStyleObj">
+            <v-container pa-0 ma-0 fluid grid-list-md>
+                <v-layout>
+                    <v-flex md6 offset-md2 sm12 xs12>
                         <transition name="el-zoom-in-center" mode="out-in">
                             <router-view></router-view>
                         </transition>
-                    </div>
-                    <div class="mainContentRight">
-                        <div style="width: 100%;background-color: #999;">占位</div>
-                    </div>
-                </div>
-            </el-main>
-            <my-back-to-top></my-back-to-top>
-            <el-footer class="myFooter">
-                <div :style="footerStyleObj" class="footerContent">
-                    (〃'▽'〃)
-                </div>
-            </el-footer>
-        </el-container>
-    </div>
+                    </v-flex>
+                    <v-flex md2 v-if="!this.isMobile">
+                        <div style="background-color: #999;">占位</div>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        </main>
+        <my-back-to-top></my-back-to-top>
+        <footer class="myFooter">
+            <v-container pa-0 ma-0 fluid>
+                <v-layout>
+                    <v-flex md8 offset-md2 >
+                        <div>(〃'▽'〃)</div>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        </footer>
+    </v-app>
 </template>
 <script type="text/javascript">
 import Vue from 'vue'
@@ -35,12 +39,12 @@ import Fingerprint2 from 'fingerprintjs2'
 export default {
     data() {
         return {
-            clientSize: {
-                height: 0,
-                width: 0,
-            },
-            contentMaxWidth: "1000px",
             isShowBg: false,
+            windowSize: {
+                x: 0,
+                y: 0
+            },
+            isMobile:false,
         };
     },
     components: {
@@ -48,6 +52,17 @@ export default {
         "my-back-to-top": top,
     },
     methods: {
+        setWindowSize(){
+            if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+                this.windowSize = { x: document.documentElement.clientWidth, y: document.documentElement.clientHeight };
+            } else {
+                this.windowSize = { x: window.innerWidth, y: window.innerHeight };
+            }
+            this.isMobile = this.windowSize.x < 960;
+        },
+        onResize() {
+            this.setWindowSize();
+        },
         loadBg() {
             let that = this;
             var headbg = new Image();
@@ -72,16 +87,10 @@ export default {
     },
     created() {
         this.loadBg();
+        this.setWindowSize();
     },
     mounted() {
-        var that = this;
         this.$nextTick(() => {
-            that.clientSize.height = document.documentElement.clientHeight;
-            that.clientSize.width = document.documentElement.clientWidth;
-            window.onresize = () => {
-                that.clientSize.height = document.documentElement.clientHeight;
-                that.clientSize.width = document.documentElement.clientWidth;
-            };
             Fingerprint2().get((result) => {
                 this.$axios({
                         url: '/api/users/' + result,
@@ -97,30 +106,24 @@ export default {
         });
     },
     computed: {
-        mainStyleObj: function() {
-            return {
-                "max-width": this.contentMaxWidth,
-            };
-        },
-        footerStyleObj: function() {
-            return {
-                "max-width": this.contentMaxWidth,
-            };
-        },
         myMainStyleObj: function() {
             return {
-                "min-height": this.clientSize.height + "px"
+                "min-height": this.windowSize.y + "px"
             };
         },
     }
 }
 </script>
 <style scoped>
+#app {
+    background: none;
+}
+
 .bg {
     position: fixed;
     height: 1057px;
     width: 100%;
-    top: 60px;
+    /*top: 60px;*/
     z-index: -1;
     background-size: cover;
     background-position: center 0;
@@ -158,22 +161,8 @@ export default {
     }
 }
 
-.mainContent {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.mainContentLeft {
-    min-height: inherit;
-    float: left;
-    width: 75%;
-}
-
-.mainContentRight {
-    display: inline-block;
-    float: right;
-    width: 20%;
-    margin-left: 5%;
+main {
+    margin-top: 60px;
 }
 
 .myFooter {
@@ -185,26 +174,20 @@ export default {
     display: table;
 }
 
+.myFooter>* {
+    display: table-cell;
+    vertical-align: middle;
+}
+
 .footerContent {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    display: table-cell;
-    vertical-align: middle;
 }
 
 @media only screen and (max-width: 1000px) {
     .bg {
         background-position: 40% 0;
-    }
-
-    .mainContentLeft {
-        width: 100%;
-    }
-
-    .myMain {
-        padding-right: 0;
-        padding-left: 0;
     }
 }
 </style>

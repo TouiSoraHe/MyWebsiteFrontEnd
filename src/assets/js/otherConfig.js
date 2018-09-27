@@ -47,5 +47,6 @@ export default{
     init:function(){
         highlight();
         dateFormat();
+        Vue.prototype.$isMobile = false;
     },
 }
