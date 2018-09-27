@@ -5,15 +5,29 @@
         </header>
         <div class="bg" :class="{showBg:isShowBg , mobileBgOffset:isMobile}"></div>
         <main class="myMain" :style="myMainStyleObj">
-            <v-container pa-0 ma-0 fluid grid-list-md>
+            <v-container pa-0 ma-0 fluid grid-list-xl>
                 <v-layout>
-                    <v-flex md6 offset-md2 sm12 xs12>
+                    <v-flex md7 offset-md1 lg5 offset-lg2 sm12 xs12>
                         <transition name="slide-x-transition" mode="out-in">
                             <router-view></router-view>
                         </transition>
                     </v-flex>
-                    <v-flex md2 v-if="!this.isMobile">
-                        <div style="background-color: #999;">占位</div>
+                    <v-flex md3 lg3 v-if="!this.isMobile" class="text-center">
+                        <v-card class="text-center pa-3" style="position: fixed;">
+                            <v-avatar size="80px" class='my-2'>
+                                <v-img src="http://7xr4g8.com1.z0.glb.clouddn.com/12"></v-img>
+                            </v-avatar>
+                            <div class="subheading my-2">
+                                hello world
+                            </div>
+                            <div class='my-2'>
+                                <v-btn fab small><v-icon>android</v-icon></v-btn>
+                                <v-btn fab small><v-icon>android</v-icon></v-btn>
+                                <v-btn fab small><v-icon>android</v-icon></v-btn>
+                                <v-btn fab small><v-icon>android</v-icon></v-btn>
+                                <v-btn fab small><v-icon>android</v-icon></v-btn>
+                            </div>
+                        </v-card>
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -22,7 +36,7 @@
         <footer class="myFooter vertical-middle">
             <v-container pa-0 ma-0 fluid>
                 <v-layout>
-                    <v-flex md8 offset-md2 class="text-center">
+                    <v-flex md10 offset-md1 lg8 offset-lg2 class="text-center">
                         <div>(〃'▽'〃)</div>
                     </v-flex>
                 </v-layout>
@@ -162,7 +176,7 @@ export default {
 }
 
 main {
-    margin-top: 60px;
+    margin-top: 70px;
 }
 
 .myFooter {

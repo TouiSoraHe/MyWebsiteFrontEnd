@@ -1,7 +1,7 @@
 <template>
     <transition mode="out-in" name="fade-transition">
-        <v-toolbar dense fixed v-if="!isMobile" key="pcNav">
-            <v-flex md2></v-flex>
+        <v-toolbar dense fixed v-if="!isMobile" key="pcNav" color="white">
+            <v-flex md1 lg2></v-flex>
             <v-toolbar-items>
                 <v-btn flat to="/">
                     <v-icon left>home</v-icon><span>主页</span>
@@ -10,10 +10,10 @@
             <v-spacer></v-spacer>
             <v-toolbar-items>
                 <v-btn flat v-for="item in links" :to="item.url" :key='item.title'>
-                    <v-icon>{{ item.icon }}</v-icon><span>{{ item.title }}</span>
+                    <v-icon size="21px">{{ item.icon }}</v-icon>&nbsp;<span>{{ item.title }}</span>
                 </v-btn>
             </v-toolbar-items>
-            <v-flex md2></v-flex>
+            <v-flex md1 lg2></v-flex>
         </v-toolbar>
         <div v-else key="mobileNav">
             <v-btn small fixed flat fab @click.stop="drawer = !drawer" style="top: 10px;left: 10px;"><v-icon>menu</v-icon></v-btn>
