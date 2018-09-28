@@ -4,6 +4,7 @@ import 'assets/css/milligram.min.css'
 import 'assets/css/global.css'
 
 import Vue from 'vue'
+import 'assets/js/store.js'
 import App from './App.vue'
 import router from 'assets/js/router'
 import 'assets/js/vuetifyConfig'

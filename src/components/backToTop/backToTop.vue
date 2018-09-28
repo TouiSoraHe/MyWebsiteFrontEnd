@@ -1,6 +1,6 @@
 <template>
     <transition name='scale-transition'>
-        <v-btn fab fixed right bottom v-scroll="onScroll" v-show="show" @click="$vuetify.goTo(0)">
+        <v-btn fab fixed right bottom v-show="show" @click="$vuetify.goTo(0)">
             <v-icon large>arrow_upward</v-icon>
         </v-btn>
     </transition>
@@ -9,18 +9,12 @@
 export default {
     data() {
         return {
-            show: false,
-            scrollTop: 0,
+            sharedState:this.$store.state,
         };
     },
-    methods: {
-        onScroll: function() {
-            this.scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrolltop;
-            if (this.scrollTop > 800) {
-                this.show = true;
-            } else {
-                this.show = false;
-            }
+    computed:{
+        show(){
+            return this.$store.getScrollTop() > 500;
         },
     },
 }

@@ -1,33 +1,45 @@
 <template>
-    <v-app id="app" v-resize="onResize">
+    <v-app id="app" v-resize="onResize" v-scroll="onScroll">
         <header>
-            <my-nav :isMobile="isMobile"></my-nav>
+            <my-nav></my-nav>
         </header>
-        <div class="bg" :class="{showBg:isShowBg , mobileBgOffset:isMobile}"></div>
+        <div class="bg" :class="{showBg:isShowBg , mobileBgOffset:isMobile}" :style="bgStyleObj"></div>
         <main class="myMain" :style="myMainStyleObj">
             <v-container pa-0 ma-0 fluid grid-list-xl>
                 <v-layout>
-                    <v-flex md7 offset-md1 lg5 offset-lg2 sm12 xs12>
+                    <v-flex :class="leftContentLayoutObj">
                         <transition name="slide-x-transition" mode="out-in">
                             <router-view></router-view>
                         </transition>
                     </v-flex>
-                    <v-flex md3 lg3 v-if="!this.isMobile" class="text-center">
-                        <v-card class="text-center pa-3" style="position: fixed;">
-                            <v-avatar size="80px" class='my-2'>
-                                <v-img src="http://7xr4g8.com1.z0.glb.clouddn.com/12"></v-img>
-                            </v-avatar>
-                            <div class="subheading my-2">
-                                hello world
-                            </div>
-                            <div class='my-2'>
-                                <v-btn fab small><v-icon>android</v-icon></v-btn>
-                                <v-btn fab small><v-icon>android</v-icon></v-btn>
-                                <v-btn fab small><v-icon>android</v-icon></v-btn>
-                                <v-btn fab small><v-icon>android</v-icon></v-btn>
-                                <v-btn fab small><v-icon>android</v-icon></v-btn>
-                            </div>
-                        </v-card>
+                    <v-flex v-if="!this.isMobile" class="text-center" :class="rightContentLayoutObj">
+                        <div style="  position:sticky;top:78px;">
+                            <v-card class="text-center pa-3" style="width: 340px">
+                                <v-avatar size="80px" class='my-2'>
+                                    <v-img src="http://7xr4g8.com1.z0.glb.clouddn.com/12"></v-img>
+                                </v-avatar>
+                                <div class="subheading my-2">
+                                    hello world
+                                </div>
+                                <div class='my-2'>
+                                    <v-btn fab small>
+                                        <v-icon>android</v-icon>
+                                    </v-btn>
+                                    <v-btn fab small>
+                                        <v-icon>android</v-icon>
+                                    </v-btn>
+                                    <v-btn fab small>
+                                        <v-icon>android</v-icon>
+                                    </v-btn>
+                                    <v-btn fab small>
+                                        <v-icon>android</v-icon>
+                                    </v-btn>
+                                    <v-btn fab small>
+                                        <v-icon>android</v-icon>
+                                    </v-btn>
+                                </div>
+                            </v-card>
+                        </div>
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -36,7 +48,7 @@
         <footer class="myFooter vertical-middle">
             <v-container pa-0 ma-0 fluid>
                 <v-layout>
-                    <v-flex md10 offset-md1 lg8 offset-lg2 class="text-center">
+                    <v-flex class="text-center" :class="footerContentLayoutObj">
                         <div>(〃'▽'〃)</div>
                     </v-flex>
                 </v-layout>
@@ -45,7 +57,6 @@
     </v-app>
 </template>
 <script type="text/javascript">
-import Vue from 'vue'
 import nav from 'components/nav/nav.vue'
 import top from 'components/backToTop/backToTop.vue'
 import Fingerprint2 from 'fingerprintjs2'
@@ -54,29 +65,72 @@ export default {
     data() {
         return {
             isShowBg: false,
-            windowSize: {
-                x: 0,
-                y: 0
-            },
-            isMobile:false,
+            sharedState: this.$store.state,
         };
     },
-    components: {
-        "my-nav": nav,
-        "my-back-to-top": top,
+    created() {
+        this.loadBg();
+    },
+    mounted() {
+        this.$nextTick(() => {
+            this.getFinger();
+        });
+    },
+    computed: {
+        isMobile() {
+            return this.$store.getIsMobile();
+        },
+        windowSize() {
+            return this.$store.getWindowSize();
+        },
+        layoutRatio() {
+            return this.$store.getLayoutRatio();
+        },
+        myMainStyleObj() {
+            return {
+                "min-height": this.windowSize.y + "px",
+                "margin-top": "30px",
+            };
+        },
+        leftContentLayoutObj() {
+            return [
+                'xs' + this.layoutRatio.xs[1], 'offset-xs' + this.layoutRatio.xs[0],
+                'sm' + this.layoutRatio.sm[1], 'offset-sm' + this.layoutRatio.sm[0],
+                'md' + this.layoutRatio.md[1], 'offset-md' + this.layoutRatio.md[0],
+                'lg' + this.layoutRatio.lg[1], 'offset-lg' + this.layoutRatio.lg[0],
+                'xl' + this.layoutRatio.xl[1], 'offset-xl' + this.layoutRatio.xl[0]
+            ];
+        },
+        rightContentLayoutObj() {
+            return [
+                'xs' + this.layoutRatio.xs[2],
+                'sm' + this.layoutRatio.sm[2],
+                'md' + this.layoutRatio.md[2],
+                'lg' + this.layoutRatio.lg[2],
+                'xl' + this.layoutRatio.xl[2]
+            ];
+        },
+        footerContentLayoutObj() {
+            return [
+                'xs' + (this.layoutRatio.xs[1] + this.layoutRatio.xs[2]), 'offset-xs' + this.layoutRatio.xs[0],
+                'sm' + (this.layoutRatio.sm[1] + this.layoutRatio.sm[2]), 'offset-sm' + this.layoutRatio.sm[0],
+                'md' + (this.layoutRatio.md[1] + this.layoutRatio.md[2]), 'offset-md' + this.layoutRatio.md[0],
+                'lg' + (this.layoutRatio.lg[1] + this.layoutRatio.lg[2]), 'offset-lg' + this.layoutRatio.lg[0],
+                'xl' + (this.layoutRatio.xl[1] + this.layoutRatio.xl[2]), 'offset-xl' + this.layoutRatio.xl[0]
+            ];
+        },
+        bgStyleObj() {
+            let mt = 0;
+            if (!this.isMobile) {
+                mt = 48;
+            }
+            return {
+                height: this.windowSize.y * 0.5 + "px",
+                'margin-top': mt + 'px',
+            };
+        },
     },
     methods: {
-        setWindowSize(){
-            if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
-                this.windowSize = { x: document.documentElement.clientWidth, y: document.documentElement.clientHeight };
-            } else {
-                this.windowSize = { x: window.innerWidth, y: window.innerHeight };
-            }
-            this.isMobile = this.windowSize.x < 960;
-        },
-        onResize() {
-            this.setWindowSize();
-        },
         loadBg() {
             let that = this;
             var headbg = new Image();
@@ -89,6 +143,33 @@ export default {
                 };
             }
         },
+        getFinger() {
+            let that = this;
+            //获取浏览器指纹
+            Fingerprint2().get((result) => {
+                that.$axios({
+                        url: '/api/users/' + result,
+                        method: 'get'
+                    })
+                    .then((response) => {
+                        that.$store.setUser(response.data);
+                    })
+                    .catch((error) => {
+                        console.log("get user error:" + error);
+                    });
+            });
+        },
+        onResize() {
+            if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+                this.$store.setWindowSize({ x: document.documentElement.clientWidth, y: document.documentElement.clientHeight });
+            } else {
+                this.$store.setWindowSize({ x: window.innerWidth, y: window.innerHeight });
+            }
+            this.$store.setIsMobile(this.windowSize.x < 960);
+        },
+        onScroll() {
+            this.$store.setScrollTop(window.pageYOffset || document.documentElement.scrollTop || document.body.scrolltop);
+        },
     },
     beforeCreate() {
         let el = document.getElementById('appLoading');
@@ -99,33 +180,10 @@ export default {
             }, 300);
         }
     },
-    created() {
-        this.loadBg();
-        this.setWindowSize();
+    components: {
+        "my-nav": nav,
+        "my-back-to-top": top,
     },
-    mounted() {
-        this.$nextTick(() => {
-            Fingerprint2().get((result) => {
-                this.$axios({
-                        url: '/api/users/' + result,
-                        method: 'get'
-                    })
-                    .then((response) => {
-                        Vue.prototype.$user = response.data;
-                    })
-                    .catch((error) => {
-                        console.log("get user error:" + error);
-                    });
-            });
-        });
-    },
-    computed: {
-        myMainStyleObj: function() {
-            return {
-                "min-height": this.windowSize.y + "px"
-            };
-        },
-    }
 }
 </script>
 <style scoped>
@@ -134,13 +192,14 @@ export default {
 }
 
 .bg {
-    position: fixed;
-    height: 1057px;
+    /*position: fixed;*/
+    /*height: 1057px;*/
     width: 100%;
     /*top: 60px;*/
     z-index: -1;
     background-size: cover;
     background-position: center 0;
+    /*background-color: white;*/
     background-repeat: no-repeat;
     -webkit-mask-image: url('assets/img/circlemask.png');
     -webkit-mask-repeat: no-repeat;
@@ -151,6 +210,10 @@ export default {
 .showBg {
     background-image: url('assets/img/headbg.png');
     -webkit-animation: circle_zoom 1s ease-in;
+}
+
+.mobileBgOffset {
+    background-position: 40% 0;
 }
 
 @keyframes circle_zoom {
@@ -175,19 +238,11 @@ export default {
     }
 }
 
-main {
-    margin-top: 70px;
-}
-
 .myFooter {
     width: 100%;
     background-color: #232323;
     min-height: 60px !important;
     height: auto !important;
     color: #888;
-}
-
-.mobileBgOffset{
-    background-position: 40% 0;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <transition mode="out-in" name="fade-transition">
         <v-toolbar dense fixed v-if="!isMobile" key="pcNav" color="white">
-            <v-flex md1 lg2></v-flex>
+            <v-flex :class="offsetLayoutObj"></v-flex>
             <v-toolbar-items>
                 <v-btn flat to="/">
                     <v-icon left>home</v-icon><span>主页</span>
@@ -13,7 +13,7 @@
                     <v-icon size="21px">{{ item.icon }}</v-icon>&nbsp;<span>{{ item.title }}</span>
                 </v-btn>
             </v-toolbar-items>
-            <v-flex md1 lg2></v-flex>
+            <v-flex :class="offsetLayoutObj"></v-flex>
         </v-toolbar>
         <div v-else key="mobileNav">
             <v-btn small fixed flat fab @click.stop="drawer = !drawer" style="top: 10px;left: 10px;"><v-icon>menu</v-icon></v-btn>
@@ -44,13 +44,8 @@
     </transition>
 </template>
 <script>
+
 export default {
-    props: {
-        isMobile: {
-            type: Boolean,
-            default: false,
-        }
-    },
     data() {
         return {
             drawer: false,
@@ -60,7 +55,25 @@ export default {
                 { title: '音乐', icon: 'music_video', url: '/music' },
                 { title: '留言', icon: 'message', url: '/message' },
             ],
+            sharedState:this.$store.state,
         };
+    },
+    computed:{
+        isMobile(){
+            return this.$store.getIsMobile();
+        },
+        layoutRatio(){
+            return this.$store.getLayoutRatio();
+        },
+        offsetLayoutObj() {
+            return [
+                'xs' + this.layoutRatio.xs[0],
+                'sm' + this.layoutRatio.sm[0],
+                'md' + this.layoutRatio.md[0],
+                'lg' + this.layoutRatio.lg[0],
+                'xl' + this.layoutRatio.xl[0]
+            ];
+        },
     },
 }
 </script>
