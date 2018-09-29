@@ -26,6 +26,7 @@ export default {
     },
     created(){
         this.$store.setHeadBgUrl(this.$store.getConfig().blogHeadBgUrl || this.$store.getConfig().defaultHeadBgUrl);
+        this.$store.setHeadBgText(this.$store.getConfig().blogHeadBgText);
     },
     components: {
         "card": card,

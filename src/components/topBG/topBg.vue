@@ -1,8 +1,8 @@
 <template>
-    <div class="bg" :class="{showBg1:switchBg && isShowBg,showBg2:!switchBg && isShowBg}" :style="[bgStyleObj,showBgStyleObj]">
+    <div class="bg" :class="{showBg1:switchBg && isShowBg,showBg2:!switchBg && isShowBg}" :style="[bgStyleObj]">
         <div class="vertical-middle" style="height: 100%;width: 100%">
             <div class="text-center">
-                <div class="display-2 white--text">helloworld</div>
+                <div class="display-2 white--text headBgText">{{headBgText}}</div>
             </div>
         </div>
     </div>
@@ -12,9 +12,9 @@ export default {
     data() {
         return {
             isShowBg: false,
-            switchBg : false,
+            switchBg: false,
             sharedState: this.$store.state,
-            bgUrl : "",
+            bgUrl: "",
         };
     },
     created() {
@@ -28,54 +28,50 @@ export default {
             headbg.src = that.headBgUrl;
             if (headbg.complete) {
                 that.openBg();
-            } 
+            }
             else {
                 headbg.onload = function() {
                     that.openBg();
                 };
             }
         },
-        closeBg(){
+        closeBg() {
             this.bgUrl = "";
             this.isShowBg = false;
         },
-        openBg(){
+        openBg() {
             this.isShowBg = true;
             this.switchBg = !this.switchBg;
             this.bgUrl = this.headBgUrl;
         },
     },
-    computed:{
-        isMobile(){
+    computed: {
+        isMobile() {
             return this.$store.getIsMobile();
         },
-        windowSize(){
+        windowSize() {
             return this.$store.getWindowSize();
         },
-        headBgUrl(){
+        headBgUrl() {
             return this.$store.getHeadBgUrl();
+        },
+        headBgText() {
+            return this.$store.getHeadBgText();
         },
         bgStyleObj() {
             let styleObj = {
                 height: this.windowSize.y * 0.6 + "px",
             };
-            if (!this.isMobile) {
-                styleObj['margin-top'] = '48px';
-            }
-            return styleObj;
-        },
-        showBgStyleObj(){
-            let styleObj = {};
-            styleObj['background-image'] = 'url('+this.bgUrl+')';
+            styleObj['background-image'] = 'url(' + this.bgUrl + ')';
             return styleObj;
         },
     },
-    watch:{
-        headBgUrl:function(){
-            if(this.headBgUrl === "" || this.headBgUrl === undefined || this.headBgUrl === null){
+    watch: {
+        headBgUrl: function() {
+            if (this.headBgUrl === "" || this.headBgUrl === undefined || this.headBgUrl === null) {
                 this.closeBg();
             }
-            else{
+            else {
                 this.loadBg();
             }
         },
@@ -84,29 +80,25 @@ export default {
 </script>
 <style scoped>
 .bg {
-    /*position: fixed;*/
-    /*height: 1057px;*/
     width: 100%;
-    /*top: 60px;*/
     z-index: -1;
     background-size: cover;
     background-position: center 0;
-    /*background-color: white;*/
     background-repeat: no-repeat;
     -webkit-mask-image: url('circlemask.png');
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center center;
     -webkit-mask-size: 300%;
-    background-color: rgba(255,255,255,1);
+    background-color: rgba(255, 255, 255, 1);
 }
 
 .showBg1 {
-    background-color: rgba(255,255,255,0);
+    background-color: rgba(255, 255, 255, 0);
     -webkit-animation: circle_zoom1 1s ease-in-out;
 }
 
 .showBg2 {
-    background-color: rgba(255,255,255,0);
+    background-color: rgba(255, 255, 255, 0);
     -webkit-animation: circle_zoom2 1s ease-in-out;
 }
 
@@ -128,6 +120,7 @@ export default {
         -webkit-mask-size: 300%
     }
 }
+
 @keyframes circle_zoom2 {
     0% {
         opacity: 0;
@@ -145,5 +138,41 @@ export default {
         opacity: 1;
         -webkit-mask-size: 300%
     }
+}
+
+.headBgText {
+    width: 60%;
+    background: #fc5e5e;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+    background-color: rgba(50,50,50,0.3);
+}
+
+.headBgText:before {
+    content: "";
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    border-left: 3px solid rgba(255,255,255,0.8);
+    border-top: 3px solid transparent;
+    border-right: 3px transparent;
+    border-bottom: 3px solid rgba(255,255,255,0.8);
+}
+
+.headBgText:after {
+    content: "";
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border-right: 3px solid rgba(255,255,255,0.8);
+    border-top: 3px solid rgba(255,255,255,0.8);
+    border-bottom: 3px solid transparent;
+    border-left: 3px solid transparent;
 }
 </style>

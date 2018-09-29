@@ -3,13 +3,18 @@ import Vue from 'vue';
 let store = {
     debug: true,
     state: {
+        //判断是否为手机端
         isMobile: false,
+        //窗口大小
         windowSize: {
             x: 0,
             y: 0,
         },
+        //距离顶部的距离
         scrollTop: 0,
+        //当前访问页面的用户的信息
         user: {},
+        //布局管理，数组分别代表 左边空白区域 内容区 右侧边栏 右边空白区域
         layoutRatio: {
             xs: [0, 12, 0, 0,],
             sm: [0, 12, 0, 0,],
@@ -17,6 +22,7 @@ let store = {
             lg: [2, 5, 3, 2,],
             xl: [3, 4, 2, 3,],
         },
+        //代表项目的配置信息，该信息仅能在此设置，不能在其他地方修改
         config:{
             defaultHeadBgUrl : "https://source.unsplash.com/random/1920x1080",
             indexHeadBgUrl:"https://s1.ax2x.com/2018/09/29/5Hec0y.png",
@@ -24,8 +30,14 @@ let store = {
             archiveHeadBgUrl:undefined,
             musicHeadBgUrl:undefined,
             messageHeadBgUrl:undefined,
+            indexHeadBgText:"首页",
+            blogHeadBgText:"博客",
+            archiveHeadBgText:"归档",
+            musicHeadBgText:"音乐",
+            messageHeadBgText:"留言",
         },
         headBgUrl:"",
+        headBgText:"",
     },
 
     setIsMobile(newValue) {
@@ -85,6 +97,15 @@ let store = {
     getHeadBgUrl() {
         if (this.debug) console.log('getHeadBgUrl triggered');
         return this.state.headBgUrl;
+    },
+
+    setHeadBgText(newValue) {
+        if (this.debug) console.log('setHeadBgText triggered with', newValue);
+        this.state.headBgText = newValue;
+    },
+    getHeadBgText() {
+        if (this.debug) console.log('getHeadBgText triggered');
+        return this.state.headBgText;
     },
 };
 

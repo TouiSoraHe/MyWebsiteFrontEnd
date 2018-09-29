@@ -68,6 +68,7 @@ export default {
                 if(that.article.imgUrl !== undefined){
                     that.$store.setHeadBgUrl(that.article.imgUrl);
                 }
+                this.$store.setHeadBgText(that.article.title);
             })
             .catch((error) => {
                 that.showLoading = false;
