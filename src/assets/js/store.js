@@ -18,7 +18,12 @@ let store = {
             xl: [3, 4, 2, 3,],
         },
         config:{
-            headBgUrl:"https://s1.ax2x.com/2018/09/29/5Hec0y.png",
+            defaultHeadBgUrl : "https://source.unsplash.com/random/1920x1080",
+            indexHeadBgUrl:"https://s1.ax2x.com/2018/09/29/5Hec0y.png",
+            blogHeadBgUrl:undefined,
+            archiveHeadBgUrl:undefined,
+            musicHeadBgUrl:undefined,
+            messageHeadBgUrl:undefined,
         },
         headBgUrl:"",
     },

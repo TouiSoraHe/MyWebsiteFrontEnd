@@ -1,5 +1,5 @@
 <template>
-    <div class="bg" :class="{showBg1:isShowBg && switchBg,showBg2:isShowBg && !switchBg}" :style="[bgStyleObj,showBgStyleObj]">
+    <div class="bg" :class="{showBg1:switchBg && isShowBg,showBg2:!switchBg && isShowBg}" :style="[bgStyleObj,showBgStyleObj]">
         <div class="vertical-middle" style="height: 100%;width: 100%">
             <div class="text-center">
                 <div class="display-2 white--text">helloworld</div>
@@ -40,9 +40,9 @@ export default {
             this.isShowBg = false;
         },
         openBg(){
-            this.bgUrl = this.headBgUrl;
-            this.isShowBg = false;
+            this.isShowBg = true;
             this.switchBg = !this.switchBg;
+            this.bgUrl = this.headBgUrl;
         },
     },
     computed:{

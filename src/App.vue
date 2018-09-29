@@ -46,9 +46,6 @@ export default {
             sharedState: this.$store.state,
         };
     },
-    created() {
-        this.$store.setHeadBgUrl(this.$store.getConfig().headBgUrl);
-    },
     mounted() {
         this.$nextTick(() => {
             this.getFinger();

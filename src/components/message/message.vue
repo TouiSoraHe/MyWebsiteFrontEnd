@@ -6,7 +6,9 @@
 
 <script>
 export default{
-        
+    created(){
+        this.$store.setHeadBgUrl(this.$store.getConfig().messageHeadBgUrl || this.$store.getConfig().defaultHeadBgUrl);
+    },
 };
 </script>
 

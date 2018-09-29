@@ -24,6 +24,9 @@ export default {
             sharedState: this.$store.state,
         };
     },
+    created(){
+        this.$store.setHeadBgUrl(this.$store.getConfig().blogHeadBgUrl || this.$store.getConfig().defaultHeadBgUrl);
+    },
     components: {
         "card": card,
         "loading":loading,
