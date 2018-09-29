@@ -2,7 +2,7 @@
     <div class="blog">
         <transition name="slide-x-transition" mode="out-in">
             <div v-if="blogInfo.length > 0">
-                <card class="card-item" :article="item" v-for="item in blogInfo" :key="item.id"></card>
+                <card class="card-item" :class="{'card-item-mobile':$store.getIsMobile()}" :article="item" v-for="item in blogInfo" :key="item.id"></card>
             </div>
         </transition>
         <loading :showLoading="showLoading" style="margin-top: 20px"></loading>
@@ -21,6 +21,7 @@ export default {
             limt:10,
             currentPage:0,
             totalPage:0,
+            sharedState: this.$store.state,
         };
     },
     components: {
@@ -78,5 +79,10 @@ export default {
 <style scoped>
 .card-item {
     margin-bottom: 25px;
+}
+
+.card-item-mobile{
+    margin-left: 25px;
+    margin-right: 25px;
 }
 </style>

@@ -5,7 +5,7 @@
         </header>
         <div class="bg" :class="{showBg:isShowBg , mobileBgOffset:isMobile}" :style="bgStyleObj"></div>
         <main class="myMain" :style="myMainStyleObj">
-            <v-container pa-0 ma-0 fluid grid-list-xl>
+            <v-container pa-0 ma-0 fluid>
                 <v-layout>
                     <v-flex :class="leftContentLayoutObj">
                         <transition name="slide-x-transition" mode="out-in">
@@ -13,7 +13,7 @@
                         </transition>
                     </v-flex>
                     <v-flex v-if="!this.isMobile" class="text-center" :class="rightContentLayoutObj">
-                        <div style="position:sticky;top:78px;">
+                        <div style="position:sticky;top:78px; margin-left: 30px;">
                             <transition name="slide-x-transition" mode="out-in">
                                 <router-view name="right"></router-view>
                             </transition>
