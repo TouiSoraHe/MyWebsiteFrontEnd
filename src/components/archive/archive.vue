@@ -4,13 +4,13 @@
   </div>
 </template>
 <script>
-  export default {
+export default {
     data () {
-      return {
-        alert: true
-      }
-    }
-  }
+        return {
+            alert: true,
+        };
+    },
+};
 </script>
 <style scoped>
 </style>

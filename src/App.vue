@@ -35,9 +35,9 @@
     </v-app>
 </template>
 <script type="text/javascript">
-import nav from 'components/nav/nav.vue'
-import top from 'components/backToTop/backToTop.vue'
-import Fingerprint2 from 'fingerprintjs2'
+import nav from 'components/nav/nav.vue';
+import top from 'components/backToTop/backToTop.vue';
+import Fingerprint2 from 'fingerprintjs2';
 
 export default {
     data() {
@@ -64,19 +64,13 @@ export default {
         layoutRatio() {
             return this.$store.getLayoutRatio();
         },
-        myMainStyleObj() {
-            return {
-                "min-height": this.windowSize.y + "px",
-                "margin-top": "30px",
-            };
-        },
         leftContentLayoutObj() {
             return [
                 'xs' + this.layoutRatio.xs[1], 'offset-xs' + this.layoutRatio.xs[0],
                 'sm' + this.layoutRatio.sm[1], 'offset-sm' + this.layoutRatio.sm[0],
                 'md' + this.layoutRatio.md[1], 'offset-md' + this.layoutRatio.md[0],
                 'lg' + this.layoutRatio.lg[1], 'offset-lg' + this.layoutRatio.lg[0],
-                'xl' + this.layoutRatio.xl[1], 'offset-xl' + this.layoutRatio.xl[0]
+                'xl' + this.layoutRatio.xl[1], 'offset-xl' + this.layoutRatio.xl[0],
             ];
         },
         rightContentLayoutObj() {
@@ -85,7 +79,7 @@ export default {
                 'sm' + this.layoutRatio.sm[2],
                 'md' + this.layoutRatio.md[2],
                 'lg' + this.layoutRatio.lg[2],
-                'xl' + this.layoutRatio.xl[2]
+                'xl' + this.layoutRatio.xl[2],
             ];
         },
         footerContentLayoutObj() {
@@ -94,18 +88,26 @@ export default {
                 'sm' + (this.layoutRatio.sm[1] + this.layoutRatio.sm[2]), 'offset-sm' + this.layoutRatio.sm[0],
                 'md' + (this.layoutRatio.md[1] + this.layoutRatio.md[2]), 'offset-md' + this.layoutRatio.md[0],
                 'lg' + (this.layoutRatio.lg[1] + this.layoutRatio.lg[2]), 'offset-lg' + this.layoutRatio.lg[0],
-                'xl' + (this.layoutRatio.xl[1] + this.layoutRatio.xl[2]), 'offset-xl' + this.layoutRatio.xl[0]
+                'xl' + (this.layoutRatio.xl[1] + this.layoutRatio.xl[2]), 'offset-xl' + this.layoutRatio.xl[0],
             ];
         },
         bgStyleObj() {
-            let mt = 0;
-            if (!this.isMobile) {
-                mt = 48;
-            }
-            return {
+            let styleObj = {
                 height: this.windowSize.y * 0.5 + "px",
-                'margin-top': mt + 'px',
             };
+            if (!this.isMobile) {
+                styleObj['margin-top'] = '48px';
+            }
+            return styleObj;
+        },
+        myMainStyleObj() {
+            let styleObj = {
+                "min-height": this.windowSize.y + "px",
+            };
+            if(!this.isMobile){
+                styleObj['margin-top'] = '30px';
+            }
+            return styleObj;
         },
     },
     methods: {
@@ -115,7 +117,8 @@ export default {
             headbg.src = require('assets/img/headbg.png');
             if (headbg.complete) {
                 that.isShowBg = true;
-            } else {
+            }
+            else {
                 headbg.onload = function() {
                     that.isShowBg = true;
                 };
@@ -126,9 +129,9 @@ export default {
             //获取浏览器指纹
             Fingerprint2().get((result) => {
                 that.$axios({
-                        url: '/api/users/' + result,
-                        method: 'get'
-                    })
+                    url: '/api/users/' + result,
+                    method: 'get',
+                })
                     .then((response) => {
                         that.$store.setUser(response.data);
                     })
@@ -139,9 +142,10 @@ export default {
         },
         onResize() {
             if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
-                this.$store.setWindowSize({ x: document.documentElement.clientWidth, y: document.documentElement.clientHeight });
-            } else {
-                this.$store.setWindowSize({ x: window.innerWidth, y: window.innerHeight });
+                this.$store.setWindowSize({ x: document.documentElement.clientWidth, y: document.documentElement.clientHeight, });
+            }
+            else {
+                this.$store.setWindowSize({ x: window.innerWidth, y: window.innerHeight, });
             }
             this.$store.setIsMobile(this.windowSize.x < 960);
         },
@@ -162,7 +166,7 @@ export default {
         "my-nav": nav,
         "my-back-to-top": top,
     },
-}
+};
 </script>
 <style scoped>
 #app {

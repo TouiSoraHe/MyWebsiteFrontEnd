@@ -50,10 +50,10 @@ export default {
         return {
             drawer: false,
             links: [
-                { title: '博文', icon: 'format_bold', url: '/blog' },
-                { title: '归档', icon: 'archive', url: '/archive' },
-                { title: '音乐', icon: 'music_video', url: '/music' },
-                { title: '留言', icon: 'message', url: '/message' },
+                { title: '博文', icon: 'format_bold', url: '/blog', },
+                { title: '归档', icon: 'archive', url: '/archive', },
+                { title: '音乐', icon: 'music_video', url: '/music', },
+                { title: '留言', icon: 'message', url: '/message', },
             ],
             sharedState:this.$store.state,
         };
@@ -71,11 +71,11 @@ export default {
                 'sm' + this.layoutRatio.sm[0],
                 'md' + this.layoutRatio.md[0],
                 'lg' + this.layoutRatio.lg[0],
-                'xl' + this.layoutRatio.xl[0]
+                'xl' + this.layoutRatio.xl[0],
             ];
         },
     },
-}
+};
 </script>
 <style scoped>
 </style>

@@ -17,7 +17,7 @@ export default {
             return this.$store.getScrollTop() > 500;
         },
     },
-}
+};
 </script>
 <style scoped>
 </style>

@@ -23,15 +23,15 @@
     </div>
 </template>
 <script>
-import VueMarkdown from "vue-markdown"
-import loading from 'components/loading/loading.vue'
-import comment from 'components/comment/comment.vue'
+import VueMarkdown from "vue-markdown";
+import loading from 'components/loading/loading.vue';
+import comment from 'components/comment/comment.vue';
 
 export default {
     props: {
         id: {
-            type: String
-        }
+            type: String,
+        },
     },
     data() {
         return {
@@ -45,7 +45,7 @@ export default {
                 return new Date(this.article.time).Format('yyyy年MM月dd日 hh:mm:ss');
             }
             return this.article.time;
-        }
+        },
     },
     methods: {
         markdownRendered: function() {
@@ -75,7 +75,7 @@ export default {
         "loading":loading,
         "comment":comment,
     },
-}
+};
 </script>
 <style scoped>
 .article {

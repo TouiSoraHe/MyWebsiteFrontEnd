@@ -10,8 +10,8 @@
     </div>
 </template>
 <script>
-import card from "components/card/card.vue"
-import loading from 'components/loading/loading.vue'
+import card from "components/card/card.vue";
+import loading from 'components/loading/loading.vue';
 
 export default {
     data() {
@@ -26,7 +26,7 @@ export default {
     },
     components: {
         "card": card,
-        "loading":loading
+        "loading":loading,
     },
     methods:{
         loadBlogInfo(){
@@ -35,9 +35,9 @@ export default {
             console.log("开始加载博客列表,currentPage:"+that.currentPage);
             that.showLoading = true;
             this.$axios({
-                    url: '/api/blog-infos?_limit='+that.limt+'&_page='+(that.currentPage+1),
-                    method: 'get'
-                })
+                url: '/api/blog-infos?_limit='+that.limt+'&_page='+(that.currentPage+1),
+                method: 'get',
+            })
                 .then((response) => {
                     that.showLoading = false;
                     that.totalPage = parseInt(response.headers['x-total-count']);
@@ -63,7 +63,7 @@ export default {
             //blogInfo懒加载
             const config = {
                 rootMargin: '500px 0px 500px 0px',
-                threshold: 0
+                threshold: 0,
             };
             let observer = new IntersectionObserver((entries)=>{
                 if (entries[0].intersectionRatio <= 0) return;
@@ -74,7 +74,7 @@ export default {
             observer.observe(document.querySelector('#blogInfoLazyLoadingObserver'));
         });
     },
-}
+};
 </script>
 <style scoped>
 .card-item {
@@ -82,6 +82,7 @@ export default {
 }
 
 .card-item-mobile{
+    margin-top: 25px;
     margin-left: 25px;
     margin-right: 25px;
 }

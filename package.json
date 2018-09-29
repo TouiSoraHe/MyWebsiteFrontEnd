@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "lintfix": "eslint src --fix",
+    "lintfix": "eslint --fix --ext .js,.vue src test/unit",
     "mockJson": "json-server --watch mock/data.json",
     "mockJS": "json-server mock/generate.js "
   },
@@ -42,7 +42,12 @@
       "eslint:recommended"
     ],
     "rules": {
-      "no-console": 0
+      "no-console": 0,
+      "semi": 1,
+      "brace-style": [2, "stroustrup", { "allowSingleLine": true }],
+      "camelcase": 2,
+      "indent": 1,
+      "comma-dangle":[1,"always"]
     },
     "parserOptions": {
       "parser": "babel-eslint"

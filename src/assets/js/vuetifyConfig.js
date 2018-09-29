@@ -1,5 +1,5 @@
-require('vuetify/src/stylus/app.styl')
-import 'material-design-icons-iconfont/dist/material-design-icons.css'
+require('vuetify/src/stylus/app.styl');
+import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
 import Vue from 'vue';
 import Vuetify from 'vuetify/es5/components/Vuetify';
@@ -15,7 +15,7 @@ import VDivider from 'vuetify/es5/components/VDivider';
 import VImg from 'vuetify/es5/components/VImg';
 import VHover from 'vuetify/es5/components/VHover';
 import VAvatar from 'vuetify/es5/components/VAvatar';
-import { Resize,Scroll } from 'vuetify/es5/directives';
+import { Resize,Scroll, } from 'vuetify/es5/directives';
 
 Vue.use(Vuetify, {
     components: {
@@ -30,10 +30,10 @@ Vue.use(Vuetify, {
         VDivider,
         VImg,
         VHover,
-        VAvatar
+        VAvatar,
     },
     directives: {
         Resize,
-        Scroll
-    }
+        Scroll,
+    },
 });

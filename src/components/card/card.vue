@@ -29,8 +29,8 @@
 export default {
     props: {
         article: {
-            type: Object
-        }
+            type: Object,
+        },
     },
     computed: {
         articleTime: function() {
@@ -38,9 +38,9 @@ export default {
                 return new Date(this.article.time).Format('yyyy-MM-dd');
             }
             return this.article.time;
-        }
+        },
     },
-}
+};
 </script>
 <style scoped>
 </style>

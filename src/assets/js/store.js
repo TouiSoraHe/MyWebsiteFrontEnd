@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import Vue from 'vue';
 
 let store = {
     debug: true,
@@ -6,16 +6,16 @@ let store = {
         isMobile: false,
         windowSize: {
             x: 0,
-            y: 0
+            y: 0,
         },
         scrollTop: 0,
         user: {},
         layoutRatio: {
-            xs: [0, 12, 0, 0],
-            sm: [0, 12, 0, 0],
-            md: [1, 7, 3, 1],
-            lg: [2, 5, 3, 2],
-            xl: [3, 4, 2, 3],
+            xs: [0, 12, 0, 0,],
+            sm: [0, 12, 0, 0,],
+            md: [1, 7, 3, 1,],
+            lg: [2, 5, 3, 2,],
+            xl: [3, 4, 2, 3,],
         },
     },
 
@@ -63,7 +63,7 @@ let store = {
         if (this.debug) console.log('getLayoutRatio triggered');
         return this.state.layoutRatio;
     },
-}
+};
 
 Vue.prototype.$store = store;
 

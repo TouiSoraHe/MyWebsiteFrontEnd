@@ -14,8 +14,8 @@
 export default {
     props:{
         showLoading:{
-            type:Boolean
-        }
+            type:Boolean,
+        },
     },
     computed:{
         isShow:function(){
@@ -24,8 +24,8 @@ export default {
             }
             return false;
         },
-    }
-}
+    },
+};
 </script>
 <style scoped>
 .view {
