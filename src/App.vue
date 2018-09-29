@@ -9,36 +9,14 @@
                 <v-layout>
                     <v-flex :class="leftContentLayoutObj">
                         <transition name="slide-x-transition" mode="out-in">
-                            <router-view></router-view>
+                            <router-view name="left"></router-view>
                         </transition>
                     </v-flex>
                     <v-flex v-if="!this.isMobile" class="text-center" :class="rightContentLayoutObj">
-                        <div style="  position:sticky;top:78px;">
-                            <v-card class="text-center pa-3" style="width: 340px">
-                                <v-avatar size="80px" class='my-2'>
-                                    <v-img src="http://7xr4g8.com1.z0.glb.clouddn.com/12"></v-img>
-                                </v-avatar>
-                                <div class="subheading my-2">
-                                    hello world
-                                </div>
-                                <div class='my-2'>
-                                    <v-btn fab small>
-                                        <v-icon>android</v-icon>
-                                    </v-btn>
-                                    <v-btn fab small>
-                                        <v-icon>android</v-icon>
-                                    </v-btn>
-                                    <v-btn fab small>
-                                        <v-icon>android</v-icon>
-                                    </v-btn>
-                                    <v-btn fab small>
-                                        <v-icon>android</v-icon>
-                                    </v-btn>
-                                    <v-btn fab small>
-                                        <v-icon>android</v-icon>
-                                    </v-btn>
-                                </div>
-                            </v-card>
+                        <div style="position:sticky;top:78px;">
+                            <transition name="slide-x-transition" mode="out-in">
+                                <router-view name="right"></router-view>
+                            </transition>
                         </div>
                     </v-flex>
                 </v-layout>
