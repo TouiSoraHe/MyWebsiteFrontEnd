@@ -4,14 +4,14 @@ faker.locale = "zh_CN";
 
 Math.randomNum = function(minNum, maxNum) {
     switch (arguments.length) {
-        case 1:
-            return parseInt(Math.random() * minNum + 1, 10);
-        case 2:
-            return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
-        default:
-            return 0;
+    case 1:
+        return parseInt(Math.random() * minNum + 1, 10);
+    case 2:
+        return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+    default:
+        return 0;
     }
-}
+};
 
 Array.prototype.randomGetItem = function(){
     if(this.length===0) return undefined;
@@ -32,15 +32,15 @@ for (let i = 1; i < 10; i++) {
     let user = {
         "id":id,
         "userName":userName,
-        "email":email
+        "email":email,
     };
     users.push(user);
 }
-    users.push({
-        "id":"7c0412670bc5428fef4571706707471e",
-        "userName":"zzy",
-        "email":"zzymailaddr@gmail.com"
-    });
+users.push({
+    "id":"7c0412670bc5428fef4571706707471e",
+    "userName":"zzy",
+    "email":"zzymailaddr@gmail.com",
+});
 
 for (let i = 1; i < 50; i++) {
     //生成评论
@@ -56,7 +56,7 @@ for (let i = 1; i < 50; i++) {
             "content":commentContent,
             "parentID":parentID,
             "time": time,
-            "user": user
+            "user": user,
         };
         commentTemps.push(comment);
     }
@@ -69,8 +69,8 @@ for (let i = 1; i < 50; i++) {
     let blogID = i + 100;
     let title = faker.lorem.sentence();
     let time = faker.date.past();
-    let views = faker.random.number({ 'min': 1000, 'max': 2000 });
-    let content = faker.lorem.paragraphs(faker.random.number({ 'min': 10, 'max': 20 }));
+    let views = faker.random.number({ 'min': 1000, 'max': 2000, });
+    let content = faker.lorem.paragraphs(faker.random.number({ 'min': 10, 'max': 20, }));
     let summary = content.slice(0, 100);
     let words = content.length;
     let imgUrl = 'http://7xr4g8.com1.z0.glb.clouddn.com/'+Math.randomNum(0,900);
@@ -103,9 +103,9 @@ function generate() {
         "blogs": blogs,
         "blog-infos": blogInfos,
         "comments":comments,
-        "users":users
-    }
+        "users":users,
+    };
 }
 
 // 如果你要用json-server的话，就需要export这个生成fake data的function
-module.exports = generate
+module.exports = generate;

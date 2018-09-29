@@ -3,7 +3,7 @@
         <header>
             <my-nav></my-nav>
         </header>
-        <div class="bg" :class="{showBg:isShowBg , mobileBgOffset:isMobile}" :style="bgStyleObj"></div>
+        <my-top-bg></my-top-bg>
         <main class="myMain" :style="myMainStyleObj">
             <v-container pa-0 ma-0 fluid>
                 <v-layout>
@@ -37,17 +37,17 @@
 <script type="text/javascript">
 import nav from 'components/nav/nav.vue';
 import top from 'components/backToTop/backToTop.vue';
+import topBg from 'components/topBG/topBg.vue';
 import Fingerprint2 from 'fingerprintjs2';
 
 export default {
     data() {
         return {
-            isShowBg: false,
             sharedState: this.$store.state,
         };
     },
     created() {
-        this.loadBg();
+        this.$store.setHeadBgUrl(this.$store.getConfig().headBgUrl);
     },
     mounted() {
         this.$nextTick(() => {
@@ -91,15 +91,6 @@ export default {
                 'xl' + (this.layoutRatio.xl[1] + this.layoutRatio.xl[2]), 'offset-xl' + this.layoutRatio.xl[0],
             ];
         },
-        bgStyleObj() {
-            let styleObj = {
-                height: this.windowSize.y * 0.5 + "px",
-            };
-            if (!this.isMobile) {
-                styleObj['margin-top'] = '48px';
-            }
-            return styleObj;
-        },
         myMainStyleObj() {
             let styleObj = {
                 "min-height": this.windowSize.y + "px",
@@ -111,19 +102,6 @@ export default {
         },
     },
     methods: {
-        loadBg() {
-            let that = this;
-            var headbg = new Image();
-            headbg.src = require('assets/img/headbg.png');
-            if (headbg.complete) {
-                that.isShowBg = true;
-            }
-            else {
-                headbg.onload = function() {
-                    that.isShowBg = true;
-                };
-            }
-        },
         getFinger() {
             let that = this;
             //获取浏览器指纹
@@ -150,7 +128,7 @@ export default {
             this.$store.setIsMobile(this.windowSize.x < 960);
         },
         onScroll() {
-            this.$store.setScrollTop(window.pageYOffset || document.documentElement.scrollTop || document.body.scrolltop);
+            this.$store.setScrollTop(window.pageYOffset || document.documentElement.scrollTop || document.body.scrolltop || 0);
         },
     },
     beforeCreate() {
@@ -165,59 +143,13 @@ export default {
     components: {
         "my-nav": nav,
         "my-back-to-top": top,
+        "my-top-bg":topBg,
     },
 };
 </script>
 <style scoped>
 #app {
     background: none;
-}
-
-.bg {
-    /*position: fixed;*/
-    /*height: 1057px;*/
-    width: 100%;
-    /*top: 60px;*/
-    z-index: -1;
-    background-size: cover;
-    background-position: center 0;
-    /*background-color: white;*/
-    background-repeat: no-repeat;
-    -webkit-mask-image: url('assets/img/circlemask.png');
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: center center;
-    -webkit-mask-size: 300%;
-}
-
-.showBg {
-    background-image: url('assets/img/headbg.png');
-    -webkit-animation: circle_zoom 1s ease-in;
-}
-
-.mobileBgOffset {
-    background-position: 40% 0;
-}
-
-@keyframes circle_zoom {
-    0% {
-        opacity: 0;
-        -webkit-mask-size: 0%
-    }
-
-    20% {
-        opacity: .3;
-        -webkit-mask-size: 50%
-    }
-
-    80% {
-        opacity: .7;
-        -webkit-mask-size: 250%
-    }
-
-    to {
-        opacity: 1;
-        -webkit-mask-size: 300%
-    }
 }
 
 .myFooter {

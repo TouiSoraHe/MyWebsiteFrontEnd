@@ -17,6 +17,10 @@ let store = {
             lg: [2, 5, 3, 2,],
             xl: [3, 4, 2, 3,],
         },
+        config:{
+            headBgUrl:"https://s1.ax2x.com/2018/09/29/5Hec0y.png",
+        },
+        headBgUrl:"",
     },
 
     setIsMobile(newValue) {
@@ -62,6 +66,20 @@ let store = {
     getLayoutRatio() {
         if (this.debug) console.log('getLayoutRatio triggered');
         return this.state.layoutRatio;
+    },
+
+    getConfig() {
+        if (this.debug) console.log('getConfig triggered');
+        return this.state.config;
+    },
+
+    setHeadBgUrl(newValue) {
+        if (this.debug) console.log('setHeadBgUrl triggered with', newValue);
+        this.state.headBgUrl = newValue;
+    },
+    getHeadBgUrl() {
+        if (this.debug) console.log('getHeadBgUrl triggered');
+        return this.state.headBgUrl;
     },
 };
 

@@ -37,6 +37,7 @@ export default {
         return {
             article: null,
             showLoading:false,
+            sharedState: this.$store.state,
         };
     },
     computed:{
@@ -64,6 +65,9 @@ export default {
                 }
                 that.article = response.data;
                 document.title = that.article.title;
+                if(that.article.imgUrl !== undefined){
+                    that.$store.setHeadBgUrl(that.article.imgUrl);
+                }
             })
             .catch((error) => {
                 that.showLoading = false;
