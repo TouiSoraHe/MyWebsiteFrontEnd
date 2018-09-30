@@ -30,14 +30,8 @@ let store = {
             archiveHeadBgUrl:undefined,
             musicHeadBgUrl:undefined,
             messageHeadBgUrl:undefined,
-            indexHeadBgText:"首页",
-            blogHeadBgText:"博客",
-            archiveHeadBgText:"归档",
-            musicHeadBgText:"音乐",
-            messageHeadBgText:"留言",
         },
         headBgUrl:"",
-        headBgText:"",
     },
 
     setIsMobile(newValue) {
@@ -97,15 +91,6 @@ let store = {
     getHeadBgUrl() {
         if (this.debug) console.log('getHeadBgUrl triggered');
         return this.state.headBgUrl;
-    },
-
-    setHeadBgText(newValue) {
-        if (this.debug) console.log('setHeadBgText triggered with', newValue);
-        this.state.headBgText = newValue;
-    },
-    getHeadBgText() {
-        if (this.debug) console.log('getHeadBgText triggered');
-        return this.state.headBgText;
     },
 };
 

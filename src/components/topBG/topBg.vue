@@ -1,10 +1,5 @@
 <template>
     <div class="bg" :class="{showBg1:switchBg && isShowBg,showBg2:!switchBg && isShowBg}" :style="[bgStyleObj]">
-        <div class="vertical-middle" style="height: 100%;width: 100%">
-            <div class="text-center">
-                <div class="display-2 white--text headBgText">{{headBgText}}</div>
-            </div>
-        </div>
     </div>
 </template>
 <script>
@@ -55,12 +50,9 @@ export default {
         headBgUrl() {
             return this.$store.getHeadBgUrl();
         },
-        headBgText() {
-            return this.$store.getHeadBgText();
-        },
         bgStyleObj() {
             let styleObj = {
-                height: this.windowSize.y * 0.6 + "px",
+                height: this.windowSize.y * 0.4 + "px",
             };
             styleObj['background-image'] = 'url(' + this.bgUrl + ')';
             return styleObj;
@@ -138,41 +130,5 @@ export default {
         opacity: 1;
         -webkit-mask-size: 300%
     }
-}
-
-.headBgText {
-    width: 60%;
-    background: #fc5e5e;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 15px;
-    background-color: rgba(50,50,50,0.3);
-}
-
-.headBgText:before {
-    content: "";
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    border-left: 3px solid rgba(255,255,255,0.8);
-    border-top: 3px solid transparent;
-    border-right: 3px transparent;
-    border-bottom: 3px solid rgba(255,255,255,0.8);
-}
-
-.headBgText:after {
-    content: "";
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    border-right: 3px solid rgba(255,255,255,0.8);
-    border-top: 3px solid rgba(255,255,255,0.8);
-    border-bottom: 3px solid transparent;
-    border-left: 3px solid transparent;
 }
 </style>

@@ -8,7 +8,6 @@
 export default{
     created(){
         this.$store.setHeadBgUrl(this.$store.getConfig().messageHeadBgUrl || this.$store.getConfig().defaultHeadBgUrl);
-        this.$store.setHeadBgText(this.$store.getConfig().messageHeadBgText);
     },
 };
 </script>

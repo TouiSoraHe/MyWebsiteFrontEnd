@@ -5,7 +5,6 @@
 export default {
     created() {
         this.$store.setHeadBgUrl(this.$store.getConfig().indexHeadBgUrl || this.$store.getConfig().defaultHeadBgUrl);
-        this.$store.setHeadBgText(this.$store.getConfig().indexHeadBgText);
     },
 };
 </script>

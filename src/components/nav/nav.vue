@@ -74,4 +74,17 @@ export default {
 };
 </script>
 <style scoped>
+
+.v-btn--active:before{
+    background-color: rgba(0,0,0,0);
+}
+
+.v-btn:hover:before{
+    background-color: rgba(0,0,0,0);
+}
+
+.v-btn__content{
+    width:50px;
+}
+
 </style>

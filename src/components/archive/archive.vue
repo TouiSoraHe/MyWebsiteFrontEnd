@@ -12,7 +12,6 @@ export default {
     },
     created(){
         this.$store.setHeadBgUrl(this.$store.getConfig().archiveHeadBgUrl || this.$store.getConfig().defaultHeadBgUrl);
-        this.$store.setHeadBgText(this.$store.getConfig().archiveHeadBgText);
     },
 };
 </script>
