@@ -53,11 +53,11 @@ let store = {
     },
 
     setScrollTop(newValue) {
-        if (this.debug) console.log('setScrollTop triggered with', newValue);
+        // if (this.debug) console.log('setScrollTop triggered with', newValue);
         this.state.scrollTop = newValue;
     },
     getScrollTop() {
-        if (this.debug) console.log('getScrollTop triggered');
+        // if (this.debug) console.log('getScrollTop triggered');
         return this.state.scrollTop;
     },
 

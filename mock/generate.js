@@ -21,6 +21,7 @@ Array.prototype.randomGetItem = function(){
 let blogs = [];
 let blogInfos = [];
 let comments = [];
+let tags = [];
 
 let users = [];
 
@@ -41,6 +42,20 @@ users.push({
     "userName":"zzy",
     "email":"zzymailaddr@gmail.com",
 });
+
+const tagNames = ["随笔","技术","前端","Unity","后台","文学","热点","shit","电影","小说","电视剧","美食"]
+//生成标签
+for(let i = 1;i<=tagNames.length;i++){
+    let id = i;
+    let tagName = tagNames[i-1];
+    let blogInfoIDs = [];
+    let tag = {
+        "id":id,
+        "tagName":tagName,
+        blogInfoIDs : blogInfoIDs,
+    };
+    tags.push(tag);
+}
 
 for (let i = 1; i < 50; i++) {
     //生成评论
@@ -74,6 +89,19 @@ for (let i = 1; i < 50; i++) {
     let summary = content.slice(0, 100);
     let words = content.length;
     let imgUrl = 'https://picsum.photos/1920/500?image='+Math.randomNum(0,1000);
+
+    let ownTags = [];
+    let ownTagsCount = Math.randomNum(0,3);
+    for(let i = 0;i<ownTagsCount;i++){
+        let index  = Math.randomNum(0,tags.length-1);
+        if(ownTags.includes(tags[index])){
+            i--;
+            continue;
+        }
+        tags[index].blogInfoIDs.push(blogInfoID);
+        ownTags.push(tags[index]);
+    }
+
     let blogInfo = {
         "id": blogInfoID,
         "title": title,
@@ -83,6 +111,7 @@ for (let i = 1; i < 50; i++) {
         "summary": summary,
         "blogID": blogID,
         "imgUrl":imgUrl,
+        "tags":ownTags,
     };
     let blog = {
         "id": blogID,
@@ -93,6 +122,7 @@ for (let i = 1; i < 50; i++) {
         "content": content,
         "comments": commentTemps,
         "imgUrl":imgUrl,
+        "tags":ownTags,
     };
     blogs.push(blog);
     blogInfos.push(blogInfo);
@@ -104,6 +134,7 @@ function generate() {
         "blog-infos": blogInfos,
         "comments":comments,
         "users":users,
+        "tags":tags,
     };
 }
 

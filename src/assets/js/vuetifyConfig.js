@@ -15,6 +15,7 @@ import VDivider from 'vuetify/es5/components/VDivider';
 import VImg from 'vuetify/es5/components/VImg';
 import VHover from 'vuetify/es5/components/VHover';
 import VAvatar from 'vuetify/es5/components/VAvatar';
+import VForm from 'vuetify/es5/components/VForm';
 import { Resize,Scroll, } from 'vuetify/es5/directives';
 
 Vue.use(Vuetify, {
@@ -31,6 +32,7 @@ Vue.use(Vuetify, {
         VImg,
         VHover,
         VAvatar,
+        VForm,
     },
     directives: {
         Resize,

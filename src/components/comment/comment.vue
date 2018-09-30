@@ -1,8 +1,13 @@
 <template>
     <div>
-        <div class="comment">
-            helloworld
-        </div>
+        <v-card>
+            <v-card-title class="headline font-weight-Medium">
+                发表评论
+            </v-card-title>
+            <v-card-text>
+                
+            </v-card-text>
+        </v-card>
     </div>
 </template>
 <script>
