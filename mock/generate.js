@@ -73,7 +73,7 @@ for (let i = 1; i < 50; i++) {
     let content = faker.lorem.paragraphs(faker.random.number({ 'min': 10, 'max': 20, }));
     let summary = content.slice(0, 100);
     let words = content.length;
-    let imgUrl = 'http://7xr4g8.com1.z0.glb.clouddn.com/'+Math.randomNum(0,900);
+    let imgUrl = 'https://picsum.photos/1920/500?image='+Math.randomNum(0,1000);
     let blogInfo = {
         "id": blogInfoID,
         "title": title,

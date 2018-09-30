@@ -1,20 +1,20 @@
 <template>
     <div>
         <transition name="slide-x-transition" mode="out-in">
-            <div class="article" v-if="article">
-                <h3 class="title text-center">{{article.title}}</h3>
-                <div class="text-center">
-                    <i class="my-icon-calendar time" v-if="article.time">&nbsp;发表于&nbsp;{{articleTime}}</i>
-                    <span v-if="article.words">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                    <i class="my-icon-word_files_icon words" v-if="article.words">&nbsp;字数&nbsp;{{article.words}}</i>
-                    <span v-if="article.views">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                    <i class="my-icon-eye views" v-if="article.views">&nbsp;阅读次数&nbsp;{{article.views}}</i>
-                </div>
-                <div class="noneHr"></div>
-                <div class="content">
+            <v-card v-if="article">
+                <v-card-title>
+                    <div class="display-1 font-weight-bold">{{article.title}}</div>
+                </v-card-title>
+                <v-card-text>
+                    <span class="body-1 grey--text"><v-icon size="18px">date_range</v-icon>{{articleTime}}</span>&nbsp;&nbsp;
+                    <span class="body-1 grey--text"><v-icon size="18px">title</v-icon><span>{{article.words}}</span></span>&nbsp;&nbsp;
+                    <span class="body-1 grey--text"><v-icon size="18px">visibility</v-icon><span>{{article.views}}</span></span>
+                </v-card-text>
+                <v-divider class="my-3"></v-divider>
+                <v-card-text class="subheading" style="text-align: justify;">
                     <vue-markdown :source="article.content" @rendered="markdownRendered"></vue-markdown>
-                </div>
-            </div>
+                </v-card-text>
+            </v-card>
         </transition>
         <loading :showLoading="showLoading" style="margin-top: 20px"></loading>
         <transition name="slide-x-transition" mode="out-in">
@@ -43,7 +43,7 @@ export default {
     computed:{
         articleTime:function(){
             if(!isNaN(Date.parse(this.article.time))){
-                return new Date(this.article.time).Format('yyyy年MM月dd日 hh:mm:ss');
+                return new Date(this.article.time).Format('yyyy-MM-dd');
             }
             return this.article.time;
         },
@@ -82,38 +82,4 @@ export default {
 };
 </script>
 <style scoped>
-.article {
-    padding: 40px;
-    background-color: rgba(255, 255, 255, 1);
-    box-shadow: 0 0 1px #bdbdbd;
-    margin-bottom: 50px;
-}
-
-.title {
-    color: #444;
-}
-
-.time,
-.words,
-.views {
-    font-size: 0.8em;
-}
-
-.time {
-    color: #00a7e0;
-}
-
-.words {
-    color: #000;
-}
-
-.views {
-    color: #ff3f1a;
-}
-
-.noneHr {
-    width: 100%;
-    margin: 1.5em 0;
-    padding: 0.1px 0;
-}
 </style>
