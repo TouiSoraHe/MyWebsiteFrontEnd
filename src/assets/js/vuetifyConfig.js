@@ -16,6 +16,10 @@ import VImg from 'vuetify/es5/components/VImg';
 import VHover from 'vuetify/es5/components/VHover';
 import VAvatar from 'vuetify/es5/components/VAvatar';
 import VForm from 'vuetify/es5/components/VForm';
+import VTextField from 'vuetify/es5/components/VTextField';
+import VSelect from 'vuetify/es5/components/VSelect';
+import VCheckbox from 'vuetify/es5/components/VCheckbox';
+import VTextarea from 'vuetify/es5/components/VTextarea';
 import { Resize,Scroll, } from 'vuetify/es5/directives';
 
 Vue.use(Vuetify, {
@@ -33,6 +37,10 @@ Vue.use(Vuetify, {
         VHover,
         VAvatar,
         VForm,
+        VTextField,
+        VSelect,
+        VCheckbox,
+        VTextarea,
     },
     directives: {
         Resize,

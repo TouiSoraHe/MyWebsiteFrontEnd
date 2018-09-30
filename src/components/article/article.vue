@@ -15,7 +15,7 @@
                     <vue-markdown :source="article.content" @rendered="markdownRendered"></vue-markdown>
                 </v-card-text>
                 <v-divider class="mx-3 my-0"></v-divider>
-                <v-card-actions class="pa-3" v-if="article.tags.length > 0">
+                <v-card-actions class="pa-3" v-if="article.tags && article.tags.length > 0">
                     <my-tag v-for="(tag,index) in article.tags" :key="index" class="mr-2" :to="'/archive/'+tag.id">{{tag.tagName}}</my-tag>
                 </v-card-actions>
             </v-card>
@@ -41,13 +41,13 @@ export default {
     data() {
         return {
             article: null,
-            showLoading:false,
+            showLoading: false,
             sharedState: this.$store.state,
         };
     },
-    computed:{
-        articleTime:function(){
-            if(!isNaN(Date.parse(this.article.time))){
+    computed: {
+        articleTime: function() {
+            if (!isNaN(Date.parse(this.article.time))) {
                 return new Date(this.article.time).Format('yyyy-MM-dd');
             }
             return this.article.time;
@@ -70,7 +70,7 @@ export default {
                 }
                 that.article = response.data;
                 document.title = that.article.title;
-                if(that.article.imgUrl !== undefined){
+                if (that.article.imgUrl !== undefined) {
                     that.$store.setHeadBgUrl(that.article.imgUrl);
                 }
             })
@@ -81,8 +81,8 @@ export default {
     },
     components: {
         "vue-markdown": VueMarkdown,
-        "loading":loading,
-        "my-comment":comment,
+        "loading": loading,
+        "my-comment": comment,
         "my-tag": tag,
     },
 };

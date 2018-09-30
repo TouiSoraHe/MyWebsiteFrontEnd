@@ -3,18 +3,6 @@ body{
     /*background-attachment:fixed;*/
 }
 
-pre {
-    border-left: 0;
-}
-
-/*code {
-    font-weight: 500;
-}*/
-
-hr {
-    border-top: 0.1rem solid #bdbdbd;
-}
-
 .text-center {
     text-align: center;
 }
