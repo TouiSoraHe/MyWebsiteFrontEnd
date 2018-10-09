@@ -5,77 +5,185 @@
                 发表评论
             </v-card-title>
             <v-card-text>
-                <form>
-                    <v-text-field v-validate="'required|max:10'" v-model="name" :counter="10" :error-messages="errors.collect('name')" label="昵称" data-vv-name="name" required name="name"></v-text-field>
-                    <v-text-field v-validate="'email'" v-model="email" :error-messages="errors.collect('email')" label="邮箱" data-vv-name="email" name="email"></v-text-field>
-                    <v-textarea v-validate="'required|max:150'" v-model="comment"  :counter="150" :error-messages="errors.collect('comment')" label="内容" data-vv-name="comment" required name="comment"  auto-grow background-color="#fff" :rows="2"></v-textarea>
-                    <v-layout>
-                        <v-spacer></v-spacer>
-                        <v-btn @click="submit">提交</v-btn>
-                    </v-layout>
-                </form>
+                <comment-form :blogID="blogID"></comment-form>
             </v-card-text>
-            <v-divider>
-            </v-divider>
-            <v-card-text class="subheading">
-                评论内容
+            <v-card-text>
+                <ul class="pa-0 ma-0">
+                    <li v-for="(comments,parentIndex) in commentsTree" :key="parentIndex" class="ma-0" style="list-style-type:none;">
+                        <v-divider v-if="parentIndex!==0">
+                        </v-divider>
+                        <div style="display: flex;" class="commentItem py-3" :id="'comment'+comments[0].id">
+                            <div>
+                                <v-avatar><img :src="comments[0].user.avatar"></v-avatar>
+                            </div>
+                            <div class="ml-3" style="flex: 1;">
+                                <div>
+                                    <div class="subheading">{{comments[0].user.userName}} : </div>
+                                    <div class="grey--text caption">{{comments[0].time.Format("yy-MM-dd hh:mm:ss")}}</div>
+                                </div>
+                                <div class="body-2 mt-2">
+                                    <span>{{comments[0].content}}</span>
+                                </div>
+                                <v-btn small flat class="ma-0 pa-0 mr-2 replyBtn" @click="replyBtnOnClick(comments[0].id,comments[0].user.userName)" style="float: right;min-width: 40px;">回复</v-btn>
+                            </div>
+                        </div>
+                        <ul style="padding: 0 0 0 64px;" class="ma-0">
+                            <li v-for="(comment,sonIndex) in comments" v-if="sonIndex!==0" :key="sonIndex" class="ma-0" style="list-style-type:none;">
+                                <v-divider>
+                                </v-divider>
+                                <div style="display: flex;" class="commentItem py-3" :id="'comment'+comment.id">
+                                    <div>
+                                        <v-avatar><img :src="comment.user.avatar"></v-avatar>
+                                    </div>
+                                    <div class="ml-3" style="flex: 1;">
+                                        <div>
+                                            <div class="subheading">{{comment.user.userName}} : </div>
+                                            <div class="grey--text caption">{{comment.time.Format("yy-MM-dd hh:mm:ss")}}</div>
+                                        </div>
+                                        <div class="body-2 mt-2">
+                                            <a href="javascript:void(0)" @click="goAnchor('#comment'+comment.parentID)" style="color: #ff4081;">@{{idToCommentDir.get(comment.parentID).user.userName}}:</a>&nbsp;
+                                            <span>{{comment.content}}</span>
+                                        </div>
+                                        <v-btn small flat class="ma-0 pa-0 mr-2 replyBtn" @click="replyBtnOnClick(comment.id,comment.user.userName)" style="float: right;min-width: 40px;">回复</v-btn>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </v-card-text>
         </v-card>
+        <v-dialog v-model="commentFormDialog" max-width="500px">
+            <v-card>
+                <v-card-title>
+                    <span class="headline">回复 {{replyUserName}}</span>
+                </v-card-title>
+                <v-card-text>
+                    <comment-form :blogID="blogID" :parentID="replyID"></comment-form>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 <script>
-import Vue from 'vue';
-import VeeValidate from 'vee-validate';
-
-Vue.use(VeeValidate);
+import CommentForm from "components/CommentForm/CommentForm.vue";
 
 export default {
-    $veeValidate: {
-        validator: 'new',
+    data() {
+        return {
+            commentFormDialog: false,
+            replyID: null,
+            replyUserName: "",
+        };
     },
 
-    data: () => ({
-        name: '',
-        email: '',
-        comment:'',
-        dictionary: {
-            attributes: {
-                name: 'name',
-                email: 'email',
-                comment:'comment',
-            },
-            custom: {
-                name: {
-                    required:'昵称不能为空',
-                    max: '昵称不能超过10个字符',
-                },
-                email: {
-                    email: '邮箱地址不正确',
-                },
-                comment:{
-                    required:"评论内容不能为空",
-                    max: '评论内容不能超过150个字符',
-                },
-            },
-        },
-    }),
+    props: {
+        comments: Array,
+        blogID: String,
+    },
 
-    mounted() {
-        this.$validator.localize('zh-CN', this.dictionary);
+    computed: {
+        //按时间升序排序后的评论列表
+        sortedComments() {
+            let ret = this.comments;
+            ret = ret.slice();
+            ret.forEach((item) => {
+                item.time = new Date(item.time);
+            });
+            ret.sort((a, b) => {
+                return a.time - b.time;
+            });
+            return ret;
+        },
+        //map,id为键,评论为值
+        idToCommentDir() {
+            let ret = new Map();
+            let comments = this.sortedComments;
+            comments.forEach((item) => {
+                ret.set(item.id, item);
+            });
+            return ret;
+        },
+        commentsTree() {
+            let that = this;
+            let comments = this.sortedComments;
+            //用于得到一条评论的根评论ID
+            function getRootCommentID(comment) {
+                if (comment.parentID === null) {
+                    return comment.id;
+                }
+                else
+                    return getRootCommentID(that.idToCommentDir.get(comment.parentID));
+            }
+            let map = new Map();
+            comments.forEach((item) => {
+                let rootID = getRootCommentID(item);
+                // item.time = new Date(item.time).Format("yy-MM-dd hh:mm:ss");
+                if (!map.has(rootID)) {
+                    map.set(rootID, []);
+                }
+                if (item.parentID === null) {
+                    map.get(rootID).unshift(item);
+                }
+                else {
+                    map.get(rootID).push(item);
+                }
+            });
+            let ret = [];
+            map.forEach((value) => {
+                ret.push(value);
+            });
+            return ret;
+        },
     },
 
     methods: {
-        submit() {
-            this.$validator.validateAll();
-            console.log(123);
+        replyBtnOnClick(replyID, replyUserName) {
+            this.commentFormDialog = true;
+            this.replyID = replyID;
+            this.replyUserName = replyUserName;
         },
+        goAnchor(selector) {
+            this.$vuetify.goTo(selector,{offset:-200,});
+            let el = this.$el.querySelector(selector);
+            let colorFlag = false;
+            let intervalID = setInterval(()=>{
+                if (!colorFlag){
+                    el.style.backgroundColor="rgba(50, 50, 50, .1)";
+                }
+                else{
+                    el.style.backgroundColor="rgba(255, 255, 255, 1)";
+                }
+                colorFlag = !colorFlag;
+            },500);
+            setTimeout(()=>{
+                el.style.backgroundColor="";
+                clearInterval(intervalID);
+            },2000);
+            console.log(el);
+        },
+    },
+
+    components: {
+        "comment-form": CommentForm,
     },
 };
 </script>
 <style scoped>
-.comment {
-    padding: 40px;
+.commentItem {
     background-color: rgba(255, 255, 255, 1);
-    box-shadow: 0 0 1px #bdbdbd;
+    transition: all 0.2s;
+}
+
+.commentItem:hover {
+    background-color: rgba(50, 50, 50, .1);
+}
+
+.commentItem .replyBtn {
+    opacity: 0;
+}
+
+.commentItem:hover .replyBtn {
+    opacity: 1;
 }
 </style>

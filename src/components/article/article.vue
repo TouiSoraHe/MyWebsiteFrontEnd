@@ -22,7 +22,7 @@
         </transition>
         <loading :showLoading="showLoading" style="margin-top: 20px"></loading>
         <transition name="slide-x-transition" mode="out-in">
-            <my-comment v-if="article" :comments="article.comments" class="my-5"></my-comment>
+            <my-comment v-if="article" :comments="article.comments" :blogID="article.id" class="my-5"></my-comment>
         </transition>
     </div>
 </template>
@@ -34,9 +34,7 @@ import tag from 'components/tag/tag.vue';
 
 export default {
     props: {
-        id: {
-            type: String,
-        },
+        id: String,
     },
     data() {
         return {

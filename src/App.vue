@@ -92,7 +92,7 @@ export default {
             let styleObj = {
                 "min-height": this.windowSize.y + "px",
             };
-            if(!this.isMobile){
+            if (!this.isMobile) {
                 styleObj['margin-top'] = '30px';
             }
             return styleObj;
@@ -140,7 +140,7 @@ export default {
     components: {
         "my-nav": nav,
         "my-back-to-top": top,
-        "my-top-bg":topBg,
+        "my-top-bg": topBg,
     },
 };
 </script>

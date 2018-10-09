@@ -22,66 +22,101 @@ let blogs = [];
 let blogInfos = [];
 let comments = [];
 let tags = [];
-
 let users = [];
+
+//博客信息
+function BlogInfo(blogInfoID,title,time,views,words,summary,blogID,imgUrl,ownTags){
+    this.id = blogInfoID;
+    this.title = title;
+    this.time = time;
+    this.views = views;
+    this.words = words;
+    this.summary = summary;
+    this.blogID = blogID;
+    this.imgUrl = imgUrl;
+    this.tags = ownTags;
+}
+
+//博客
+function Blog(blogID,title,time,views,words,content,commentTemps,imgUrl,ownTags){
+    this.id = blogID;
+    this.title = title;
+    this.time = time;
+    this.views = views;
+    this.words = words;
+    this.content = content;
+    this.comments = commentTemps;
+    this.imgUrl = imgUrl;
+    this.tags = ownTags;
+}
+
+function Comment(commentID,commentContent,parentID,time,blogID,user){
+    this.id = commentID;
+    this.content = commentContent;
+    this.parentID = parentID;
+    this.time = time;
+    this.blogID = blogID;
+    this.user = user;
+}
+
+function Tag(tagID,tagName,blogInfoIDs){
+    this.id = tagID;
+    this.tagName = tagName;
+    this.blogInfoIDs = blogInfoIDs;
+}
+
+function User(userID,userName,email,avatar){
+    this.id = userID;
+    this.userName = userName;
+    this.email = email;
+    this.avatar = avatar;
+}
 
 //生成用户
 for (let i = 1; i < 10; i++) {
-    let id = i;
+    let id = i.toString();
     let userName = faker.name.findName();
     let email = faker.internet.email();
-    let user = {
-        "id":id,
-        "userName":userName,
-        "email":email,
-    };
-    users.push(user);
+    let avatar = 'https://picsum.photos/100/100?image='+Math.randomNum(0,1000);
+    users.push(new User(id,userName,email,avatar));
 }
 users.push({
     "id":"7c0412670bc5428fef4571706707471e",
     "userName":"zzy",
     "email":"zzymailaddr@gmail.com",
+    "avatar" : 'https://picsum.photos/100/100?image='+Math.randomNum(0,1000),
 });
 
 const tagNames = ["随笔","技术","前端","Unity","后台","文学","热点","shit","电影","小说","电视剧","美食"]
 //生成标签
 for(let i = 1;i<=tagNames.length;i++){
-    let id = i;
+    let id = i.toString();
     let tagName = tagNames[i-1];
-    let blogInfoIDs = [];
-    let tag = {
-        "id":id,
-        "tagName":tagName,
-        blogInfoIDs : blogInfoIDs,
-    };
-    tags.push(tag);
+    tags.push(new Tag(id,tagName,[]));
 }
 
 for (let i = 1; i < 50; i++) {
+    let blogInfoID = i.toString();
+    let blogID = (i + 100).toString();
+
     //生成评论
-    let commentContent = faker.lorem.sentences();
     let commentTemps = [];
     for (var j = i*1000; j <= i*1000+30; j++) {
+        let commentContent = faker.lorem.sentences();
         let parentItem = commentTemps.randomGetItem();
         let parentID = Math.random() >= 0.5 ? null : (parentItem===undefined ? null : parentItem.id);
         let user = users.randomGetItem();
         let time = faker.date.past();
-        let comment = {
-            "id":j,
-            "content":commentContent,
-            "parentID":parentID,
-            "time": time,
-            "user": user,
-        };
-        commentTemps.push(comment);
+        while(parentItem!==undefined && parentID === parentItem.id && time<= parentItem.time){
+            time = faker.date.past();
+        }
+        commentTemps.push(new Comment(j.toString(),commentContent,parentID,time,blogID,user));
     }
     commentTemps.forEach((item)=>{
         comments.push(item);
     });
 
     //生成博客列表和博客
-    let blogInfoID = i;
-    let blogID = i + 100;
     let title = faker.lorem.sentence();
     let time = faker.date.past();
     let views = faker.random.number({ 'min': 1000, 'max': 2000, });
@@ -101,31 +136,8 @@ for (let i = 1; i < 50; i++) {
         tags[index].blogInfoIDs.push(blogInfoID);
         ownTags.push(tags[index]);
     }
-
-    let blogInfo = {
-        "id": blogInfoID,
-        "title": title,
-        "time": time,
-        "views": views,
-        "words": words,
-        "summary": summary,
-        "blogID": blogID,
-        "imgUrl":imgUrl,
-        "tags":ownTags,
-    };
-    let blog = {
-        "id": blogID,
-        "title": title,
-        "time": time,
-        "views": views,
-        "words": words,
-        "content": content,
-        "comments": commentTemps,
-        "imgUrl":imgUrl,
-        "tags":ownTags,
-    };
-    blogs.push(blog);
-    blogInfos.push(blogInfo);
+    blogs.push(new Blog(blogID,title,time,views,words,content,commentTemps,imgUrl,ownTags));
+    blogInfos.push(new BlogInfo(blogInfoID,title,time,views,words,summary,blogID,imgUrl,ownTags));
 }
 
 function generate() {
