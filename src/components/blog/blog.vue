@@ -37,12 +37,12 @@ export default {
             if(that.showLoading) return;
             console.log("开始加载博客列表,currentPage:"+that.currentPage);
             that.showLoading = true;
-            this.$axios({
-                url: '/api/blog-infos?_limit='+that.limt+'&_page='+(that.currentPage+1),
-                method: 'get',
-            })
-                .then((response) => {
-                    that.showLoading = false;
+            this.$api.getBlogInfos(
+                {
+                    limt:that.limt,
+                    currentPage:that.currentPage,
+                },
+                (response)=>{
                     that.totalPage = parseInt(response.headers['x-total-count']);
                     if(response.data.length>0){
                         that.currentPage++;
@@ -53,10 +53,9 @@ export default {
                         }
                         that.blogInfo.push(item);
                     });
-                })
-                .catch((error) => {
+                },
+                ()=>{
                     that.showLoading = false;
-                    console.log("获取blogInfo时发生了错误:" + error);
                 });
         },
     },

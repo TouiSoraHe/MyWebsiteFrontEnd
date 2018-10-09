@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Vue from 'vue';
-// import router from 'assets/js/router'
 
 function errorMessage(msg){
     console.error(msg);
@@ -30,4 +29,44 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
-Vue.prototype.$axios = axios;
+function Api() {}
+
+function callBack(func, para) {
+    if (func !== null && func !== undefined) {
+        if (para !== undefined) {
+            func(para);
+        }
+        else {
+            func();
+        }
+    }
+}
+
+function get(url,success, completed, error){
+    axios
+        .get(url)
+        .then((response) => {
+            callBack(completed);
+            callBack(success, response);
+        })
+        .catch((errorMsg) => {
+            callBack(completed);
+            callBack(error, errorMsg);
+            console.error(errorMsg);
+        });
+}
+
+Api.prototype = {
+    constructor: Api,
+    getBlog: function(para, success, completed, error) {
+        get('/api/blogs/' + para.id,success,completed,error);
+    },
+    getBlogInfos: function(para, success, completed, error) {
+        get('/api/blog-infos?_limit='+para.limt+'&_page='+(para.currentPage+1),success,completed,error);
+    },
+    getUser: function(para, success, completed, error) {
+        get('/api/users/' + para.userID,success,completed,error);
+    },
+};
+
+Vue.prototype.$api = new Api();

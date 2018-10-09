@@ -103,15 +103,12 @@ export default {
             let that = this;
             //获取浏览器指纹
             Fingerprint2().get((result) => {
-                that.$axios({
-                    url: '/api/users/' + result,
-                    method: 'get',
-                })
-                    .then((response) => {
+                that.$api.getUser(
+                    {
+                        userID:result,
+                    },
+                    (response)=>{
                         that.$store.setUser(response.data);
-                    })
-                    .catch((error) => {
-                        console.log("get user error:" + error);
                     });
             });
         },

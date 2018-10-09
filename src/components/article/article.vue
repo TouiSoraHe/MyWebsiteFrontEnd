@@ -59,22 +59,23 @@ export default {
     created: function() {
         let that = this;
         that.showLoading = true;
-        this.$axios
-            .get('/api/blogs/' + that.id)
-            .then((response) => {
-                that.showLoading = false;
-                if (!response.data.id || !response.data.title || !response.data.content) {
-                    console.log("获取article时数据有误:" + response.data.id);
+        this.$api.getBlog(
+            {
+                id:that.id,
+            },
+            (response)=>{
+                let article = response.data;
+                if (!article.id || !article.title || !article.content) {
+                    console.error("获取article时数据有误:" + article.id);
                 }
-                that.article = response.data;
+                that.article = article;
                 document.title = that.article.title;
                 if (that.article.imgUrl !== undefined) {
                     that.$store.setHeadBgUrl(that.article.imgUrl);
                 }
-            })
-            .catch((error) => {
+            },
+            ()=>{
                 that.showLoading = false;
-                console.log("获取article时发生了错误:" + error);
             });
     },
     components: {
