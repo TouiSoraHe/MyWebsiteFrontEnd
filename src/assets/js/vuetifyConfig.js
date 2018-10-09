@@ -21,6 +21,7 @@ import VSelect from 'vuetify/es5/components/VSelect';
 import VCheckbox from 'vuetify/es5/components/VCheckbox';
 import VTextarea from 'vuetify/es5/components/VTextarea';
 import VDialog from 'vuetify/es5/components/VDialog';
+import VPagination from 'vuetify/es5/components/VPagination';
 import { Resize,Scroll, } from 'vuetify/es5/directives';
 
 Vue.use(Vuetify, {
@@ -43,6 +44,7 @@ Vue.use(Vuetify, {
         VCheckbox,
         VTextarea,
         VDialog,
+        VPagination,
     },
     directives: {
         Resize,

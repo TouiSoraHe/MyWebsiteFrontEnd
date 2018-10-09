@@ -9,7 +9,7 @@
             </v-card-text>
             <v-card-text>
                 <ul class="pa-0 ma-0">
-                    <li v-for="(comments,parentIndex) in commentsTree" :key="parentIndex" class="ma-0" style="list-style-type:none;">
+                    <li v-for="(comments,parentIndex) in commentsTreePagination" :key="comments[0].id" class="ma-0" style="list-style-type:none;">
                         <v-divider v-if="parentIndex!==0">
                         </v-divider>
                         <div style="display: flex;" class="commentItem py-3" :id="'comment'+comments[0].id">
@@ -28,7 +28,7 @@
                             </div>
                         </div>
                         <ul style="padding: 0 0 0 64px;" class="ma-0">
-                            <li v-for="(comment,sonIndex) in comments" v-if="sonIndex!==0" :key="sonIndex" class="ma-0" style="list-style-type:none;">
+                            <li v-for="(comment,sonIndex) in comments" v-if="sonIndex!==0" :key="comment.id" class="ma-0" style="list-style-type:none;">
                                 <v-divider>
                                 </v-divider>
                                 <div style="display: flex;" class="commentItem py-3" :id="'comment'+comment.id">
@@ -52,6 +52,13 @@
                     </li>
                 </ul>
             </v-card-text>
+            <v-card-text class="text-xs-center">
+                <v-pagination
+                  v-model="page"
+                  :length="pageLength"
+                  @input="paginationInput"
+                ></v-pagination>
+            </v-card-text>
         </v-card>
         <v-dialog v-model="commentFormDialog" max-width="500px">
             <v-card>
@@ -74,6 +81,8 @@ export default {
             commentFormDialog: false,
             replyID: null,
             replyUserName: "",
+            page:1,
+            pageCount:5,
         };
     },
 
@@ -118,7 +127,6 @@ export default {
             let map = new Map();
             comments.forEach((item) => {
                 let rootID = getRootCommentID(item);
-                // item.time = new Date(item.time).Format("yy-MM-dd hh:mm:ss");
                 if (!map.has(rootID)) {
                     map.set(rootID, []);
                 }
@@ -134,6 +142,12 @@ export default {
                 ret.push(value);
             });
             return ret;
+        },
+        commentsTreePagination(){
+            return this.commentsTree.slice((this.page-1)*this.pageCount,(this.page-1)*this.pageCount+this.pageCount);
+        },
+        pageLength(){
+            return Math.ceil(this.commentsTree.length/this.pageCount);
         },
     },
 
@@ -160,7 +174,9 @@ export default {
                 el.style.backgroundColor="";
                 clearInterval(intervalID);
             },2000);
-            console.log(el);
+        },
+        paginationInput(){
+            console.log(this.commentsTreePagination);
         },
     },
 
