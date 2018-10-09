@@ -7,7 +7,7 @@
             <v-card-text>
                 <comment-form :blogID="blogID"></comment-form>
             </v-card-text>
-            <v-card-text>
+            <v-card-text v-if="commentsTreePagination.length>0">
                 <ul class="pa-0 ma-0">
                     <li v-for="(comments,parentIndex) in commentsTreePagination" :key="comments[0].id" class="ma-0" style="list-style-type:none;">
                         <v-divider v-if="parentIndex!==0">
@@ -52,7 +52,10 @@
                     </li>
                 </ul>
             </v-card-text>
-            <v-card-text class="text-xs-center">
+            <v-card-text v-else class="text-xs-center">
+                暂时还没有评论,快来抢沙发吧!
+            </v-card-text>
+            <v-card-text class="text-xs-center" v-if="pageLength>1">
                 <v-pagination
                   v-model="page"
                   :length="pageLength"
@@ -94,7 +97,7 @@ export default {
     computed: {
         //按时间升序排序后的评论列表
         sortedComments() {
-            let ret = this.comments;
+            let ret = this.comments || [];
             ret = ret.slice();
             ret.forEach((item) => {
                 item.time = new Date(item.time);

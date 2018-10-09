@@ -1,7 +1,7 @@
 <template>
     <div>
         <transition name="slide-x-transition" mode="out-in">
-            <v-card v-if="article">
+            <v-card v-if="article" class="mb-5">
                 <v-card-title>
                     <div class="display-1 font-weight-bold">{{article.title}}</div>
                 </v-card-title>
@@ -22,7 +22,7 @@
         </transition>
         <loading :showLoading="showLoading" style="margin-top: 20px"></loading>
         <transition name="slide-x-transition" mode="out-in">
-            <my-comment v-if="article" :comments="article.comments" :blogID="article.id" class="my-5"></my-comment>
+            <my-comment v-if="article" :comments="article.comments" :blogID="article.id.toString()" class="mb-5"></my-comment>
         </transition>
     </div>
 </template>

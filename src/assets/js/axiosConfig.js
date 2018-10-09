@@ -52,7 +52,7 @@ function get(url,success, completed, error){
         .catch((errorMsg) => {
             callBack(completed);
             callBack(error, errorMsg);
-            console.error(errorMsg);
+            console.error(url+":"+errorMsg);
         });
 }
 
