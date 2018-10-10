@@ -3,16 +3,16 @@ import Vue from 'vue';
 let store = {
     debug: true,
     state: {
-        //判断是否为手机端
+        //判断是否为手机端,在APP.vue中设置
         isMobile: false,
-        //窗口大小
+        //窗口大小,在APP.vue中设置
         windowSize: {
             x: 0,
             y: 0,
         },
-        //距离顶部的距离
+        //距离顶部的距离,在APP.vue中设置
         scrollTop: 0,
-        //当前访问页面的用户的信息
+        //当前访问页面的用户的信息,在APP.vue中设置
         user: {},
         //布局管理，数组分别代表 左边空白区域 内容区 右侧边栏 右边空白区域
         layoutRatio: {
@@ -30,6 +30,10 @@ let store = {
             archiveHeadBgUrl:undefined,
             musicHeadBgUrl:undefined,
             messageHeadBgUrl:undefined,
+            BloggerInfo:{
+                BloggerName:"遠空",
+                BloggerAvatar:"http://p2.music.126.net/OpgpNNPKznDDMxoBqVJy-Q==/2464005557906815.jpg",
+            },
         },
         headBgUrl:"",
     },

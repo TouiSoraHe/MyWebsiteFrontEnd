@@ -12,16 +12,72 @@ Vue.use(Router);
 
 let router = new Router({
     routes: [
-        { path: '/', components: { left: index, }, meta: { title: '首页', }, },
-        { path: '/blog', components: { left: blog, right: PersonalInfo, }, meta: { title: '博文', }, },
-        { path: '/archive', components: { left: archive, }, meta: { title: '归档', }, },
-        { path: '/music', components: { left: music, }, meta: { title: '音乐', }, },
-        { path: '/message', components: { left: message, }, meta: { title: '留言', }, },
-        { path: '/blog/:id', components: { left: article, right: PersonalInfo, }, props: { left: true, }, meta: { title: '博文', }, },
+        {
+            path: '/',
+            components: {
+                left: index,
+            },
+            meta: {
+                title: '首页',
+            },
+        },
+        {
+            path: '/blog',
+            components: {
+                left: blog,
+                right: PersonalInfo,
+            },
+            meta: {
+                title: '博文',
+            },
+        },
+        {
+            path: '/archive',
+            components: {
+                left: archive,
+            },
+            meta: {
+                title: '归档',
+            },
+        },
+        {
+            path: '/music',
+            components: {
+                left: music,
+            },
+            meta: {
+                title: '音乐',
+            },
+        },
+        {
+            path: '/message',
+            components: {
+                left: message,
+            },
+            meta: {
+                title: '留言',
+            },
+        },
+        {
+            path: '/blog/:id',
+            components: {
+                left: article,
+                right: PersonalInfo,
+            },
+            props: {
+                left: true,
+            },
+            meta: {
+                title: '博文',
+            },
+        },
     ],
     linkActiveClass: 'active',
     scrollBehavior() {
-        return { x: 0, y: 0, };
+        return {
+            x: 0,
+            y: 0,
+        };
     },
 });
 

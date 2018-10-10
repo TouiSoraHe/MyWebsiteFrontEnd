@@ -75,7 +75,7 @@ function User(userID,userName,email,avatar){
 //生成用户
 for (let i = 1; i < 10; i++) {
     let id = i.toString();
-    let userName = faker.name.findName();
+    let userName = faker.name.findName().replace(/\s+/g,"");
     let email = faker.internet.email();
     let avatar = 'https://picsum.photos/100/100?image='+Math.randomNum(0,1000);
     users.push(new User(id,userName,email,avatar));

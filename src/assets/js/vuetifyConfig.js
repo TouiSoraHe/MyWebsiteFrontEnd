@@ -1,5 +1,5 @@
 require('vuetify/src/stylus/app.styl');
-import 'material-design-icons-iconfont/dist/material-design-icons.css';
+import '@mdi/font/css/materialdesignicons.css';
 
 import Vue from 'vue';
 import Vuetify from 'vuetify/es5/components/Vuetify';
@@ -22,7 +22,8 @@ import VCheckbox from 'vuetify/es5/components/VCheckbox';
 import VTextarea from 'vuetify/es5/components/VTextarea';
 import VDialog from 'vuetify/es5/components/VDialog';
 import VPagination from 'vuetify/es5/components/VPagination';
-import { Resize,Scroll, } from 'vuetify/es5/directives';
+import VTooltip from 'vuetify/es5/components/VTooltip';
+import { Resize, Scroll, } from 'vuetify/es5/directives';
 
 Vue.use(Vuetify, {
     components: {
@@ -45,9 +46,27 @@ Vue.use(Vuetify, {
         VTextarea,
         VDialog,
         VPagination,
+        VTooltip,
     },
     directives: {
         Resize,
         Scroll,
+    },
+    iconfont: 'mdi',
+    icons: {
+        'home': 'mdi-home',
+        'blogger': 'mdi-blogger',
+        'archive': 'mdi-archive',
+        'music': 'mdi-library-music',
+        'message': 'mdi-message',
+        'menu': 'mdi-menu',
+        'calendar': 'mdi-calendar',
+        'title': 'mdi-title',
+        'file-word': 'mdi-file-word',
+        'eye': 'mdi-eye',
+        'arrow-up': 'mdi-arrow-up',
+        'github-circle':'mdi-github-circle',
+        'email':'mdi-email',
+        'telegram':'mdi-telegram',
     },
 });

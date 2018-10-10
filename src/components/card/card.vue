@@ -16,9 +16,9 @@
                     </v-container>
                 </v-img>
                 <v-card-text class="grey--text">
-                    <span class="body-1"><v-icon size="18px">date_range</v-icon>{{articleTime}}</span>&nbsp;&nbsp;
-                    <span class="body-1"><v-icon size="18px">title</v-icon><span>{{article.words}}</span></span>&nbsp;&nbsp;
-                    <span class="body-1"><v-icon size="18px">visibility</v-icon><span>{{article.views}}</span></span>
+                    <span class="body-1"><v-icon size="18px">{{$vuetify.icons['calendar']}}</v-icon>{{articleTime}}</span>&nbsp;&nbsp;
+                    <span class="body-1"><v-icon size="18px">{{$vuetify.icons['file-word']}}</v-icon><span>{{article.words}}</span></span>&nbsp;&nbsp;
+                    <span class="body-1"><v-icon size="18px">{{$vuetify.icons['eye']}}</v-icon><span>{{article.views}}</span></span>
                 </v-card-text>
             </v-card>
         </v-hover>

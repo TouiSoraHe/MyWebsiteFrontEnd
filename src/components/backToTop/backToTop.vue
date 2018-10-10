@@ -1,7 +1,7 @@
 <template>
     <transition name='scale-transition'>
         <v-btn fab fixed right bottom v-show="show" @click="$vuetify.goTo(0)">
-            <v-icon large>arrow_upward</v-icon>
+            <v-icon large>{{$vuetify.icons['arrow-up']}}</v-icon>
         </v-btn>
     </transition>
 </template>

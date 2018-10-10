@@ -18,13 +18,13 @@
                             </div>
                             <div class="ml-3" style="flex: 1;">
                                 <div>
-                                    <div class="subheading">{{comments[0].user.userName}} : </div>
-                                    <div class="grey--text caption">{{comments[0].time.Format("yy-MM-dd hh:mm:ss")}}</div>
+                                    <span class="subheading">{{comments[0].user.userName}}</span>
+                                    <span class="grey--text caption"> · {{comments[0].time.Format("yy-MM-dd")}}</span>
+                                    <v-btn small flat class="ma-0 pa-0 mr-2 replyBtn" @click="replyBtnOnClick(comments[0].id,comments[0].user.userName)" style="float: right;min-width: 40px;">回复</v-btn>
                                 </div>
                                 <div class="body-2 mt-2">
                                     <span>{{comments[0].content}}</span>
                                 </div>
-                                <v-btn small flat class="ma-0 pa-0 mr-2 replyBtn" @click="replyBtnOnClick(comments[0].id,comments[0].user.userName)" style="float: right;min-width: 40px;">回复</v-btn>
                             </div>
                         </div>
                         <ul style="padding: 0 0 0 64px;" class="ma-0">
@@ -37,14 +37,14 @@
                                     </div>
                                     <div class="ml-3" style="flex: 1;">
                                         <div>
-                                            <div class="subheading">{{comment.user.userName}} : </div>
-                                            <div class="grey--text caption">{{comment.time.Format("yy-MM-dd hh:mm:ss")}}</div>
+                                            <span class="subheading">{{comment.user.userName}}</span>
+                                            <span class="grey--text caption"> · {{comment.time.Format("yy-MM-dd")}}</span>
+                                            <v-btn small flat class="ma-0 pa-0 mr-2 replyBtn" @click="replyBtnOnClick(comment.id,comment.user.userName)" style="float: right;min-width: 40px;">回复</v-btn>
                                         </div>
                                         <div class="body-2 mt-2">
                                             <a href="javascript:void(0)" @click="goAnchor('#comment'+comment.parentID)" style="color: #ff4081;">@{{idToCommentDir.get(comment.parentID).user.userName}}:</a>&nbsp;
                                             <span>{{comment.content}}</span>
                                         </div>
-                                        <v-btn small flat class="ma-0 pa-0 mr-2 replyBtn" @click="replyBtnOnClick(comment.id,comment.user.userName)" style="float: right;min-width: 40px;">回复</v-btn>
                                     </div>
                                 </div>
                             </li>

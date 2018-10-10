@@ -1,6 +1,5 @@
 import 'normalize.css/normalize.css';
 import 'assets/css/milligram.min.css';
-// import 'assets/icon/iconfont.css'
 import 'assets/css/global.css';
 
 import Vue from 'vue';
