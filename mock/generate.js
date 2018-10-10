@@ -59,9 +59,10 @@ function Comment(commentID,commentContent,parentID,time,blogID,user){
     this.user = user;
 }
 
-function Tag(tagID,tagName,blogInfoIDs){
+function Tag(tagID,tagName,tagImg,blogInfoIDs){
     this.id = tagID;
     this.tagName = tagName;
+    this.tagImg = tagImg;
     this.blogInfoIDs = blogInfoIDs;
 }
 
@@ -92,7 +93,14 @@ const tagNames = ["随笔","技术","前端","Unity","后台","文学","热点",
 for(let i = 1;i<=tagNames.length;i++){
     let id = i.toString();
     let tagName = tagNames[i-1];
-    tags.push(new Tag(id,tagName,[]));
+    let imgID = Math.randomNum(0,1000);
+    let tagImg = {
+        small : 'https://picsum.photos/200/200?image='+imgID,
+        medium : 'https://picsum.photos/500/500?image='+imgID,
+        large : 'https://picsum.photos/1920/1080?image='+imgID,
+
+    };
+    tags.push(new Tag(id,tagName,tagImg,[]));
 }
 
 for (let i = 1; i < 50; i++) {

@@ -6,6 +6,7 @@ import music from 'components/music/music.vue';
 import archive from 'components/archive/archive.vue';
 import message from 'components/message/message.vue';
 import article from 'components/article/article.vue';
+import archiveBlogs from 'components/ArchiveBlogs/ArchiveBlogs.vue';
 import PersonalInfo from 'components/PersonalInfo/PersonalInfo.vue';
 
 Vue.use(Router);
@@ -35,6 +36,7 @@ let router = new Router({
             path: '/archive',
             components: {
                 left: archive,
+                right: PersonalInfo,
             },
             meta: {
                 title: '归档',
@@ -69,6 +71,19 @@ let router = new Router({
             },
             meta: {
                 title: '博文',
+            },
+        },
+        {
+            path: '/archive/:id',
+            components: {
+                left: archiveBlogs,
+                right: PersonalInfo,
+            },
+            props: {
+                left: true,
+            },
+            meta: {
+                title: '标签详情',
             },
         },
     ],

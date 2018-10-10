@@ -37,7 +37,7 @@ export default {
             if(that.showLoading) return;
             console.log("开始加载博客列表,currentPage:"+that.currentPage);
             that.showLoading = true;
-            this.$api.getBlogInfos(
+            this.$api.getBlogInfosByPage(
                 {
                     limt:that.limt,
                     currentPage:that.currentPage,

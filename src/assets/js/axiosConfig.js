@@ -61,11 +61,31 @@ Api.prototype = {
     getBlog: function(para, success, completed, error) {
         get('/api/blogs/' + para.id,success,completed,error);
     },
-    getBlogInfos: function(para, success, completed, error) {
+    getBlogInfosByPage: function(para, success, completed, error) {
         get('/api/blog-infos?_limit='+para.limt+'&_page='+(para.currentPage+1),success,completed,error);
+    },
+    getBlogInfosByIDs: function(para, success, completed, error) {
+        let first = true;
+        let parametersString = new String();
+        para.blogInfoIDs.forEach((id)=>{
+            if(!first){
+                parametersString += '&';
+            }
+            parametersString += 'id='+id;
+            if(first){
+                first = false;
+            }
+        });
+        get('/api/blog-infos?'+parametersString,success,completed,error);
     },
     getUser: function(para, success, completed, error) {
         get('/api/users/' + para.userID,success,completed,error);
+    },
+    getTags: function(para, success, completed, error) {
+        get('/api/tags',success,completed,error);
+    },
+    getTag: function(para, success, completed, error) {
+        get('/api/tags/'+para.id,success,completed,error);
     },
 };
 

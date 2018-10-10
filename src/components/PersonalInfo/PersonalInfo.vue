@@ -1,11 +1,9 @@
 <template>
     <div>
         <v-card class="text-center" style="width: 315px">
-            <v-card-media class="pa-3">
-                <v-avatar size="80px">
-                    <v-img :src="bloggerInfo.BloggerAvatar"></v-img>
-                </v-avatar>
-            </v-card-media>
+            <v-avatar size="80px" class="my-3">
+                <v-img :src="bloggerInfo.BloggerAvatar"></v-img>
+            </v-avatar>
             <v-card-text class="subheading pa-0">
                 {{bloggerInfo.BloggerName}}
             </v-card-text>
