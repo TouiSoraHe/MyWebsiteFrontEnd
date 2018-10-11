@@ -6,75 +6,135 @@
             </div>
         </transition>
         <loading :showLoading="showLoading" style="margin-top: 20px"></loading>
-        <div id="blogInfoLazyLoadingObserver"></div>
+        <observer @intersect="observerIntersect"></observer>
     </div>
 </template>
 <script>
 import card from "components/card/card.vue";
 import loading from 'components/loading/loading.vue';
+import Observer from 'components/Observer/Observer.vue';
 
 export default {
     data() {
         return {
             blogInfo: [],
-            showLoading:false,
-            limt:10,
-            currentPage:0,
-            totalPage:0,
+            blogInfoIDs: [],
+            showLoading: false,
+            limt: 10, //每页数据量
+            currentPage: 0, //当前页
+            totalCount: 0, //数据总数
             sharedState: this.$store.state,
         };
     },
-    created(){
-        this.$store.setHeadBgUrl(this.$store.getConfig().blogHeadBgUrl || this.$store.getConfig().defaultHeadBgUrl);
+    props: {
+        id: String,
+    },
+    created() {
+        if (this.id === undefined) {
+            this.$store.setHeadBgUrl(this.$store.getConfig().blogHeadBgUrl || this.$store.getConfig().defaultHeadBgUrl);
+        }
     },
     components: {
         "card": card,
-        "loading":loading,
+        "loading": loading,
+        "observer":Observer,
     },
-    methods:{
-        loadBlogInfo(){
-            var that = this;
-            if(that.showLoading) return;
-            console.log("开始加载博客列表,currentPage:"+that.currentPage);
-            that.showLoading = true;
-            this.$api.getBlogInfosByPage(
-                {
-                    limt:that.limt,
-                    currentPage:that.currentPage,
-                },
-                (response)=>{
-                    that.totalPage = parseInt(response.headers['x-total-count']);
-                    if(response.data.length>0){
-                        that.currentPage++;
+    methods: {
+        async loadBlogInfo() {
+            if (this.showLoading) return;
+            if (this.id === undefined) {
+                this.loadBlogWithPage();
+            }
+            else {
+                if (this.blogInfoIDs.length === 0) {
+                    await this.loadBlogInfoIDs();
+                    if (this.blogInfoIDs.length !== 0) {
+                        this.totalCount = this.blogInfoIDs.length;
+                        this.loadBlogWithID();
                     }
-                    response.data.forEach(function(item) {
-                        if (!item.id || !item.title || !item.summary) {
-                            console.log("获取blogInfo时数据有误:" + item.id);
-                        }
-                        that.blogInfo.push(item);
-                    });
-                },
-                ()=>{
-                    that.showLoading = false;
-                });
+                }
+                else {
+                    this.loadBlogWithID();
+                }
+            }
+        },
+        async loadBlogWithPage() {
+            try{
+                this.showLoading = true;
+                let response = await this.$api.getBlogInfosByPage(this.limt,this.currentPage);
+                this.totalCount = parseInt(response.headers['x-total-count']);
+                if (response.data.length > 0) {
+                    this.currentPage++;
+                    this.blogInfo = this.blogInfo.concat(response.data);
+                }
+            }
+            catch(error){
+                console.error(error);
+            }
+            finally{
+                this.showLoading = false;
+            }
+        },
+        async loadBlogWithID() {
+            let blogInfoIDs = this.blogInfoIDs.slice(this.currentPage * this.limt, (this.currentPage + 1) * this.limt);
+            if (blogInfoIDs.length === 0) return;
+            try{
+                this.showLoading = true;
+                let response = await this.$api.getBlogInfosByIDs(blogInfoIDs);
+                if (response.data.length > 0) {
+                    this.currentPage++;
+                    this.blogInfo = this.blogInfo.concat(response.data);
+                }
+            }
+            catch(error){
+                console.error(error);
+            }
+            finally{
+                this.showLoading = false;
+            }
+        },
+        async loadBlogInfoIDs() {
+            try{
+                this.showLoading = true;
+                let response = await this.$api.getTag(this.id);
+                document.title = response.data.tagName;
+                if (response.data.tagImg !== undefined) {
+                    if (this.$store.getIsMobile()) {
+                        this.$store.setHeadBgUrl(response.data.tagImg.medium);
+                    }
+                    else {
+                        this.$store.setHeadBgUrl(response.data.tagImg.large);
+                    }
+                }
+                this.blogInfoIDs = response.data.blogInfoIDs;
+            }
+            catch(error){
+                console.error(error);
+            }
+            finally{
+                this.showLoading = false;
+            }
+        },
+        resetState() {
+            this.blogInfo = [];
+            this.blogInfoIDs = [];
+            this.showLoading = false;
+            this.currentPage = 0;
+            this.totalCount = 0;
+        },
+        observerIntersect(){
+            this.loadBlogInfo();
         },
     },
-    mounted: function() {
-        let that = this;
-        this.$nextTick(()=>{
-            //blogInfo懒加载
-            const config = {
-                rootMargin: '500px 0px 500px 0px',
-                threshold: 0,
-            };
-            let observer = new IntersectionObserver((entries)=>{
-                if (entries[0].intersectionRatio <= 0) return;
-                if(that.currentPage*that.limt<that.totalPage || that.currentPage==0){
-                    that.loadBlogInfo();
+    watch: {
+        '$route'(to, from) {
+            if (to.path != from.path) {
+                this.resetState();
+                if (to.path == "/blog") {
+                    this.$store.setHeadBgUrl(this.$store.getConfig().blogHeadBgUrl || this.$store.getConfig().defaultHeadBgUrl);
                 }
-            }, config);
-            observer.observe(document.querySelector('#blogInfoLazyLoadingObserver'));
-        });
+            }
+        },
     },
 };
 </script>
@@ -83,7 +143,7 @@ export default {
     margin-bottom: 25px;
 }
 
-.card-item-mobile{
+.card-item-mobile {
     margin-top: 25px;
     margin-left: 25px;
     margin-right: 25px;

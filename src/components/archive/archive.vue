@@ -31,13 +31,18 @@ export default {
     },
     created() {
         this.$store.setHeadBgUrl(this.$store.getConfig().archiveHeadBgUrl || this.$store.getConfig().defaultHeadBgUrl);
-        this.$api.getTags(
-            null,
-            (response) => {
-                response.data.forEach((item) => {
-                    this.tags.push(item);
-                });
-            });
+        this.getTags();
+    },
+    methods:{
+        async getTags(){
+            try{
+                let response = await this.$api.getTags();
+                this.tags = response.data;
+            }
+            catch(error){
+                console.error(error);
+            }
+        },
     },
 };
 </script>

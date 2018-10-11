@@ -6,7 +6,6 @@ import music from 'components/music/music.vue';
 import archive from 'components/archive/archive.vue';
 import message from 'components/message/message.vue';
 import article from 'components/article/article.vue';
-import archiveBlogs from 'components/ArchiveBlogs/ArchiveBlogs.vue';
 import PersonalInfo from 'components/PersonalInfo/PersonalInfo.vue';
 
 Vue.use(Router);
@@ -76,7 +75,7 @@ let router = new Router({
         {
             path: '/archive/:id',
             components: {
-                left: archiveBlogs,
+                left: blog,
                 right: PersonalInfo,
             },
             props: {

@@ -55,28 +55,26 @@ export default {
         markdownRendered: function() {
             this.$nextTick(() => { this.$highlight(); });
         },
+        async getBlog(){
+            try{
+                this.showLoading = true;
+                let response = await this.$api.getBlog(this.id);
+                this.article = response.data;
+                document.title = this.article.title;
+                if (this.article.imgUrl !== undefined) {
+                    this.$store.setHeadBgUrl(this.article.imgUrl);
+                }
+            }
+            catch(error){
+                console.log(error);
+            }
+            finally{
+                this.showLoading = false;
+            }
+        },
     },
     created: function() {
-        let that = this;
-        that.showLoading = true;
-        this.$api.getBlog(
-            {
-                id:that.id,
-            },
-            (response)=>{
-                let article = response.data;
-                if (!article.id || !article.title || !article.content) {
-                    console.error("获取article时数据有误:" + article.id);
-                }
-                that.article = article;
-                document.title = that.article.title;
-                if (that.article.imgUrl !== undefined) {
-                    that.$store.setHeadBgUrl(that.article.imgUrl);
-                }
-            },
-            ()=>{
-                that.showLoading = false;
-            });
+        this.getBlog();
     },
     components: {
         "vue-markdown": VueMarkdown,

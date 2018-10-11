@@ -31,43 +31,18 @@ axios.interceptors.response.use(function (response) {
 
 function Api() {}
 
-function callBack(func, para) {
-    if (func !== null && func !== undefined) {
-        if (para !== undefined) {
-            func(para);
-        }
-        else {
-            func();
-        }
-    }
-}
-
-function get(url,success, completed, error){
-    axios
-        .get(url)
-        .then((response) => {
-            callBack(completed);
-            callBack(success, response);
-        })
-        .catch((errorMsg) => {
-            callBack(completed);
-            callBack(error, errorMsg);
-            console.error(url+":"+errorMsg);
-        });
-}
-
 Api.prototype = {
     constructor: Api,
-    getBlog: function(para, success, completed, error) {
-        get('/api/blogs/' + para.id,success,completed,error);
+    getBlog: function(id) {
+        return axios.get('/api/blogs/' + id);
     },
-    getBlogInfosByPage: function(para, success, completed, error) {
-        get('/api/blog-infos?_limit='+para.limt+'&_page='+(para.currentPage+1),success,completed,error);
+    getBlogInfosByPage: function(limt,currentPage) {
+        return axios.get('/api/blog-infos?_limit='+limt+'&_page='+(currentPage+1));
     },
-    getBlogInfosByIDs: function(para, success, completed, error) {
+    getBlogInfosByIDs: function(blogInfoIDs) {
         let first = true;
         let parametersString = new String();
-        para.blogInfoIDs.forEach((id)=>{
+        blogInfoIDs.forEach((id)=>{
             if(!first){
                 parametersString += '&';
             }
@@ -76,16 +51,16 @@ Api.prototype = {
                 first = false;
             }
         });
-        get('/api/blog-infos?'+parametersString,success,completed,error);
+        return axios.get('/api/blog-infos?'+parametersString);
     },
-    getUser: function(para, success, completed, error) {
-        get('/api/users/' + para.userID,success,completed,error);
+    getUser: function(userID) {
+        return axios.get('/api/users/' + userID);
     },
-    getTags: function(para, success, completed, error) {
-        get('/api/tags',success,completed,error);
+    getTags: function() {
+        return axios.get('/api/tags');
     },
-    getTag: function(para, success, completed, error) {
-        get('/api/tags/'+para.id,success,completed,error);
+    getTag: function(id) {
+        return axios.get('/api/tags/'+id);
     },
 };
 
