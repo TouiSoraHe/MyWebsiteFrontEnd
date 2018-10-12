@@ -42,25 +42,33 @@ export default {
     methods: {
         async loadBlogInfo() {
             if (this.showLoading) return;
-            if (this.id === undefined) {
-                this.loadBlogWithPage();
-            }
-            else {
-                if (this.blogInfoIDs.length === 0) {
-                    await this.loadBlogInfoIDs();
-                    if (this.blogInfoIDs.length !== 0) {
-                        this.totalCount = this.blogInfoIDs.length;
-                        this.loadBlogWithID();
-                    }
+            try{
+                this.showLoading = true;
+                if (this.id === undefined) {
+                    await this.loadBlogWithPage();
                 }
                 else {
-                    this.loadBlogWithID();
+                    if (this.blogInfoIDs.length === 0) {
+                        await this.loadBlogInfoIDs();
+                        if (this.blogInfoIDs.length !== 0) {
+                            this.totalCount = this.blogInfoIDs.length;
+                            await this.loadBlogWithID();
+                        }
+                    }
+                    else {
+                        await this.loadBlogWithID();
+                    }
                 }
+            }
+            catch(error){
+                console.error(error);
+            }
+            finally{
+                this.showLoading = false;
             }
         },
         async loadBlogWithPage() {
             try{
-                this.showLoading = true;
                 let response = await this.$api.getBlogInfosByPage(this.limt,this.currentPage);
                 this.totalCount = parseInt(response.headers['x-total-count']);
                 if (response.data.length > 0) {
@@ -71,15 +79,11 @@ export default {
             catch(error){
                 console.error(error);
             }
-            finally{
-                this.showLoading = false;
-            }
         },
         async loadBlogWithID() {
             let blogInfoIDs = this.blogInfoIDs.slice(this.currentPage * this.limt, (this.currentPage + 1) * this.limt);
             if (blogInfoIDs.length === 0) return;
             try{
-                this.showLoading = true;
                 let response = await this.$api.getBlogInfosByIDs(blogInfoIDs);
                 if (response.data.length > 0) {
                     this.currentPage++;
@@ -89,13 +93,9 @@ export default {
             catch(error){
                 console.error(error);
             }
-            finally{
-                this.showLoading = false;
-            }
         },
         async loadBlogInfoIDs() {
             try{
-                this.showLoading = true;
                 let response = await this.$api.getTag(this.id);
                 document.title = response.data.tagName;
                 if (response.data.tagImg !== undefined) {
@@ -111,9 +111,6 @@ export default {
             catch(error){
                 console.error(error);
             }
-            finally{
-                this.showLoading = false;
-            }
         },
         resetState() {
             this.blogInfo = [];
@@ -121,6 +118,7 @@ export default {
             this.showLoading = false;
             this.currentPage = 0;
             this.totalCount = 0;
+            this.loadBlogInfo();
         },
         observerIntersect(){
             this.loadBlogInfo();
