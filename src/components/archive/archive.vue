@@ -19,14 +19,18 @@
                 </v-card>
             </v-hover>
         </div>
+        <loading :showLoading="showLoading"></loading>
     </div>
 </template>
 <script>
+import loading from 'components/loading/loading.vue';
+
 export default {
     data() {
         return {
             alert: true,
             tags: [],
+            showLoading: false,
         };
     },
     created() {
@@ -36,13 +40,20 @@ export default {
     methods:{
         async getTags(){
             try{
+                this.showLoading = true;
                 let response = await this.$api.getTags();
                 this.tags = response.data;
             }
             catch(error){
                 console.error(error);
             }
+            finally{
+                this.showLoading = false;
+            }
         },
+    },
+    components: {
+        "loading": loading,
     },
 };
 </script>
