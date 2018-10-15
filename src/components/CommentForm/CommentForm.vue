@@ -38,8 +38,8 @@ export default {
                         email: '邮箱地址不正确',
                     },
                     comment:{
-                        required:"评论内容不能为空",
-                        max: '评论内容不能超过150个字符',
+                        required:"内容不能为空",
+                        max: '内容不能超过150个字符',
                     },
                 },
             },
@@ -49,10 +49,7 @@ export default {
 
     props:{
         blogID:String,
-        parentID:{
-            type:String,
-            default:null,
-        },
+        parentID:String,
     },
 
     computed:{

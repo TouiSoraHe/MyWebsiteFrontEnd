@@ -2,14 +2,14 @@
     <div>
         <v-card>
             <v-card-title class="headline font-weight-Medium">
-                发表评论
+                发表{{blogID === "-1" ? '留言':'评论'}}
             </v-card-title>
             <v-card-text>
                 <comment-form :blogID="blogID"></comment-form>
             </v-card-text>
-            <v-card-text v-if="commentsTreePagination.length>0">
+            <v-card-text v-if="commentsTree.length > 0">
                 <ul class="pa-0 ma-0">
-                    <li v-for="(comments,parentIndex) in commentsTreePagination" :key="comments[0].id" class="ma-0" style="list-style-type:none;">
+                    <li v-for="(comments,parentIndex) in commentsTree" :key="comments[0].id" class="ma-0" style="list-style-type:none;">
                         <v-divider v-if="parentIndex!==0">
                         </v-divider>
                         <div style="display: flex;" class="commentItem py-3" :id="'comment'+comments[0].id">
@@ -52,15 +52,14 @@
                     </li>
                 </ul>
             </v-card-text>
+            <v-card-text v-else-if="showLoading">
+                <loading :showLoading="showLoading"></loading>
+            </v-card-text>
             <v-card-text v-else class="text-xs-center">
                 暂时还没有评论,快来抢沙发吧!
             </v-card-text>
             <v-card-text class="text-xs-center" v-if="pageLength>1">
-                <v-pagination
-                  v-model="page"
-                  :length="pageLength"
-                  @input="paginationInput"
-                ></v-pagination>
+                <v-pagination v-model="page" :length="pageLength" @input="loadComment"></v-pagination>
             </v-card-text>
         </v-card>
         <v-dialog v-model="commentFormDialog" max-width="500px">
@@ -77,63 +76,85 @@
 </template>
 <script>
 import CommentForm from "components/CommentForm/CommentForm.vue";
+import loading from 'components/loading/loading.vue';
 
 export default {
     data() {
         return {
+            showLoading: false,
             commentFormDialog: false,
             replyID: null,
             replyUserName: "",
-            page:1,
-            pageCount:5,
+            page: 1,
+            limt: 5,
+            pageLength: 0,
+            idToCommentDir: new Map(),
+            commentsPageMap: new Map(),
+            commentsPageMapChangeTracker: 0,
         };
     },
 
     props: {
-        comments: Array,
         blogID: String,
     },
 
+    created() {
+        this.loadComment();
+    },
+
     computed: {
-        //按时间升序排序后的评论列表
-        sortedComments() {
-            let ret = this.comments || [];
-            ret = ret.slice();
-            ret.forEach((item) => {
+        commentsTree(){
+            let x= this.commentsPageMapChangeTracker;
+            x = 0;
+            return this.commentsPageMap.get(this.page + x) || [];
+        },
+    },
+
+    methods: {
+        async loadComment() {
+            if(this.commentsPageMap.has(this.page)) return;
+            try{
+                this.showLoading = true;
+                let resule = await this.$api.getComment(this.blogID, this.limt, this.page);
+                this.pageLength = Math.ceil(resule.rootTotalCount / this.limt);
+                let comments = resule.comments;
+                this.sortedComments(comments);
+                for (let i = 0; i < comments.length; i++) {
+                    this.idToCommentDir.set(comments[i].id, comments[i]);
+                }
+                this.commentsPageMap.set(this.page, this.getCommentsTree(comments));
+                this.commentsPageMapChangeTracker += 1;
+            }
+            catch(error){
+                console.error(error);
+            }
+            finally{
+                this.showLoading = false;
+            }
+        },
+        sortedComments(comments) {
+            comments.forEach((item) => {
                 item.time = new Date(item.time);
             });
-            ret.sort((a, b) => {
+            comments.sort((a, b) => {
                 return a.time - b.time;
             });
-            return ret;
         },
-        //map,id为键,评论为值
-        idToCommentDir() {
-            let ret = new Map();
-            let comments = this.sortedComments;
-            comments.forEach((item) => {
-                ret.set(item.id, item);
-            });
-            return ret;
-        },
-        commentsTree() {
-            let that = this;
-            let comments = this.sortedComments;
-            //用于得到一条评论的根评论ID
-            function getRootCommentID(comment) {
-                if (comment.parentID === null) {
-                    return comment.id;
-                }
-                else
-                    return getRootCommentID(that.idToCommentDir.get(comment.parentID));
+        getRootCommentID(comment) {
+            if (comment.parentID == "-1") {
+                return comment.id;
             }
+            else
+                return this.getRootCommentID(this.idToCommentDir.get(comment.parentID));
+        },
+        getCommentsTree(comments) {
             let map = new Map();
             comments.forEach((item) => {
-                let rootID = getRootCommentID(item);
+                let rootID = this.getRootCommentID(item);
                 if (!map.has(rootID)) {
                     map.set(rootID, []);
                 }
-                if (item.parentID === null) {
+                if (item.parentID == "-1") {
                     map.get(rootID).unshift(item);
                 }
                 else {
@@ -146,45 +167,34 @@ export default {
             });
             return ret;
         },
-        commentsTreePagination(){
-            return this.commentsTree.slice((this.page-1)*this.pageCount,(this.page-1)*this.pageCount+this.pageCount);
-        },
-        pageLength(){
-            return Math.ceil(this.commentsTree.length/this.pageCount);
-        },
-    },
-
-    methods: {
         replyBtnOnClick(replyID, replyUserName) {
             this.commentFormDialog = true;
             this.replyID = replyID;
             this.replyUserName = replyUserName;
         },
         goAnchor(selector) {
-            this.$vuetify.goTo(selector,{offset:-200,});
+            this.$vuetify.goTo(selector, { offset: -200, });
             let el = this.$el.querySelector(selector);
             let colorFlag = false;
-            let intervalID = setInterval(()=>{
-                if (!colorFlag){
-                    el.style.backgroundColor="rgba(50, 50, 50, .1)";
+            let intervalID = setInterval(() => {
+                if (!colorFlag) {
+                    el.style.backgroundColor = "rgba(50, 50, 50, .1)";
                 }
-                else{
-                    el.style.backgroundColor="rgba(255, 255, 255, 1)";
+                else {
+                    el.style.backgroundColor = "rgba(255, 255, 255, 1)";
                 }
                 colorFlag = !colorFlag;
-            },500);
-            setTimeout(()=>{
-                el.style.backgroundColor="";
+            }, 500);
+            setTimeout(() => {
+                el.style.backgroundColor = "";
                 clearInterval(intervalID);
-            },2000);
-        },
-        paginationInput(){
-            console.log(this.commentsTreePagination);
+            }, 2000);
         },
     },
 
     components: {
         "comment-form": CommentForm,
+        "loading": loading,
     },
 };
 </script>

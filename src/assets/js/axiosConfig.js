@@ -37,7 +37,7 @@ Api.prototype = {
         return axios.get('/api/blogs/' + id);
     },
     getBlogInfosByPage: function(limt,currentPage) {
-        return axios.get('/api/blog-infos?_limit='+limt+'&_page='+(currentPage+1));
+        return axios.get('/api/blog-infos?_sort=time&_order=DESC&_limit='+limt+'&_page='+(currentPage+1));
     },
     getBlogInfosByIDs: function(blogInfoIDs) {
         let first = true;
@@ -51,7 +51,7 @@ Api.prototype = {
                 first = false;
             }
         });
-        return axios.get('/api/blog-infos?'+parametersString);
+        return axios.get('/api/blog-infos?_sort=time&_order=DESC&'+parametersString);
     },
     getUser: function(userID) {
         return axios.get('/api/users/' + userID);
@@ -61,6 +61,25 @@ Api.prototype = {
     },
     getTag: function(id) {
         return axios.get('/api/tags/'+id);
+    },
+    getComment: async function(blogID,limt,page){
+        let response =  await axios.get('/api/comments?blogID='+blogID+'&parentID=-1&_limit='+limt+'&_page='+page+'&_sort=time');
+        let rootTotalCount = parseInt(response.headers['x-total-count']);
+        let comments = response.data.slice();
+        async function getAllChildComments(rootComments){
+            for (var i = 0; i < rootComments.length; i++) {
+                response =  await axios.get('/api/comments?blogID=-1&parentID='+rootComments[i].id);
+                if(response.data.length>0){
+                    comments = comments.concat(response.data);
+                    await getAllChildComments(response.data);
+                }
+            }
+        }
+        await getAllChildComments(response.data);
+        return {
+            comments:comments,
+            rootTotalCount:rootTotalCount,
+        };
     },
 };
 

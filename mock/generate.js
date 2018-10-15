@@ -38,14 +38,13 @@ function BlogInfo(blogInfoID,title,time,views,words,summary,blogID,imgUrl,ownTag
 }
 
 //博客
-function Blog(blogID,title,time,views,words,content,commentTemps,imgUrl,ownTags){
+function Blog(blogID,title,time,views,words,content,imgUrl,ownTags){
     this.id = blogID;
     this.title = title;
     this.time = time;
     this.views = views;
     this.words = words;
     this.content = content;
-    this.comments = commentTemps;
     this.imgUrl = imgUrl;
     this.tags = ownTags;
 }
@@ -107,23 +106,6 @@ for (let i = 1; i < 50; i++) {
     let blogInfoID = i.toString();
     let blogID = (i + 100).toString();
 
-    //生成评论
-    let commentTemps = [];
-    for (var j = i*1000; j <= i*1000+30; j++) {
-        let commentContent = faker.lorem.sentences();
-        let parentItem = commentTemps.randomGetItem();
-        let parentID = Math.random() >= 0.5 ? null : (parentItem===undefined ? null : parentItem.id);
-        let user = users.randomGetItem();
-        let time = faker.date.past();
-        while(parentItem!==undefined && parentID === parentItem.id && time<= parentItem.time){
-            time = faker.date.past();
-        }
-        commentTemps.push(new Comment(j.toString(),commentContent,parentID,time,blogID,user));
-    }
-    commentTemps.forEach((item)=>{
-        comments.push(item);
-    });
-
     //生成博客列表和博客
     let title = faker.lorem.sentence();
     let time = faker.date.past();
@@ -144,8 +126,44 @@ for (let i = 1; i < 50; i++) {
         tags[index].blogInfoIDs.push(blogInfoID);
         ownTags.push(tags[index]);
     }
-    blogs.push(new Blog(blogID,title,time,views,words,content,commentTemps,imgUrl,ownTags));
+    blogs.push(new Blog(blogID,title,time,views,words,content,imgUrl,ownTags));
     blogInfos.push(new BlogInfo(blogInfoID,title,time,views,words,summary,blogID,imgUrl,ownTags));
+
+    //生成评论
+    let commentTemps = [];
+    for (let j = i*1000; j <= i*1000+30; j++) {
+        let commentContent = faker.lorem.sentences();
+        let parentItem = commentTemps.randomGetItem();
+        let parentID = Math.random() >= 0.5 ? -1 : (parentItem===undefined ? -1 : parentItem.id);
+        let user = users.randomGetItem();
+        let time = faker.date.past();
+        while(parentItem!==undefined && parentID === parentItem.id && time<= parentItem.time){
+            time = faker.date.past();
+        }
+        commentTemps.push(new Comment(j.toString(),commentContent,parentID,time,blogID,user));
+    }
+    commentTemps.forEach((item)=>{
+        comments.push(item);
+    });
+}
+
+{
+    //生成留言
+    let commentTemps = [];
+    for (let i = 100000; i < 100000+1000; i++) {
+        let commentContent = faker.lorem.sentences();
+        let parentItem = commentTemps.randomGetItem();
+        let parentID = Math.random() >= 0.5 ? -1 : (parentItem===undefined ? -1 : parentItem.id);
+        let user = users.randomGetItem();
+        let time = faker.date.past();
+        while(parentItem!==undefined && parentID === parentItem.id && time<= parentItem.time){
+            time = faker.date.past();
+        }
+        commentTemps.push(new Comment(i.toString(),commentContent,parentID,time,(-1).toString(),user));
+    }
+    commentTemps.forEach((item)=>{
+        comments.push(item);
+    });
 }
 
 function generate() {

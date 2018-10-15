@@ -22,7 +22,7 @@
         </transition>
         <loading :showLoading="showLoading" style="margin-top: 20px"></loading>
         <transition name="slide-x-transition" mode="out-in">
-            <my-comment v-if="article" :comments="article.comments" :blogID="article.id.toString()" class="mb-5"></my-comment>
+            <my-comment v-if="article" :blogID="article.id.toString()" class="mb-5"></my-comment>
         </transition>
     </div>
 </template>

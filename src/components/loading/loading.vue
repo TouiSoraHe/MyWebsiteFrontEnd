@@ -19,10 +19,7 @@ export default {
     },
     computed:{
         isShow:function(){
-            if(this.showLoading){
-                return true;
-            }
-            return false;
+            return this.showLoading;
         },
     },
 };
