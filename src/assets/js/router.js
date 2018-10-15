@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import index from 'components/index/index.vue';
 import blog from 'components/blog/blog.vue';
 import music from 'components/music/music.vue';
 import archive from 'components/archive/archive.vue';
@@ -15,20 +14,11 @@ let router = new Router({
         {
             path: '/',
             components: {
-                left: index,
-            },
-            meta: {
-                title: '首页',
-            },
-        },
-        {
-            path: '/blog',
-            components: {
                 left: blog,
                 right: PersonalInfo,
             },
             meta: {
-                title: '博文',
+                title: '首页',
             },
         },
         {
