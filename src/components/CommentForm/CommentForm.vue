@@ -72,6 +72,7 @@ export default {
         submit() {
             this.$validator.validateAll();
             console.log(this.replyComment);
+            console.log(this.$store.getUser());
         },
     },
 };

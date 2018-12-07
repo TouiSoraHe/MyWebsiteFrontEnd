@@ -106,11 +106,17 @@ export default {
                 });
             }
             try{
-                let finger = await getFinger();
+                var finger = await getFinger();
                 let response = await this.$api.getUser(finger);
                 this.$store.setUser(response.data);
             }
             catch(error){
+                this.$store.setUser({
+                    id : finger,
+                    userName : "",
+                    email : "",
+                    avatar : "",
+                });
                 console.error(error);
             }
         },

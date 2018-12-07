@@ -25,7 +25,7 @@ let tags = [];
 let users = [];
 
 //博客信息
-function BlogInfo(blogInfoID,title,time,views,words,summary,blogID,imgUrl,ownTags){
+function BlogInfo(blogInfoID,title,time,views,words,summary,blogID,bgImg,ownTags,deleted,lastModified){
     this.id = blogInfoID;
     this.title = title;
     this.time = time;
@@ -33,29 +33,27 @@ function BlogInfo(blogInfoID,title,time,views,words,summary,blogID,imgUrl,ownTag
     this.words = words;
     this.summary = summary;
     this.blogID = blogID;
-    this.imgUrl = imgUrl;
+    this.bgImg = bgImg;
     this.tags = ownTags;
+    this.deleted = deleted;
+    this.lastModified = lastModified;
 }
 
 //博客
-function Blog(blogID,title,time,views,words,content,imgUrl,ownTags){
+function Blog(blogID,content,blogInfo){
     this.id = blogID;
-    this.title = title;
-    this.time = time;
-    this.views = views;
-    this.words = words;
     this.content = content;
-    this.imgUrl = imgUrl;
-    this.tags = ownTags;
+    this.blogInfo = blogInfo;
 }
 
-function Comment(commentID,commentContent,parentID,time,blogID,user){
+function Comment(commentID,commentContent,parentID,time,blogID,user,deleted){
     this.id = commentID;
     this.content = commentContent;
     this.parentID = parentID;
     this.time = time;
     this.blogID = blogID;
     this.user = user;
+    this.deleted = deleted;
 }
 
 function Tag(tagID,tagName,tagImg,blogInfoIDs){
@@ -70,6 +68,12 @@ function User(userID,userName,email,avatar){
     this.userName = userName;
     this.email = email;
     this.avatar = avatar;
+}
+
+function ImgUrl(small,medium,large){
+    this.small = small;
+    this.medium = medium;
+    this.large = large;
 }
 
 //生成用户
@@ -93,12 +97,9 @@ for(let i = 1;i<=tagNames.length;i++){
     let id = i.toString();
     let tagName = tagNames[i-1];
     let imgID = Math.randomNum(0,1000);
-    let tagImg = {
-        small : 'https://picsum.photos/200/200?image='+imgID,
-        medium : 'https://picsum.photos/500/500?image='+imgID,
-        large : 'https://picsum.photos/1920/1080?image='+imgID,
-
-    };
+    let tagImg = new ImgUrl('https://picsum.photos/200/200?image='+imgID,
+        'https://picsum.photos/500/500?image='+imgID,
+        'https://picsum.photos/1920/1080?image='+imgID); 
     tags.push(new Tag(id,tagName,tagImg,[]));
 }
 
@@ -113,7 +114,10 @@ for (let i = 1; i < 50; i++) {
     let content = faker.lorem.paragraphs(faker.random.number({ 'min': 10, 'max': 20, }));
     let summary = content.slice(0, 100);
     let words = content.length;
-    let imgUrl = 'https://picsum.photos/1920/500?image='+Math.randomNum(0,1000);
+    let imgID = Math.randomNum(0,1000);
+    let imgUrl = new ImgUrl('https://picsum.photos/200/200?image='+imgID,
+        'https://picsum.photos/500/500?image='+imgID,
+        'https://picsum.photos/1920/1080?image='+imgID); 
 
     let ownTags = [];
     let ownTagsCount = Math.randomNum(0,3);
@@ -126,8 +130,9 @@ for (let i = 1; i < 50; i++) {
         tags[index].blogInfoIDs.push(blogInfoID);
         ownTags.push(tags[index]);
     }
-    blogs.push(new Blog(blogID,title,time,views,words,content,imgUrl,ownTags));
-    blogInfos.push(new BlogInfo(blogInfoID,title,time,views,words,summary,blogID,imgUrl,ownTags));
+    let blogInfo = new BlogInfo(blogInfoID,title,time,views,words,summary,blogID,imgUrl,ownTags,false,time);
+    blogs.push(new Blog(blogID,content,blogInfo));
+    blogInfos.push(blogInfo);
 
     //生成评论
     let commentTemps = [];
@@ -140,7 +145,7 @@ for (let i = 1; i < 50; i++) {
         while(parentItem!==undefined && parentID === parentItem.id && time<= parentItem.time){
             time = faker.date.past();
         }
-        commentTemps.push(new Comment(j.toString(),commentContent,parentID,time,blogID,user));
+        commentTemps.push(new Comment(j.toString(),commentContent,parentID,time,blogID,user,false));
     }
     commentTemps.forEach((item)=>{
         comments.push(item);

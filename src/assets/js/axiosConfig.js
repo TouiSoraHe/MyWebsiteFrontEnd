@@ -68,7 +68,7 @@ Api.prototype = {
         let comments = response.data.slice();
         async function getAllChildComments(rootComments){
             for (var i = 0; i < rootComments.length; i++) {
-                response =  await axios.get('/api/comments?blogID=-1&parentID='+rootComments[i].id);
+                response =  await axios.get('/api/comments?blogID='+blogID+'&parentID='+rootComments[i].id);
                 if(response.data.length>0){
                     comments = comments.concat(response.data);
                     await getAllChildComments(response.data);
