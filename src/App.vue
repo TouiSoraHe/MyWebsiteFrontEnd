@@ -9,13 +9,13 @@
                 <v-layout>
                     <v-flex :class="leftContentLayoutObj">
                         <transition name="slide-x-transition" mode="out-in">
-                            <router-view name="left"></router-view>
+                            <router-view name="left" :key="'left'+routerViewKey"></router-view>
                         </transition>
                     </v-flex>
                     <v-flex v-if="!this.isMobile" class="text-center" :class="rightContentLayoutObj">
                         <div style="position:sticky;top:78px; margin-left: 30px;">
                             <transition name="slide-x-transition" mode="out-in">
-                                <router-view name="right"></router-view>
+                                <router-view name="right" :key="'right'+routerViewKey"></router-view>
                             </transition>
                         </div>
                     </v-flex>
@@ -96,6 +96,9 @@ export default {
                 styleObj['margin-top'] = '30px';
             }
             return styleObj;
+        },
+        routerViewKey(){
+            return this.$route.name !== undefined? this.$route.name + +new Date(): this.$route + +new Date();
         },
     },
     methods: {

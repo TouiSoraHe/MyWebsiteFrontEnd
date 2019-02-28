@@ -112,26 +112,8 @@ export default {
                 console.error(error);
             }
         },
-        resetState() {
-            this.blogInfo = [];
-            this.blogInfoIDs = [];
-            this.showLoading = false;
-            this.currentPage = 0;
-            this.totalCount = 0;
-            this.loadBlogInfo();
-        },
         observerIntersect(){
             this.loadBlogInfo();
-        },
-    },
-    watch: {
-        '$route'(to, from) {
-            if (to.path != from.path) {
-                this.resetState();
-                if (to.path == "/blog") {
-                    this.$store.setHeadBgUrl(this.$store.getConfig().blogHeadBgUrl || this.$store.getConfig().defaultHeadBgUrl);
-                }
-            }
         },
     },
 };
