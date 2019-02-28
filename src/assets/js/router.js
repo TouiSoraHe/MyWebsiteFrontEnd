@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import blog from 'components/blog/blog.vue';
-import music from 'components/music/music.vue';
-import archive from 'components/archive/archive.vue';
-import message from 'components/message/message.vue';
-import article from 'components/article/article.vue';
-import PersonalInfo from 'components/PersonalInfo/PersonalInfo.vue';
+const blog = () => import('components/blog/blog.vue');
+const music = () => import('components/music/music.vue');
+const archive = () => import('components/archive/archive.vue');
+const message = () => import('components/message/message.vue');
+const article = () => import('components/article/article.vue');
+const PersonalInfo = () => import('components/PersonalInfo/PersonalInfo.vue');
 
 Vue.use(Router);
 
