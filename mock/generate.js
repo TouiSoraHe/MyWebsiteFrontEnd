@@ -81,14 +81,19 @@ for (let i = 1; i < 10; i++) {
     let id = i.toString();
     let userName = faker.name.findName().replace(/\s+/g,"");
     let email = faker.internet.email();
-    let avatar = 'https://picsum.photos/100/100?image='+Math.randomNum(0,1000);
+    let imgID = Math.randomNum(0,1000);
+    let avatar = new ImgUrl('https://picsum.photos/100/100?image='+imgID,
+        'https://picsum.photos/500/500?image='+imgID,
+        'https://picsum.photos/1920/1080?image='+imgID); 
     users.push(new User(id,userName,email,avatar));
 }
 users.push({
-    "id":"7c0412670bc5428fef4571706707471e",
+    "id":"6a1c1e19949e6a9adf0b6876ca3073fb",
     "userName":"zzy",
     "email":"zzymailaddr@gmail.com",
-    "avatar" : 'https://picsum.photos/100/100?image='+Math.randomNum(0,1000),
+    "avatar" : new ImgUrl('https://picsum.photos/100/100?image='+Math.randomNum(0,1000),
+        'https://picsum.photos/500/500?image='+Math.randomNum(0,1000),
+        'https://picsum.photos/1920/1080?image='+Math.randomNum(0,1000)),
 });
 
 const tagNames = ["随笔","技术","前端","Unity","后台","文学","热点","shit","电影","小说","电视剧","美食"]

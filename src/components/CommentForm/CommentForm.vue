@@ -5,7 +5,7 @@
         <v-textarea v-validate="'required|max:150'" v-model="replyComment.content"  :counter="150" :error-messages="errors.collect('comment')" label="内容" data-vv-name="comment" required name="comment"  auto-grow background-color="#fff" :rows="2"></v-textarea>
         <v-layout>
             <v-spacer></v-spacer>
-            <v-btn @click="submit">提交</v-btn>
+            <v-btn :loading="loading" :disabled="loading" :color="submitColor" @click="submit">提交</v-btn>
         </v-layout>
     </form>
 </template>
@@ -43,7 +43,9 @@ export default {
                     },
                 },
             },
+            loading:false,
             sharedState: this.$store.state,
+            submitColor:'normal',
         };
     },
 
@@ -53,12 +55,12 @@ export default {
     },
 
     computed:{
-        replyComment() {
+        replyComment(){
             return {
                 content: '',
-                parentID: this.parentID,
+                parentId: this.parentID,
                 time: null,
-                blogID: this.blogID,
+                blogId: this.blogID,
                 user: this.$store.getUser(),
             };
         },
@@ -70,9 +72,25 @@ export default {
 
     methods: {
         submit() {
-            this.$validator.validateAll();
-            console.log(this.replyComment);
-            console.log(this.$store.getUser());
+            let that = this;
+            this.submitColor = "normal";
+            this.loading = true;
+            this.$validator.validateAll()
+                .then(function(value) {
+                    if(value === true){
+                        that.$api.addComment(that.replyComment)
+                            .then((response)=>{
+                                that.loading = false;
+                                that.$emit('submit_on_success',response.data);
+                                that.replyComment.content = '';
+                            })
+                            .catch((error)=>{
+                                that.loading = false;
+                                console.error(error);
+                                that.submitColor = "error";
+                            });
+                    }
+                });
         },
     },
 };

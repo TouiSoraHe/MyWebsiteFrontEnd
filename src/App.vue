@@ -113,9 +113,9 @@ export default {
             catch(error){
                 this.$store.setUser({
                     id : finger,
-                    userName : "",
-                    email : "",
-                    avatar : "",
+                    userName : undefined,
+                    email : undefined,
+                    avatar : undefined,
                 });
                 console.error(error);
             }
