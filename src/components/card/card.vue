@@ -2,7 +2,7 @@
     <div v-if="article">
         <v-hover>
             <v-card slot-scope="{ hover }"  :class="`elevation-${hover ? 12 : 2}`" :to="'/blog/'+article.blogID">
-                <v-img class="white--text" height="250px" :src="article.bgImg.large">
+                <v-img class="white--text" height="250px" :src="article.bgImg.large?article.bgImg.large:''">
                     <v-container fill-height fluid ma-0 pa-0>
                         <v-layout ma-0 pa-0>
                             <v-flex xs12 flexbox class="white--text" pa-3 style="background: rgba(0,0,0,.2);margin-top: auto;">
