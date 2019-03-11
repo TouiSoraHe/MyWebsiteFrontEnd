@@ -14,7 +14,7 @@
                         </v-divider>
                         <div style="display: flex;" class="commentItem py-3" :id="'comment'+comments[0].id">
                             <div>
-                                <v-avatar><img :src="comments[0].user.avatar.small"></v-avatar>
+                                <v-avatar><img :src="comments[0].user.avatar.small || require('./avatar.png')"></v-avatar>
                             </div>
                             <div class="ml-3" style="flex: 1;">
                                 <div>
@@ -33,7 +33,7 @@
                                 </v-divider>
                                 <div style="display: flex;" class="commentItem py-3" :id="'comment'+comment.id">
                                     <div>
-                                        <v-avatar><img :src="comment.user.avatar.small"></v-avatar>
+                                        <v-avatar><img :src="comment.user.avatar.small || require('./avatar.png')"></v-avatar>
                                     </div>
                                     <div class="ml-3" style="flex: 1;">
                                         <div>

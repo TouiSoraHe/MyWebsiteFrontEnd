@@ -105,7 +105,19 @@ export default {
         async getFinger() {
             function getFinger() {
                 return new Promise((resolve) => {
-                    Fingerprint2().get((result) => {resolve(result);});
+                    const userIdKey = 'userid';
+                    let userIdValue = localStorage.getItem(userIdKey);
+                    if(userIdValue === undefined || userIdValue === null){
+                        Fingerprint2().get((result) => {
+                            userIdValue = result;
+                            localStorage.setItem(userIdKey,userIdValue);
+                            resolve(userIdValue);
+                        });
+                    }
+                    else{
+                        resolve(userIdValue);
+                    }
+                    console.log(localStorage.getItem('test'));
                 });
             }
             try{

@@ -24,8 +24,8 @@ let store = {
         },
         //代表项目的配置信息，该信息仅能在此设置，不能在其他地方修改
         config:{
-            defaultHeadBgUrl : "https://source.unsplash.com/random/1920x1080",
-            indexHeadBgUrl:"https://s1.ax2x.com/2018/09/29/5Hec0y.png",
+            defaultHeadBgUrl : "https://ws1.sinaimg.cn/large/006nw0Eagy1g0yvwlazhuj31z40nx47d.jpg",
+            indexHeadBgUrl:undefined,
             blogHeadBgUrl:undefined,
             archiveHeadBgUrl:undefined,
             musicHeadBgUrl:undefined,

@@ -74,10 +74,10 @@ export default {
         submit() {
             let that = this;
             this.submitColor = "normal";
-            this.loading = true;
             this.$validator.validateAll()
                 .then(function(value) {
                     if(value === true){
+                        that.loading = true;
                         that.$api.addComment(that.replyComment)
                             .then((response)=>{
                                 that.loading = false;

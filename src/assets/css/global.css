@@ -16,6 +16,10 @@ body{
     vertical-align: middle;
 }
 
+code:after, kbd:after, code:before, kbd:before {
+    content: "" !important;
+}
+
 
 /*滚动条整体部分*/
 
