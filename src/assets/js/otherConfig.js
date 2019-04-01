@@ -1,6 +1,7 @@
 import hljs from 'highlight.js';
 import Vue from 'vue';
 import 'highlight.js/styles/monokai-sublime.css';
+import md5 from 'js-md5';
 
 
 Vue.prototype.$highlight = function() {
@@ -8,6 +9,13 @@ Vue.prototype.$highlight = function() {
     blocks.forEach((block) => {
         hljs.highlightBlock(block);
     });
+};
+
+Vue.prototype.$md5 = md5;
+
+Vue.prototype.$getGravatar = function(email) {
+    let hash = this.$md5(email.trim().toLowerCase());
+    return 'http://www.gravatar.com/avatar/'+hash+'?s=200';
 };
 
 //格式化日期

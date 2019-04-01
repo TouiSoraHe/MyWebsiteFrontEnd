@@ -19,7 +19,7 @@ let store = {
             xs: [0, 12, 0, 0,],
             sm: [0, 12, 0, 0,],
             md: [1, 7, 3, 1,],
-            lg: [2, 5, 3, 2,],
+            lg: [1, 7, 3, 1,],
             xl: [2, 5, 3, 2,],
         },
         //代表项目的配置信息，该信息仅能在此设置，不能在其他地方修改
@@ -33,6 +33,11 @@ let store = {
             BloggerInfo:{
                 BloggerName:"遠空",
                 BloggerAvatar:"http://p2.music.126.net/OpgpNNPKznDDMxoBqVJy-Q==/2464005557906815.jpg",
+                contactInformation:{
+                    github:"https://github.com/zzy213326",
+                    email:"mailto:zzymailaddr@gmail.com",
+                    telegram:"https://telegram.me/touisorahe",
+                },
             },
         },
         headBgUrl:"",

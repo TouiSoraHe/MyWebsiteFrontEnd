@@ -66,7 +66,11 @@ Vue.use(Vuetify, {
         'eye': 'mdi-eye',
         'arrow-up': 'mdi-arrow-up',
         'github-circle':'mdi-github-circle',
+        'github':'mdi-github-circle',
         'email':'mdi-email',
         'telegram':'mdi-telegram',
+        'account':'mdi-account',
+        'qq':'mdi-qqchat',
+        'wechat':'mdi-wechat',
     },
 });

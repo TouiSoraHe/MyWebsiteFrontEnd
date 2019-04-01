@@ -14,7 +14,7 @@
                         </v-divider>
                         <div style="display: flex;" class="commentItem py-3" :id="'comment'+comments[0].id">
                             <div>
-                                <v-avatar><img :src="comments[0].user.avatar.small || require('./avatar.png')"></v-avatar>
+                                <v-avatar><img :src="getAvatar(comments[0])"></v-avatar>
                             </div>
                             <div class="ml-3" style="flex: 1;">
                                 <div>
@@ -28,26 +28,28 @@
                             </div>
                         </div>
                         <ul style="padding: 0 0 0 64px;" class="ma-0">
-                            <li v-for="(comment,sonIndex) in comments" v-if="sonIndex!==0" :key="comment.id" class="ma-0" style="list-style-type:none;">
-                                <v-divider>
-                                </v-divider>
-                                <div style="display: flex;" class="commentItem py-3" :id="'comment'+comment.id">
-                                    <div>
-                                        <v-avatar><img :src="comment.user.avatar.small || require('./avatar.png')"></v-avatar>
-                                    </div>
-                                    <div class="ml-3" style="flex: 1;">
+                            <template v-for="(comment,sonIndex) in comments">
+                                <li v-if="sonIndex!==0" :key="comment.id" class="ma-0" style="list-style-type:none;">
+                                    <v-divider>
+                                    </v-divider>
+                                    <div style="display: flex;" class="commentItem py-3" :id="'comment'+comment.id">
                                         <div>
-                                            <span class="subheading">{{comment.user.userName}}</span>
-                                            <span class="grey--text caption"> · {{comment.time.Format("yy-MM-dd")}}</span>
-                                            <v-btn small flat class="ma-0 pa-0 mr-2 replyBtn" @click="replyBtnOnClick(comment.id,comment.user.userName)" style="float: right;min-width: 40px;">回复</v-btn>
+                                            <v-avatar><img :src="getAvatar(comment)"></v-avatar>
                                         </div>
-                                        <div class="body-2 mt-2">
-                                            <a href="javascript:void(0)" @click="goAnchor('#comment'+comment.parentID)" style="color: #ff4081;">@{{idToCommentDir.get(comment.parentID).user.userName}}:</a>&nbsp;
-                                            <span>{{comment.content}}</span>
+                                        <div class="ml-3" style="flex: 1;">
+                                            <div>
+                                                <span class="subheading">{{comment.user.userName}}</span>
+                                                <span class="grey--text caption"> · {{comment.time.Format("yy-MM-dd")}}</span>
+                                                <v-btn small flat class="ma-0 pa-0 mr-2 replyBtn" @click="replyBtnOnClick(comment.id,comment.user.userName)" style="float: right;min-width: 40px;">回复</v-btn>
+                                            </div>
+                                            <div class="body-2 mt-2">
+                                                <a href="javascript:void(0)" @click="goAnchor('#comment'+comment.parentID)" style="color: #ff4081;">@{{idToCommentDir.get(comment.parentID).user.userName}}:</a>&nbsp;
+                                                <span>{{comment.content}}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
+                            </template>
                         </ul>
                     </li>
                 </ul>
@@ -208,6 +210,12 @@ export default {
                     this.page = this.pageLength;
                 }
             }
+        },
+        getAvatar(comment){
+            if(comment && comment.user && comment.user.email){
+                return this.$getGravatar(comment.user.email);
+            }
+            return comment.user.avatar.small || require('./avatar.png');
         },
         goAnchor(selector) {
             this.$vuetify.goTo(selector, { offset: -200, });

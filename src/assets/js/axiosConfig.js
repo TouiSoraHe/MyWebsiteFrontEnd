@@ -128,6 +128,11 @@ Api.prototype = {
         fixComment(response.data);
         return response;
     },
+    getBloggerInfo:async function() {
+        let response = await axios.get('/api/blogger-info');
+        return response;
+        
+    },
 };
 
 Vue.prototype.$api = new Api();

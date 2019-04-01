@@ -1,8 +1,8 @@
 <template>
     <form class="ma-0">
-        <v-text-field v-validate="'required|max:10'" v-model="replyComment.user.userName" :counter="10" :error-messages="errors.collect('name')" label="昵称" data-vv-name="name" required name="name"></v-text-field>
-        <v-text-field v-validate="'email'" v-model="replyComment.user.email" :error-messages="errors.collect('email')" label="邮箱" data-vv-name="email" name="email"></v-text-field>
-        <v-textarea v-validate="'required|max:150'" v-model="replyComment.content"  :counter="150" :error-messages="errors.collect('comment')" label="内容" data-vv-name="comment" required name="comment"  auto-grow background-color="#fff" :rows="2"></v-textarea>
+        <v-text-field v-validate="'required|max:10'" v-model="replyComment.user.userName" :counter="10" :error-messages="errors.collect('name')" label="昵称" data-vv-name="name" required name="name" placeholder="如何称呼您"></v-text-field>
+        <v-text-field v-validate="'email'" v-model="replyComment.user.email" :error-messages="errors.collect('email')" label="邮箱" data-vv-name="email" name="email" placeholder="仅用于获取Gravatar头像"></v-text-field>
+        <v-textarea v-validate="'required|max:150'" v-model="replyComment.content"  :counter="150" :error-messages="errors.collect('comment')" label="内容" data-vv-name="comment" required name="comment"  auto-grow background-color="#fff" :rows="2" aria-placeholder="规范文明言行 养成良好习惯"></v-textarea>
         <v-layout>
             <v-spacer></v-spacer>
             <v-btn :loading="loading" :disabled="loading" :color="submitColor" @click="submit">提交</v-btn>

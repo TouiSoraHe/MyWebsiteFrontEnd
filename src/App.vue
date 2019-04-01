@@ -46,12 +46,18 @@ export default {
             sharedState: this.$store.state,
         };
     },
+    created () {
+        this.getBloggerInfo();  
+    },
     mounted() {
         this.$nextTick(() => {
             this.getFinger();
         });
     },
     computed: {
+        bloggerInfo() {
+            return this.$store.getConfig().BloggerInfo;
+        },
         isMobile() {
             return this.$store.getIsMobile();
         },
@@ -134,6 +140,27 @@ export default {
                 });
                 console.error(error);
             }
+        },
+        async getBloggerInfo(){
+            try{
+                let response = await this.$api.getBloggerInfo();
+                let bloggerInfo = response.data;
+                if(bloggerInfo){
+                    this.bloggerInfo.BloggerName = bloggerInfo.username || this.bloggerInfo.BloggerName;
+                    if(bloggerInfo.email){
+                        this.bloggerInfo.BloggerAvatar = this.$getGravatar(bloggerInfo.email);
+                    }
+                    if(bloggerInfo.contactInformation){
+                        Object.keys(bloggerInfo.contactInformation).forEach(key=>{
+                            this.bloggerInfo.contactInformation[key] = bloggerInfo.contactInformation[key];
+                        });
+                    }
+                }
+            }
+            catch(error){
+                console.error(error);
+            }
+
         },
         onResize() {
             if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {

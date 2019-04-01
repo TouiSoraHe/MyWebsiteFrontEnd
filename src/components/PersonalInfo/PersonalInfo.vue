@@ -8,7 +8,7 @@
                 {{bloggerInfo.BloggerName}}
             </v-card-text>
             <v-card-text>
-                <v-tooltip top v-for="item in links" :key="item.link">
+                <v-tooltip top v-for="(item,index) in links" :key="index">
                     <v-btn fab small depressed color="rgba(0,0,0,0.1)" slot="activator" :href="item.link" :target="item.target">
                         <v-icon>{{$vuetify.icons[item.icon]}}</v-icon>
                     </v-btn>
@@ -23,16 +23,27 @@ export default {
     data() {
         return {
             sharedState: this.$store.state,
-            links: [
-                { link: "https://github.com/zzy213326", icon: "github-circle", description: "github", target :"_blank", },
-                { link: "mailto:zzymailaddr@gmail.com", icon: "email", description: "email", target : "_blank", },
-                { link: "https://telegram.me/touisorahe", icon: "telegram", description: "telegram", target : "_blank", },
-            ],
         };
     },
     computed: {
         bloggerInfo() {
             return this.$store.getConfig().BloggerInfo;
+        },
+        links(){
+            let ret = [];
+            Object.keys(this.bloggerInfo.contactInformation).forEach(item=>{
+                let icon = item.toLowerCase();
+                if(!this.$vuetify.icons.hasOwnProperty(icon)){
+                    icon = 'account';
+                }
+                ret.push({
+                    link:this.bloggerInfo.contactInformation[item],
+                    "icon":icon,
+                    description:item,
+                    target:"_blank",
+                });
+            });
+            return ret;
         },
     },
 };
