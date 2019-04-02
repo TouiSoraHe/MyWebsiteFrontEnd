@@ -152,7 +152,7 @@ export default {
                     }
                     if(bloggerInfo.contactInformation){
                         Object.keys(bloggerInfo.contactInformation).forEach(key=>{
-                            this.bloggerInfo.contactInformation[key] = bloggerInfo.contactInformation[key];
+                            this.$set(this.bloggerInfo.contactInformation,key,bloggerInfo.contactInformation[key]);
                         });
                     }
                 }

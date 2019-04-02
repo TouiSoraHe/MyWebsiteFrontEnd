@@ -34,9 +34,6 @@ let store = {
                 BloggerName:"遠空",
                 BloggerAvatar:"http://p2.music.126.net/OpgpNNPKznDDMxoBqVJy-Q==/2464005557906815.jpg",
                 contactInformation:{
-                    github:"https://github.com/zzy213326",
-                    email:"mailto:zzymailaddr@gmail.com",
-                    telegram:"https://telegram.me/touisorahe",
                 },
             },
         },
