@@ -1,21 +1,21 @@
 <template>
-    <div class="loading-wrap text-center" v-show="isShow">
-        <div class="lds-hourglass text-center "></div>
-    </div>
+  <div v-show="isShow" class="loading-wrap text-center">
+    <div class="lds-hourglass text-center "></div>
+  </div>
 </template>
 <script>
 export default {
-    props: {
-        showLoading: {
-            type: Boolean,
-        },
-    },
-    computed: {
-        isShow: function() {
-            return this.showLoading;
-        },
-    },
-};
+  props: {
+    showLoading: {
+      type: Boolean
+    }
+  },
+  computed: {
+    isShow: function() {
+      return this.showLoading
+    }
+  }
+}
 </script>
 <style scoped>
 .loading-wrap {

@@ -1,74 +1,72 @@
 <template>
-    <div class="bg" :class="{showBg1:switchBg && isShowBg,showBg2:!switchBg && isShowBg}" :style="[bgStyleObj]">
-    </div>
+  <div :class="{showBg1:switchBg && isShowBg,showBg2:!switchBg && isShowBg}" :style="[bgStyleObj]" class="bg">
+  </div>
 </template>
 <script>
 export default {
-    data() {
-        return {
-            isShowBg: false,
-            switchBg: false,
-            sharedState: this.$store.state,
-            bgUrl: "",
-        };
+  data() {
+    return {
+      isShowBg: false,
+      switchBg: false,
+      sharedState: this.$store.state,
+      bgUrl: ''
+    }
+  },
+  computed: {
+    isMobile() {
+      return this.$store.getIsMobile()
     },
-    created() {
-        this.loadBg();
+    windowSize() {
+      return this.$store.getWindowSize()
     },
-    methods: {
-        loadBg() {
-            let that = this;
-            that.closeBg();
-            var headbg = new Image();
-            headbg.src = that.headBgUrl;
-            if (headbg.complete) {
-                that.openBg();
-            }
-            else {
-                headbg.onload = function() {
-                    that.openBg();
-                };
-            }
-        },
-        closeBg() {
-            this.bgUrl = "";
-            this.isShowBg = false;
-        },
-        openBg() {
-            this.isShowBg = true;
-            this.switchBg = !this.switchBg;
-            this.bgUrl = this.headBgUrl;
-        },
+    headBgUrl() {
+      return this.$store.getHeadBgUrl()
     },
-    computed: {
-        isMobile() {
-            return this.$store.getIsMobile();
-        },
-        windowSize() {
-            return this.$store.getWindowSize();
-        },
-        headBgUrl() {
-            return this.$store.getHeadBgUrl();
-        },
-        bgStyleObj() {
-            let styleObj = {
-                height: this.windowSize.y * 0.4 + "px",
-            };
-            styleObj['background-image'] = 'url(' + this.bgUrl + ')';
-            return styleObj;
-        },
+    bgStyleObj() {
+      const styleObj = {
+        height: this.windowSize.y * 0.4 + 'px'
+      }
+      styleObj['background-image'] = 'url(' + this.bgUrl + ')'
+      return styleObj
+    }
+  },
+  watch: {
+    headBgUrl: function() {
+      if (this.headBgUrl === '' || this.headBgUrl === undefined || this.headBgUrl === null) {
+        this.closeBg()
+      } else {
+        this.loadBg()
+      }
+    }
+  },
+  created() {
+    this.loadBg()
+  },
+  methods: {
+    loadBg() {
+      const that = this
+      that.closeBg()
+      var headbg = new Image()
+      headbg.src = that.headBgUrl
+      if (headbg.complete) {
+        that.openBg()
+      } else {
+        headbg.onload = function() {
+          that.openBg()
+        }
+      }
     },
-    watch: {
-        headBgUrl: function() {
-            if (this.headBgUrl === "" || this.headBgUrl === undefined || this.headBgUrl === null) {
-                this.closeBg();
-            }
-            else {
-                this.loadBg();
-            }
-        },
+    closeBg() {
+      this.bgUrl = ''
+      this.isShowBg = false
     },
-};
+    openBg() {
+      this.isShowBg = true
+      this.switchBg = !this.switchBg
+      this.bgUrl = this.headBgUrl
+    }
+  }
+}
 </script>
 <style scoped>
 .bg {

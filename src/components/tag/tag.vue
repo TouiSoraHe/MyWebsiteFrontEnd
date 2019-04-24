@@ -1,17 +1,17 @@
 <template>
-    <router-link class="tag" :to="to">
-        <slot></slot>
-    </router-link>
+  <router-link :to="to" class="tag">
+    <slot></slot>
+  </router-link>
 </template>
 <script>
 export default {
-    props:{
-        to:{
-            type:String,
-            default:"/archive",
-        },
-    },
-};
+  props: {
+    to: {
+      type: String,
+      default: '/archive'
+    }
+  }
+}
 </script>
 <style scoped>
 .tag {
