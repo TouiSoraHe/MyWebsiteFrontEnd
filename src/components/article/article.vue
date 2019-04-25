@@ -78,7 +78,7 @@ export default {
         this.article = response.data
         document.title = this.article.blogInfo.title
         if (this.article.blogInfo.bgImg.large !== undefined) {
-          this.$store.setHeadBgUrl(this.article.blogInfo.bgImg.large)
+          this.$store.commit('setHeadBgUrl', (this.article.blogInfo.bgImg.large))
         }
       } catch (error) {
         console.log(error)

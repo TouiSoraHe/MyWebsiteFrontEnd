@@ -41,7 +41,7 @@ export default {
     }
   },
   created() {
-    this.$store.setHeadBgUrl(this.$store.getConfig().archiveHeadBgUrl || this.$store.getConfig().defaultHeadBgUrl)
+    this.$store.commit('setHeadBgUrl', (this.$store.state.app.config.archiveHeadBgUrl || this.$store.state.app.config.defaultHeadBgUrl))
     this.getTags()
   },
   methods: {

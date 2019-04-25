@@ -8,23 +8,16 @@ export default {
     return {
       isShowBg: false,
       switchBg: false,
-      sharedState: this.$store.state,
       bgUrl: ''
     }
   },
   computed: {
-    isMobile() {
-      return this.$store.getIsMobile()
-    },
-    windowSize() {
-      return this.$store.getWindowSize()
-    },
     headBgUrl() {
-      return this.$store.getHeadBgUrl()
+      return this.$store.state.app.headBgUrl
     },
     bgStyleObj() {
       const styleObj = {
-        height: this.windowSize.y * 0.4 + 'px'
+        height: this.$store.state.app.windowSize.y * 0.4 + 'px'
       }
       styleObj['background-image'] = 'url(' + this.bgUrl + ')'
       return styleObj

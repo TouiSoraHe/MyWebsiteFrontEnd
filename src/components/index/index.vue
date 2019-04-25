@@ -4,7 +4,7 @@
 <script>
 export default {
   created() {
-    this.$store.setHeadBgUrl(this.$store.getConfig().indexHeadBgUrl || this.$store.getConfig().defaultHeadBgUrl)
+    this.$store.commit('setHeadBgUrl', (this.$store.state.app.config.indexHeadBgUrl || this.$store.state.app.config.defaultHeadBgUrl))
   }
 }
 </script>

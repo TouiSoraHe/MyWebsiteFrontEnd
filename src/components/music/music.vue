@@ -7,7 +7,7 @@
 <script>
 export default {
   created() {
-    this.$store.setHeadBgUrl(this.$store.getConfig().musicHeadBgUrl || this.$store.getConfig().defaultHeadBgUrl)
+    this.$store.commit('setHeadBgUrl', (this.$store.state.app.config.musicHeadBgUrl || this.$store.state.app.config.defaultHeadBgUrl))
   }
 }
 </script>

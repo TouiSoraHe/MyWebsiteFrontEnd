@@ -16,7 +16,7 @@ export default {
   },
   computed: {
     show() {
-      return this.$store.getScrollTop() > 500
+      return this.$store.state.app.scrollTop > 500
     }
   }
 }

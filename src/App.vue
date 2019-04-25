@@ -12,7 +12,7 @@
               <router-view :key="'left'+routerViewKey" name="left"></router-view>
             </transition>
           </v-flex>
-          <v-flex v-if="!isMobile" :class="rightContentLayoutObj" class="text-center">
+          <v-flex v-if="!$store.state.app.isMobile" :class="rightContentLayoutObj" class="text-center">
             <div style="position:sticky;top:78px; margin-left: 30px;">
               <transition name="slide-x-transition" mode="out-in">
                 <router-view :key="'right'+routerViewKey" name="right"></router-view>
@@ -46,23 +46,12 @@ export default {
     'my-back-to-top': top,
     'my-top-bg': topBg
   },
-  data() {
-    return {
-      sharedState: this.$store.state
-    }
-  },
   computed: {
     bloggerInfo() {
-      return this.$store.getConfig().BloggerInfo
-    },
-    isMobile() {
-      return this.$store.getIsMobile()
-    },
-    windowSize() {
-      return this.$store.getWindowSize()
+      return this.$store.state.app.config.BloggerInfo
     },
     layoutRatio() {
-      return this.$store.getLayoutRatio()
+      return this.$store.state.app.layoutRatio
     },
     leftContentLayoutObj() {
       return [
@@ -93,9 +82,9 @@ export default {
     },
     myMainStyleObj() {
       const styleObj = {
-        'min-height': this.windowSize.y + 'px'
+        'min-height': this.$store.state.app.windowSize.y + 'px'
       }
-      if (!this.isMobile) {
+      if (!this.$store.state.app.isMobile) {
         styleObj['margin-top'] = '30px'
       }
       return styleObj
@@ -113,6 +102,9 @@ export default {
     })
   },
   beforeCreate() {
+    console.log(123)
+    console.log(this)
+
     const el = document.getElementById('appLoading')
     if (el !== null) {
       el.className += 'disappear'
@@ -142,9 +134,9 @@ export default {
       try {
         var finger = await getFinger()
         const response = await this.$api.getUser(finger)
-        this.$store.setUser(response.data)
+        this.$store.commit('setUser', response.data)
       } catch (error) {
-        this.$store.setUser({
+        this.$store.commit('setUser', {
           id: finger,
           userName: undefined,
           email: undefined,
@@ -174,14 +166,14 @@ export default {
     },
     onResize() {
       if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
-        this.$store.setWindowSize({ x: document.documentElement.clientWidth, y: document.documentElement.clientHeight })
+        this.$store.commit('setWindowSize', { x: document.documentElement.clientWidth, y: document.documentElement.clientHeight })
       } else {
-        this.$store.setWindowSize({ x: window.innerWidth, y: window.innerHeight })
+        this.$store.commit('setWindowSize', { x: window.innerWidth, y: window.innerHeight })
       }
-      this.$store.setIsMobile(this.windowSize.x < 960)
+      this.$store.commit('setIsMobile', this.$store.state.app.windowSize.x < 960)
     },
     onScroll() {
-      this.$store.setScrollTop(window.pageYOffset || document.documentElement.scrollTop || document.body.scrolltop || 0)
+      this.$store.commit('setScrollTop', window.pageYOffset || document.documentElement.scrollTop || document.body.scrolltop || 0)
     }
   }
 }

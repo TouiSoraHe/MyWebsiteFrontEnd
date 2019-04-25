@@ -1,6 +1,6 @@
 <template>
   <transition mode="out-in" name="fade-transition">
-    <v-toolbar v-if="!isMobile" key="pcNav" dense fixed flat dark color="rgba(0,0,0,0.3)">
+    <v-toolbar v-if="!$store.state.app.isMobile" key="pcNav" dense fixed flat dark color="rgba(0,0,0,0.3)">
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-btn v-for="item in links" :key="item.title" :to="item.url" flat depressed>
@@ -51,19 +51,15 @@ export default {
         { title: '归档', icon: this.$vuetify.icons['archive'], url: '/archive' },
         { title: '音乐', icon: this.$vuetify.icons['music'], url: '/music' },
         { title: '留言', icon: this.$vuetify.icons['message'], url: '/message' }
-      ],
-      sharedState: this.$store.state
+      ]
     }
   },
   computed: {
-    isMobile() {
-      return this.$store.getIsMobile()
-    },
     layoutRatio() {
       return this.$store.getLayoutRatio()
     },
     bloggerInfo() {
-      return this.$store.getConfig().BloggerInfo
+      return this.$store.state.app.config.BloggerInfo
     },
     offsetLayoutObj() {
       return [

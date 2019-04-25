@@ -21,7 +21,8 @@
     "vue": "^2.5.17",
     "vue-markdown": "^2.2.4",
     "vue-router": "^3.0.1",
-    "vuetify": "^1.2.4"
+    "vuetify": "^1.2.4",
+    "vuex": "^3.1.0"
   },
   "devDependencies": {
     "@mdi/font": "^2.8.94",

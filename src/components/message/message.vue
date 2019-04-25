@@ -12,7 +12,7 @@ export default {
     'comment': comment
   },
   created() {
-    this.$store.setHeadBgUrl(this.$store.getConfig().messageHeadBgUrl || this.$store.getConfig().defaultHeadBgUrl)
+    this.$store.commit('setHeadBgUrl', (this.$store.state.app.config.messageHeadBgUrl || this.$store.state.app.config.defaultHeadBgUrl))
   },
   methods: {
 

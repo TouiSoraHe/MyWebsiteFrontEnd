@@ -82,7 +82,7 @@ export default {
         parentId: this.parentID,
         time: null,
         blogId: this.blogid,
-        user: this.$store.getUser()
+        user: this.$store.state.app.user
       }
     }
   },

@@ -2,7 +2,7 @@
   <div class="blog">
     <transition name="slide-x-transition" mode="out-in">
       <div v-if="blogInfo.length > 0">
-        <card v-for="item in blogInfo" :key="item.id" :class="{'card-item-mobile':$store.getIsMobile()}" :article="item" class="card-item"></card>
+        <card v-for="item in blogInfo" :key="item.id" :class="{'card-item-mobile':$store.state.app.isMobile}" :article="item" class="card-item"></card>
       </div>
     </transition>
     <loading :show-loading="showLoading" style="margin-top: 20px"></loading>
@@ -39,7 +39,7 @@ export default {
   },
   created() {
     if (this.id === undefined) {
-      this.$store.setHeadBgUrl(this.$store.getConfig().blogHeadBgUrl || this.$store.getConfig().defaultHeadBgUrl)
+      this.$store.commit('setHeadBgUrl', (this.$store.state.app.config.blogHeadBgUrl || this.$store.state.app.config.defaultHeadBgUrl))
     }
   },
   methods: {
@@ -96,10 +96,10 @@ export default {
         const response = await this.$api.getTag(this.id)
         document.title = response.data.tagName
         if (response.data.tagImg !== undefined) {
-          if (this.$store.getIsMobile()) {
-            this.$store.setHeadBgUrl(response.data.tagImg.medium)
+          if (this.$store.state.app.isMobile) {
+            this.$store.commit('setHeadBgUrl', (response.data.tagImg.medium))
           } else {
-            this.$store.setHeadBgUrl(response.data.tagImg.large)
+            this.$store.commit('setHeadBgUrl', (response.data.tagImg.large))
           }
         }
         this.blogInfoIDs = response.data.blogInfoIDs

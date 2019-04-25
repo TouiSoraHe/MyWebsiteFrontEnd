@@ -27,7 +27,7 @@ export default {
   },
   computed: {
     bloggerInfo() {
-      return this.$store.getConfig().BloggerInfo
+      return this.$store.state.app.config.BloggerInfo
     },
     links() {
       const ret = []
