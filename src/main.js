@@ -7,7 +7,9 @@ import router from '@/router/router.js'
 import store from '@/store/store.js'
 import App from './App.vue'
 
-import 'assets/js/vuetifyConfig'
+import '@/plugins/vuetify.js'
+import '@/plugins/tips.js'
+
 import 'assets/js/axiosConfig'
 import 'assets/js/otherConfig'
 import '@/utils/utils.js'

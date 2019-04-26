@@ -112,24 +112,16 @@ export default {
   },
   methods: {
     async getFinger() {
-      function getFinger() {
-        return new Promise((resolve) => {
-          const userIdKey = 'userid'
-          let userIdValue = localStorage.getItem(userIdKey)
-          if (userIdValue === undefined || userIdValue === null) {
-            Fingerprint2().get((result) => {
-              userIdValue = result
-              localStorage.setItem(userIdKey, userIdValue)
-              resolve(userIdValue)
-            })
-          } else {
-            resolve(userIdValue)
-          }
-          console.log(localStorage.getItem('test'))
-        })
-      }
       try {
-        var finger = await getFinger()
+        let userIdValue = localStorage.getItem('userid')
+        if (userIdValue === undefined || userIdValue === null) {
+          const components = await Fingerprint2.getPromise()
+          var values = components.map(function(component) { return component.value })
+          var murmur = Fingerprint2.x64hash128(values.join(''), 31)
+          userIdValue = murmur
+          localStorage.setItem('userid', userIdValue)
+        }
+        var finger = userIdValue
         const response = await this.$api.getUser(finger)
         this.$store.commit('setUser', response.data)
       } catch (error) {
