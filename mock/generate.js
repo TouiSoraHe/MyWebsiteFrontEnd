@@ -1,3 +1,4 @@
+/* eslint-disable no-unmodified-loop-condition */
 /* eslint-disable no-extend-native */
 const faker = require('faker')
 

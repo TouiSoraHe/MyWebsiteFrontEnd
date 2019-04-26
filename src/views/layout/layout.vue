@@ -23,6 +23,11 @@
       </v-container>
     </main>
     <my-back-to-top></my-back-to-top>
+    <aplayer
+      fixed
+      :volume="1"
+      :audio="$store.state.music.playlist"
+    ></aplayer>
     <footer class="myFooter vertical-middle">
       <v-container pa-0 ma-0 fluid>
         <v-layout>
@@ -94,7 +99,7 @@ export default {
     }
   },
   created() {
-    this.getBloggerInfo()
+    this.init()
   },
   mounted() {
     this.$nextTick(() => {
@@ -134,12 +139,26 @@ export default {
         console.error(error)
       }
     },
+    async init() {
+      await this.getBloggerInfo()
+      this.$store.commit('setBackendInfo', {
+        domain: this.$store.state.app.config.musicInfo['后台地址'],
+        uid: this.$store.state.app.config.musicInfo['uid']
+      })
+      await this.getMusicPlaylists()
+    },
     async getBloggerInfo() {
       try {
         const response = await this.$api.getBloggerInfo()
         this.$store.commit('setConfig', response.data)
       } catch (error) {
         console.error(error)
+      }
+    },
+    async getMusicPlaylists() {
+      const response = await this.$store.dispatch('GetPlaylists')
+      if (response.data.code === 200) {
+        this.$store.commit('setPlaylists', response.data.playlist)
       }
     },
     onResize() {

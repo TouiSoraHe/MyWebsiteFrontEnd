@@ -9,6 +9,7 @@ import App from './App.vue'
 
 import '@/plugins/vuetify.js'
 import '@/plugins/tips.js'
+import '@/plugins/aplayer.js'
 
 import 'assets/js/axiosConfig'
 import 'assets/js/otherConfig'

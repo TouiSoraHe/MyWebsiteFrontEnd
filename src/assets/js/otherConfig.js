@@ -27,3 +27,4 @@ Math.randomNum = function(minNum, maxNum) {
       return 0
   }
 }
+
