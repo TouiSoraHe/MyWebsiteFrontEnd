@@ -17,7 +17,7 @@ export default {
     },
     bgStyleObj() {
       const styleObj = {
-        height: this.$store.state.app.windowSize.y * 0.4 + 'px'
+        height: this.$store.state.app.windowSize.y * 0.6 + 'px'
       }
       styleObj['background-image'] = 'url(' + this.bgUrl + ')'
       return styleObj

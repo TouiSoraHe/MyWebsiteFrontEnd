@@ -48,7 +48,7 @@ export default {
       drawer: false,
       links: [
         { title: '主页', icon: this.$vuetify.icons['home'], url: '/' },
-        { title: '归档', icon: this.$vuetify.icons['archive'], url: '/archive' },
+        { title: '归档', icon: this.$vuetify.icons['archive'], url: '/archive/archive-list' },
         { title: '音乐', icon: this.$vuetify.icons['music'], url: '/music' },
         { title: '留言', icon: this.$vuetify.icons['message'], url: '/message' }
       ]

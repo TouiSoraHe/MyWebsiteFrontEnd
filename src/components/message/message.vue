@@ -11,9 +11,6 @@ export default {
   components: {
     'comment': comment
   },
-  created() {
-    this.$store.commit('setHeadBgUrl', (this.$store.state.app.config.messageHeadBgUrl || this.$store.state.app.config.defaultHeadBgUrl))
-  },
   methods: {
 
   }

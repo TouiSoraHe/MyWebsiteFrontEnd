@@ -37,11 +37,6 @@ export default {
       sharedState: this.$store.state
     }
   },
-  created() {
-    if (this.id === undefined) {
-      this.$store.commit('setHeadBgUrl', (this.$store.state.app.config.blogHeadBgUrl || this.$store.state.app.config.defaultHeadBgUrl))
-    }
-  },
   methods: {
     async loadBlogInfo() {
       if (this.showLoading) return

@@ -16,12 +16,9 @@ const app = {
       xl: [2, 5, 3, 2]
     },
     config: {
-      defaultHeadBgUrl: 'https://ws1.sinaimg.cn/large/006nw0Eagy1g0yvwlazhuj31z40nx47d.jpg',
-      indexHeadBgUrl: undefined,
-      blogHeadBgUrl: undefined,
-      archiveHeadBgUrl: undefined,
-      musicHeadBgUrl: undefined,
-      messageHeadBgUrl: undefined,
+      bgUrl: {
+        'default': 'https://ws1.sinaimg.cn/large/006nw0Eagy1g0yvwlazhuj31z40nx47d.jpg'
+      },
       BloggerInfo: {
         BloggerName: '遠空',
         BloggerAvatar: 'http://p2.music.126.net/OpgpNNPKznDDMxoBqVJy-Q==/2464005557906815.jpg',
