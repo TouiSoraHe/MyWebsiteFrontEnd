@@ -19,10 +19,10 @@
         <v-list class="pa-1">
           <v-list-tile avatar>
             <v-list-tile-avatar>
-              <img :src="bloggerInfo.BloggerAvatar">
+              <img :src="$getGravatar(bloggerInfo.email)">
             </v-list-tile-avatar>
             <v-list-tile-content>
-              <v-list-tile-title>{{ bloggerInfo.BloggerName }}</v-list-tile-title>
+              <v-list-tile-title>{{ bloggerInfo.name }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>

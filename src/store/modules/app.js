@@ -20,8 +20,8 @@ const app = {
         'default': 'https://i.loli.net/2019/04/26/5cc2a033011c3.jpg'
       },
       BloggerInfo: {
-        BloggerName: '遠空',
-        BloggerAvatar: 'http://p2.music.126.net/OpgpNNPKznDDMxoBqVJy-Q==/2464005557906815.jpg',
+        name: '遠空',
+        email: '',
         contactInformation: {
         }
       }
@@ -46,6 +46,9 @@ const app = {
     },
     setHeadBgUrl(state, newValue) {
       state.headBgUrl = newValue
+    },
+    setConfig(state, newValue) {
+      Object.assign(state.config, newValue)
     }
   },
   actions: {

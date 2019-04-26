@@ -137,18 +137,7 @@ export default {
     async getBloggerInfo() {
       try {
         const response = await this.$api.getBloggerInfo()
-        const bloggerInfo = response.data
-        if (bloggerInfo) {
-          this.bloggerInfo.BloggerName = bloggerInfo.username || this.bloggerInfo.BloggerName
-          if (bloggerInfo.email) {
-            this.bloggerInfo.BloggerAvatar = this.$getGravatar(bloggerInfo.email)
-          }
-          if (bloggerInfo.contactInformation) {
-            Object.keys(bloggerInfo.contactInformation).forEach(key => {
-              this.$set(this.bloggerInfo.contactInformation, key, bloggerInfo.contactInformation[key])
-            })
-          }
-        }
+        this.$store.commit('setConfig', response.data)
       } catch (error) {
         console.error(error)
       }

@@ -2,10 +2,10 @@
   <div>
     <v-card class="text-center" style="width: 315px">
       <v-avatar size="80px" class="my-3">
-        <v-img :src="bloggerInfo.BloggerAvatar"></v-img>
+        <v-img :src="$getGravatar(bloggerInfo.email)"></v-img>
       </v-avatar>
       <v-card-text class="subheading pa-0">
-        {{ bloggerInfo.BloggerName }}
+        {{ bloggerInfo.name }}
       </v-card-text>
       <v-card-text>
         <v-tooltip v-for="(item,index) in links" :key="index" top>
