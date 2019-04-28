@@ -22,7 +22,10 @@
               </v-list-tile-avatar>
 
               <v-list-tile-content>
-                <v-list-tile-title v-text="item.name"></v-list-tile-title>
+                <v-list-tile-title>
+                  <span>{{ item.name }}</span>
+                  <span style="float:right" class="grey--text caption">{{ item.trackCount+' 首' }}</span>
+                </v-list-tile-title>
                 <v-list-tile-sub-title v-on="on" v-text="item.description"></v-list-tile-sub-title>
               </v-list-tile-content>
             </v-list-tile>
