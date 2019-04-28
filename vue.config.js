@@ -22,6 +22,17 @@ module.exports = {
         pathRewrite: {
           '/api': '' // 需要rewrite的,
         }
+      },
+      '^/music': {
+        // 目标 API 地址
+        target: 'http://localhost:3000/',
+        // 如果要代理 websockets
+        ws: true,
+        // 将主机标头的原点更改为目标URL
+        // changeOrigin: true,
+        pathRewrite: {
+          '/music': '' // 需要rewrite的,
+        }
       }
     }
   },

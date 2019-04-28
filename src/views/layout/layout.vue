@@ -146,7 +146,6 @@ export default {
       this.$store.commit('setHeadBgUrl', this.$store.state.app.config.bgUrl[this.$route.path] || this.$store.state.app.config.bgUrl.default)
       // 获取音乐相关信息
       this.$store.commit('setBackendInfo', {
-        domain: this.$store.state.app.config.musicInfo['后台地址'],
         uid: this.$store.state.app.config.musicInfo['uid']
       })
       await this.getMusicPlaylists()

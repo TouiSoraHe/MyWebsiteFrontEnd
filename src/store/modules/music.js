@@ -3,7 +3,6 @@ import { getPlaylists, getPlaylist, getMusicUrl } from '@/api/music.js'
 const music = {
   state: {
     backendInfo: {
-      domain: '',
       uid: ''
     },
     playlists: [],
@@ -27,7 +26,6 @@ const music = {
       state.playlistStatus = newValue
     },
     setBackendInfo(state, newValue) {
-      state.backendInfo.domain = newValue.domain
       state.backendInfo.uid = newValue.uid
     }
   },
@@ -36,7 +34,7 @@ const music = {
     GetPlaylists(store) {
       return new Promise((resolve, reject) => {
         store.commit('setPlaylistsStatus', 'loading')
-        getPlaylists(store.state.backendInfo.domain, store.state.backendInfo.uid).then(response => {
+        getPlaylists(store.state.backendInfo.uid).then(response => {
           store.commit('setPlaylistsStatus', 'ready')
           resolve(response)
         }).catch(error => {
@@ -52,7 +50,7 @@ const music = {
           store.commit('setPlaylistStatus', 'ready')
           resolve(store.state.idToPlaylist.get(id).slice())
         } else {
-          getPlaylist(store.state.backendInfo.domain, id).then(response => {
+          getPlaylist(id).then(response => {
             const idToMusic = new Map()
             response.data.playlist.tracks.forEach(item => {
               idToMusic.set(item.id, {
@@ -61,7 +59,7 @@ const music = {
                 cover: item.al.picUrl
               })
             })
-            getMusicUrl(store.state.backendInfo.domain, Array.from(idToMusic.keys()).join(',')).then(musicUrls => {
+            getMusicUrl(Array.from(idToMusic.keys()).join(',')).then(musicUrls => {
               musicUrls.data.data.forEach(item => {
                 idToMusic.get(item.id).url = item.url
               })

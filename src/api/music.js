@@ -1,22 +1,22 @@
 import request from '@/utils/request'
 
-export function getPlaylists(domain, uid) {
+export function getPlaylists(uid) {
   return request({
-    url: domain + '/user/playlist?uid=' + uid,
+    url: '/music/user/playlist?uid=' + uid,
     method: 'get'
   })
 }
 
-export function getPlaylist(domain, id) {
+export function getPlaylist(id) {
   return request({
-    url: domain + '/playlist/detail?id=' + id,
+    url: '/music/playlist/detail?id=' + id,
     method: 'get'
   })
 }
 
-export function getMusicUrl(domain, ids) {
+export function getMusicUrl(ids) {
   return request({
-    url: domain + '/song/url?id=' + ids,
+    url: '/music/song/url?id=' + ids,
     method: 'get'
   })
 }
