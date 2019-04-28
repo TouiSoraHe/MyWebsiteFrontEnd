@@ -17,7 +17,7 @@ const app = {
     },
     config: {
       bgUrl: {
-        'default': 'https://i.loli.net/2019/04/26/5cc2a033011c3.jpg'
+        'default': ''
       },
       BloggerInfo: {
         name: '遠空',

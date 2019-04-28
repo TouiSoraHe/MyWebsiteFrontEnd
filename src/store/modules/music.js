@@ -7,7 +7,9 @@ const music = {
       uid: ''
     },
     playlists: [],
+    playlistsStatus: '',
     playlist: [],
+    playlistStatus: '',
     idToPlaylist: new Map()
   },
 
@@ -15,8 +17,14 @@ const music = {
     setPlaylists(state, newValue) {
       state.playlists = newValue
     },
+    setPlaylistsStatus(state, newValue) {
+      state.playlistsStatus = newValue
+    },
     setPlaylist(state, newValue) {
       state.playlist = newValue
+    },
+    setPlaylistStatus(state, newValue) {
+      state.playlistStatus = newValue
     },
     setBackendInfo(state, newValue) {
       state.backendInfo.domain = newValue.domain
@@ -27,16 +35,21 @@ const music = {
   actions: {
     GetPlaylists(store) {
       return new Promise((resolve, reject) => {
+        store.commit('setPlaylistsStatus', 'loading')
         getPlaylists(store.state.backendInfo.domain, store.state.backendInfo.uid).then(response => {
+          store.commit('setPlaylistsStatus', 'ready')
           resolve(response)
         }).catch(error => {
+          store.commit('setPlaylistsStatus', 'error')
           reject(error)
         })
       })
     },
     GetPlaylist(store, id) {
       return new Promise((resolve, reject) => {
+        store.commit('setPlaylistStatus', 'loading')
         if (store.state.idToPlaylist.has(id)) {
+          store.commit('setPlaylistStatus', 'ready')
           resolve(store.state.idToPlaylist.get(id).slice())
         } else {
           getPlaylist(store.state.backendInfo.domain, id).then(response => {
@@ -54,11 +67,19 @@ const music = {
               })
               const list = Array.from(idToMusic.values())
               store.state.idToPlaylist.set(id, list)
-              resolve(list.slice())
+              if (list.length > 0) {
+                store.commit('setPlaylistStatus', 'ready')
+                resolve(list.slice())
+              } else {
+                store.commit('setPlaylistStatus', 'error')
+                reject('当前歌单没有音乐')
+              }
             }).catch(musicError => {
+              store.commit('setPlaylistStatus', 'error')
               reject(musicError)
             })
           }).catch(error => {
+            store.commit('setPlaylistStatus', 'error')
             reject(error)
           })
         }

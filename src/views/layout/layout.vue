@@ -140,12 +140,20 @@ export default {
       }
     },
     async init() {
+      // 获取config
       await this.getBloggerInfo()
+      // 设置背景图
+      this.$store.commit('setHeadBgUrl', this.$store.state.app.config.bgUrl[this.$route.path] || this.$store.state.app.config.bgUrl.default)
+      // 获取音乐相关信息
       this.$store.commit('setBackendInfo', {
         domain: this.$store.state.app.config.musicInfo['后台地址'],
         uid: this.$store.state.app.config.musicInfo['uid']
       })
       await this.getMusicPlaylists()
+      if (this.$store.state.music.playlists.length > 0) {
+        const list = await this.$store.dispatch('GetPlaylist', this.$store.state.music.playlists[0].id)
+        this.$store.commit('setPlaylist', list)
+      }
     },
     async getBloggerInfo() {
       try {
