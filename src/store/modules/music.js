@@ -61,7 +61,12 @@ const music = {
             })
             getMusicUrl(Array.from(idToMusic.keys()).join(',')).then(musicUrls => {
               musicUrls.data.data.forEach(item => {
-                idToMusic.get(item.id).url = item.url
+                if (item.url) {
+                  idToMusic.get(item.id).url = item.url
+                } else {
+                  // 移除没有版本/会员的歌曲
+                  idToMusic.delete(item.id)
+                }
               })
               const list = Array.from(idToMusic.values())
               store.state.idToPlaylist.set(id, list)
