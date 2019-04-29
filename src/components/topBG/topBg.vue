@@ -66,7 +66,7 @@ export default {
     width: 100%;
     z-index: -1;
     background-size: cover;
-    background-position: center 0;
+    background-position: center center;
     background-repeat: no-repeat;
     -webkit-mask-image: url('circlemask.png');
     -webkit-mask-repeat: no-repeat;
