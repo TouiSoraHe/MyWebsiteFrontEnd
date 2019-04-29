@@ -24,6 +24,7 @@
     </main>
     <my-back-to-top></my-back-to-top>
     <aplayer
+      ref="aplayer"
       fixed
       :volume="1"
       :audio="$store.state.music.playlist"
@@ -188,6 +189,7 @@ export default {
       try {
         console.error(e)
         await this.$store.dispatch('ResetPlaylist')
+        this.$refs.aplayer.play()
       } catch (error) {
         this.$tips.showTips({
           color: 'error',

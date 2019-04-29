@@ -106,6 +106,7 @@ const music = {
     ResetPlaylist(store) {
       return new Promise((resolve, reject) => {
         if (store.state.currentId) {
+          store.state.idToPlaylist.delete(store.state.currentId)
           store.dispatch('SwitchPlayList', store.state.currentId).then(list => {
             resolve(list)
           }).catch(error => {
