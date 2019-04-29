@@ -9,7 +9,8 @@ const music = {
     playlistsStatus: '',
     playlist: [],
     playlistStatus: '',
-    idToPlaylist: new Map()
+    idToPlaylist: new Map(),
+    currentId: undefined
   },
 
   mutations: {
@@ -27,6 +28,9 @@ const music = {
     },
     setBackendInfo(state, newValue) {
       state.backendInfo.uid = newValue.uid
+    },
+    setCurrentId(state, newValue) {
+      state.currentId = newValue
     }
   },
 
@@ -83,6 +87,28 @@ const music = {
             })
           }).catch(error => {
             store.commit('setPlaylistStatus', 'error')
+            reject(error)
+          })
+        }
+      })
+    },
+    SwitchPlayList(store, id) {
+      return new Promise((resolve, reject) => {
+        store.dispatch('GetPlaylist', id).then(list => {
+          store.commit('setPlaylist', list)
+          store.commit('setCurrentId', id)
+          resolve(list)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    ResetPlaylist(store) {
+      return new Promise((resolve, reject) => {
+        if (store.state.currentId) {
+          store.dispatch('SwitchPlayList', store.state.currentId).then(list => {
+            resolve(list)
+          }).catch(error => {
             reject(error)
           })
         }

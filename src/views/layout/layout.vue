@@ -27,6 +27,7 @@
       fixed
       :volume="1"
       :audio="$store.state.music.playlist"
+      @error="onMusicError"
     ></aplayer>
     <footer class="myFooter vertical-middle">
       <v-container pa-0 ma-0 fluid>
@@ -98,13 +99,13 @@ export default {
       return this.$route.name !== undefined ? this.$route.name + +new Date() : this.$route + +new Date()
     }
   },
-  created() {
-    this.init()
-  },
   mounted() {
     this.$nextTick(() => {
       this.getFinger()
     })
+  },
+  created() {
+    this.init()
   },
   beforeCreate() {
     const el = document.getElementById('appLoading')
@@ -140,27 +141,30 @@ export default {
       }
     },
     async init() {
-      // 获取config
-      await this.getBloggerInfo()
-      // 设置背景图
-      this.$store.commit('setHeadBgUrl', this.$store.state.app.config.bgUrl[this.$route.path] || this.$store.state.app.config.bgUrl.default)
-      // 获取音乐相关信息
-      this.$store.commit('setBackendInfo', {
-        uid: this.$store.state.app.config.musicInfo['uid']
-      })
-      await this.getMusicPlaylists()
-      if (this.$store.state.music.playlists.length > 0) {
-        const list = await this.$store.dispatch('GetPlaylist', this.$store.state.music.playlists[0].id)
-        this.$store.commit('setPlaylist', list)
+      try {
+        // 获取config
+        await this.getBloggerInfo()
+        // 设置背景图
+        this.$store.commit('setHeadBgUrl', this.$store.state.app.config.bgUrl[this.$route.path] || this.$store.state.app.config.bgUrl.default)
+        // 获取音乐相关信息
+        this.$store.commit('setBackendInfo', {
+          uid: this.$store.state.app.config.musicInfo['uid']
+        })
+        await this.getMusicPlaylists()
+        if (this.$store.state.music.playlists.length > 0) {
+          await this.$store.dispatch('SwitchPlayList', this.$store.state.music.playlists[0].id)
+        }
+      } catch (error) {
+        this.$tips.showTips({
+          color: 'error',
+          text: error.response ? error.response.data || error : error,
+          timeout: 3000
+        })
       }
     },
     async getBloggerInfo() {
-      try {
-        const response = await this.$api.getBloggerInfo()
-        this.$store.commit('setConfig', response.data)
-      } catch (error) {
-        console.error(error)
-      }
+      const response = await this.$api.getBloggerInfo()
+      this.$store.commit('setConfig', response.data)
     },
     async getMusicPlaylists() {
       const response = await this.$store.dispatch('GetPlaylists')
@@ -178,6 +182,19 @@ export default {
     },
     onScroll() {
       this.$store.commit('setScrollTop', window.pageYOffset || document.documentElement.scrollTop || document.body.scrolltop || 0)
+    },
+    async onMusicError(e) {
+      // 网易云音乐的音乐URL一段时间后会发生变化,此时需要重新获取URL连接
+      try {
+        console.error(e)
+        await this.$store.dispatch('ResetPlaylist')
+      } catch (error) {
+        this.$tips.showTips({
+          color: 'error',
+          text: error.response ? error.response.data || error : error,
+          timeout: 3000
+        })
+      }
     }
   }
 }

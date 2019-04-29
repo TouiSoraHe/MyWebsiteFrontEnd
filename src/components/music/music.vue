@@ -86,8 +86,7 @@ export default {
     async switchPlayList(id) {
       try {
         this.switchPlayListId = id
-        const list = await this.$store.dispatch('GetPlaylist', id)
-        this.$store.commit('setPlaylist', list)
+        await this.$store.dispatch('SwitchPlayList', id)
       } catch (error) {
         this.$tips.showTips({
           color: 'error',
