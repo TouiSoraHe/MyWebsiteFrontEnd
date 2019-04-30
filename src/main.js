@@ -11,6 +11,7 @@ import '@/plugins/vuetify.js'
 import '@/plugins/tips.js'
 import '@/plugins/aplayer.js'
 import '@/plugins/matomo.js'
+import '@/plugins/highlight.js'
 
 import 'assets/js/axiosConfig'
 import 'assets/js/otherConfig'
