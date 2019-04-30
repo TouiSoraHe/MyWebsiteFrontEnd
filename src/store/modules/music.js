@@ -73,8 +73,8 @@ const music = {
                 }
               })
               const list = Array.from(idToMusic.values())
-              store.state.idToPlaylist.set(id, list)
               if (list.length > 0) {
+                store.state.idToPlaylist.set(id, list)
                 store.commit('setPlaylistStatus', 'ready')
                 resolve(list.slice())
               } else {
