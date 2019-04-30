@@ -2,21 +2,24 @@ import request from '@/utils/request'
 
 export function getPlaylists(uid) {
   return request({
-    url: '/music/user/playlist?uid=' + uid,
-    method: 'get'
+    url: '/music/user/playlist',
+    method: 'post',
+    data: { uid: uid }
   })
 }
 
 export function getPlaylist(id) {
   return request({
-    url: '/music/playlist/detail?id=' + id,
-    method: 'get'
+    url: '/music/playlist/detail',
+    method: 'post',
+    data: { id: id }
   })
 }
 
 export function getMusicUrl(ids) {
   return request({
-    url: '/music/song/url?id=' + ids,
-    method: 'get'
+    url: '/music/song/url',
+    method: 'post',
+    data: { id: ids }
   })
 }
