@@ -23,13 +23,7 @@
       </v-container>
     </main>
     <my-back-to-top></my-back-to-top>
-    <aplayer
-      ref="aplayer"
-      fixed
-      :volume="1"
-      :audio="$store.state.music.playlist"
-      @error="onMusicError"
-    ></aplayer>
+    <player></player>
     <footer class="myFooter vertical-middle">
       <v-container pa-0 ma-0 fluid>
         <v-layout>
@@ -45,13 +39,15 @@
 import nav from 'components/nav/nav.vue'
 import top from 'components/backToTop/backToTop.vue'
 import topBg from 'components/topBG/topBg.vue'
+import player from 'components/player/player.vue'
 import Fingerprint2 from 'fingerprintjs2'
 
 export default {
   components: {
     'my-nav': nav,
     'my-back-to-top': top,
-    'my-top-bg': topBg
+    'my-top-bg': topBg,
+    'player': player
   },
   computed: {
     bloggerInfo() {
@@ -183,20 +179,6 @@ export default {
     },
     onScroll() {
       this.$store.commit('setScrollTop', window.pageYOffset || document.documentElement.scrollTop || document.body.scrolltop || 0)
-    },
-    async onMusicError(e) {
-      // 网易云音乐的音乐URL一段时间后会发生变化,此时需要重新获取URL连接
-      try {
-        console.error(e)
-        await this.$store.dispatch('ResetPlaylist')
-        this.$refs.aplayer.play()
-      } catch (error) {
-        this.$tips.showTips({
-          color: 'error',
-          text: error.response ? error.response.data || error : error,
-          timeout: 3000
-        })
-      }
     }
   }
 }
