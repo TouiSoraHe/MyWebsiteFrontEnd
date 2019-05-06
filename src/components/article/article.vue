@@ -14,7 +14,7 @@
         </v-card-text>
         <v-divider class="my-3"></v-divider>
         <v-card-text class="subheading" style="text-align: justify;">
-          <vue-markdown :source="article.content" rel="noreferrer" @rendered="markdownRendered"></vue-markdown>
+          <vue-markdown v-viewer :source="article.content" @rendered="markdownRendered"></vue-markdown>
         </v-card-text>
         <v-divider class="mx-3 my-0"></v-divider>
         <v-card-actions v-if="article.blogInfo.tags && article.blogInfo.tags.length > 0" class="pa-3">
